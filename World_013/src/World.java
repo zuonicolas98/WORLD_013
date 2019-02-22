@@ -46,7 +46,7 @@ public class World {
 				tab_Arbre.add(new Arbre("Arbre",10,_x,_y));
 				if(Math.random()<1) {
 					tab_Arbre.get(i).setFeu();
-					System.out.println(i+"  "+tab_Arbre.get(i).getFeu());
+					//System.out.println(i+"  "+tab_Arbre.get(i).getFeu());
 				}
 			}else
 				i--;
@@ -85,7 +85,7 @@ public class World {
 		while(true) {
 			f.getPanneau().repaint();
 			try {
-				Thread.sleep(50);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
