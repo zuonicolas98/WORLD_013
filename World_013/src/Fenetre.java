@@ -15,8 +15,9 @@ public class Fenetre extends JFrame{
 		
 		this.setContentPane(p);
 		//this.setAlwaysOnTop(true);
-		this.setVisible(true);
+		this.setVisible(false);
 	}
+	public Panneau getPanneau() {return p;}
 	public int getX() { return f_x;}
 	public int getY() { return f_y;}
 }
