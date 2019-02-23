@@ -1,13 +1,16 @@
 package Agents;
+import Default.*;
 
 public abstract class Animal {
-	private int vie;
-	private int x,y;
-	private int direction;
-	private int action; //pour les images : 1:debout | 2:manger | 3:dormir
+	protected int vie;
+	protected int x,y;
+	protected int direction;
+	protected int action; //pour les images : 1:debout | 2:manger | 3:dormir
+	protected World w;
 	
-	public Animal(int x, int y) {
-		vie=10;
+	public Animal(int x, int y, World w) {
+		this.w=w;
+		vie=20;
 		this.x=x;
 		this.y=y;
 		direction= (int)(Math.random()*4); //0:haut | 1:droite | 2:bas | 3:gauche
@@ -15,8 +18,9 @@ public abstract class Animal {
 	}
 	
 	public abstract void bouger();
-	public abstract void chasser();
+	public abstract boolean chasser();
 	public abstract void fuir();
+	public abstract void step();
 	
 	//Getters	
 	public int getX() { return x;}
