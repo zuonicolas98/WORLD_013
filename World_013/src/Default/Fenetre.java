@@ -2,6 +2,7 @@ package Default;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class Fenetre extends JFrame{
 	private int f_x,f_y;
 	private Panneau p;
@@ -13,10 +14,11 @@ public class Fenetre extends JFrame{
 		this.setTitle("World");
 		this.setSize(x, y);
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setAlwaysOnTop(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.setContentPane(p);
-		//this.setAlwaysOnTop(true);
 		this.setVisible(false);
 	}
 	public Panneau getPanneau() {return p;}

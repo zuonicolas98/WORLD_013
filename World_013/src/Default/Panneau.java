@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.io.IOException;
 import java.io.File;
 
+@SuppressWarnings("serial")
 public class Panneau extends JPanel{
 	private World w;
 	private Fenetre f;
