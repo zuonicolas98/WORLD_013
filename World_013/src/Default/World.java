@@ -14,6 +14,11 @@ public class World {
 	private Fenetre f;
 	
 	public World(int x, int y,int nb_arbre,int nb_animal, int tx,int ty) {
+		if(x==0 || y==0) {
+			System.out.println("ERREUR DIMENSION DU TABLEAU !!!");
+			System.exit(0);
+		}
+		//Initialisations
 		world=new int[x][y];
 		X=x;
 		Y=y;
@@ -35,13 +40,13 @@ public class World {
 
 	}
 	//Initialisation du monde
-	/*	
-	 *	BUISSON = 1
-	 *	ARBRE   = 2
-	 *	ROCHER  = 3
-	 *	EAU     = 4
-	 *	FEU 	= 5
-	 */
+	/*	RIEN    = 0  *
+	 *	BUISSON = 1  *
+	 *	ARBRE   = 2  *
+	 *	ROCHER  = 3  *
+	 *	EAU     = 4  *
+	 *	LAVE 	= 5  */
+
 	public void InitWorld() {
 		
 		for(int y=0;y<Y;y++) {
@@ -54,9 +59,9 @@ public class World {
 		for(int i=0;i<nb_arbre;i++) {
 			int _x=(int)(Math.random()*X);
 			int _y=(int)(Math.random()*Y);
-			if(world[_x][_y]!=2) {
+			if(world[_x][_y]==0) { //s'il n'y a rien sur cette case
 				world[_x][_y]=2;
-				tab_Arbre.add(new Arbre("Arbre",10,_x,_y));
+				tab_Arbre.add(new Arbre("Arbre",30,_x,_y, this));
 				if(Math.random()<1) {
 					tab_Arbre.get(i).setFeu();
 					//System.out.println(i+"  "+tab_Arbre.get(i).getFeu());
@@ -71,7 +76,7 @@ public class World {
 				int _y=(int)(Math.random()*Y);
 				int type=(int)(Math.random()*2);
 				if(world[_x][_y]!=2) {
-					switch(type) { // 1:chevre | 2:cochon
+					switch(type) { // 0:Chevre | 1:Cochon
 						case 0: 
 							tab_Animal.add(new Chevre(_x,_y, this));
 							break;
@@ -79,8 +84,7 @@ public class World {
 							tab_Animal.add(new Cochon(_x,_y, this));
 							break;
 						default:;
-					}
-						
+					}		
 				}else
 					i--;
 			}
@@ -98,28 +102,42 @@ public class World {
 	}
 	
 	public Arbre RechercheArbres(int __x,int __y) {
-		Arbre a=new Arbre("a",0,-1,-1);
+		Arbre a=new Arbre("a",0,-1,-1,this);
 		for(int id=0;id<tab_Arbre.size();id++) {
-			if(tab_Arbre.get(id).getX()==__x && tab_Arbre.get(id).getY()==__y) {
-				return tab_Arbre.get(id);
-			}
+			if(tab_Arbre.get(id).getX()==__x && tab_Arbre.get(id).getY()==__y) 
+				return tab_Arbre.get(id);	
 		}
-		return a;
-		
+		return a;	
 	}
 	
 	public void run() {
 		f.setVisible(true);
 		while(true) {
-			f.getPanneau().repaint();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			this.step();
+		}	
+	}
+	
+	public void step() {
+		
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		
+		//step() animaux
+		for(int i=0; i < tab_Animal.size(); i++) {
+			tab_Animal.get(i).step();
+		}
+		
+		//step() arbres
+		for(int i=0; i < tab_Arbre.size(); i++) {
+			tab_Arbre.get(i).step();
+		}
+		
+		f.getPanneau().repaint();
 	}
+	
 	//Getters
 	public int[][] getWorld() { return world ;}
 	public int getX() { return X; }

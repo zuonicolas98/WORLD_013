@@ -19,7 +19,6 @@ public abstract class Animal {
 	
 	public abstract void bouger();
 	public abstract boolean chasser();
-	public abstract void fuir();
 	public abstract void step();
 	
 	//Getters	
@@ -28,11 +27,5 @@ public abstract class Animal {
 	public int getVie() { return vie;}
 	public int getDirection() { return direction;}
 	public int getAction() { return action;}
-	
-	//Setters
-	public void setAction(int a) { 
-		if(a>=1 && a<=3)
-			action = a;
-	}
 	
 }
