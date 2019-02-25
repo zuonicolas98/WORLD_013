@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.File;
 
@@ -20,10 +21,12 @@ public class Panneau extends JPanel{
 	public Image IMG_FIRE1;
 	public Image IMG_FIRE2;
 	public Image IMG_FIRE3;
+	public Image IMG_RABBIT;
 	
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
 		this.f=f;
+		IMG_RABBIT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/lapin.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -39,18 +42,17 @@ public class Panneau extends JPanel{
 				for(int i=0;i<w.getY();i++) {
 					for(int j=0;j<w.getX();j++) {
 						g.drawImage(IMG_GRASS, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
-						
 						//affichage des animaux
 						for(int k=0; k<w.tab_Animal.size();k++) {
 							if((w.tab_Animal.get(k).getX()==j) && (w.tab_Animal.get(k).getY()==i) ) {
 								
 								if(w.tab_Animal.get(k) instanceof Cochon) {
 									if(w.tab_Animal.get(k).getAction()==1) //s'il est debout
-										g.drawImage(IMG_WOLF, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+										g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 									else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
-										g.drawImage(IMG_WOLF, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+										g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 									else //s'il dort
-										g.drawImage(IMG_WOLF, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+										g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 								}
 								
 								else if (w.tab_Animal.get(k) instanceof Chevre) {
@@ -102,7 +104,6 @@ public class Panneau extends JPanel{
 										//AUTRES ARBRES
 									}
 								}
-								
 								if(w.RechercheArbres(j,i).getFeu()) { //Si l'arbre est en feu
 									if(time==0) {
 										g.drawImage(IMG_FIRE1, (f.getX()/(w.getX()))*j-20,((f.getY()-40)/(w.getY()))*i-80,f.getX()/(w.getX())+40,f.getY()/(w.getY())+40, this);
