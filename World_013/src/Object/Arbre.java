@@ -24,7 +24,7 @@ public class Arbre {
 	}
 	
 	public void step() {
-		if(vie <= 0) {
+		if(vie <= 0) { 
 			feu=false;
 			cendre=true;
 			if(cpt_cendre == 10) //reste en cendre pendant 10 iterations
@@ -33,17 +33,51 @@ public class Arbre {
 				cpt_cendre++;
 			//System.out.println(cpt_cendre);
 		}	
-		if(feu == true)
-			vie--;
 		
+		if(feu == true) {
+			vie--;
+			if(Math.random()<0.01) //1% de chance que le feu s'eteint
+				feu=false;
+			
+		}else if(Math.random()<0.006){ //Apparition d'un arbre à coté d'un autre
+			boolean b=false;
+			int c=0;
+			do {
+				int d=(int)(Math.random()*4);
+				if((d==0) && (y-1>=0) && (w.getWorld()[x][y-1]==0)) {
+					w.getWorld()[x][y-1]=2;
+					w.tab_Arbre.add(new Arbre(nom,30,x,y-1, w));
+					b=true;
+				}else if((d==1) && (x+1<w.getX()) && (w.getWorld()[x+1][y]==0)) {
+					w.getWorld()[x+1][y]=2;
+					w.tab_Arbre.add(new Arbre(nom,30,x+1,y, w));
+					b=true;
+				}else if((d==2) && (y+1<w.getY()) && (w.getWorld()[x][y+1]==0)) {
+					w.getWorld()[x][y+1]=2;
+					w.tab_Arbre.add(new Arbre(nom,30,x,y+1, w));
+					b=true;
+				}else if((d==3) && (x-1>=0) && (w.getWorld()[x-1][y]==0)) {
+					w.getWorld()[x-1][y]=2;
+					w.tab_Arbre.add(new Arbre(nom,30,x-1,y, w));
+					b=true;
+				}
+				c++;
+			}while(b == false && c<4);
+		}
 		//System.out.println(vie);
 		
-		if((croissance < 3) && (cpt == 20)) {
+		if((croissance < 3) && (cpt == 30)) { //l'arbre grandi 
 			croissance++;
 			cpt=0;
 		}else {
 			cpt++;
 		}
+		
+		//Feu de forêt
+		if( (feu==false) && (w.RechercheArbres(x,y-1).getFeu()==true || w.RechercheArbres(x+1,y).getFeu()==true 
+							|| w.RechercheArbres(x,y+1).getFeu()==true || w.RechercheArbres(x-1,y).getFeu()==true)) 
+				feu=true;
+		
 	}
 	
 	//Getters
@@ -55,11 +89,8 @@ public class Arbre {
 	public int getCroissance() { return croissance;}
 	
 	//Setters
-	public void setFeu() {
-		if(feu)
-			feu=false;
-		else
-			feu=true;
+	public void setFeu(boolean f) {
+		feu=f;
 	}
 	
 }
