@@ -5,7 +5,7 @@ public abstract class Animal {
 	protected int vie;
 	protected int x,y;
 	protected int direction;
-	protected int action; //pour les images : 1:debout | 2:manger | 3:dormir
+	protected int action; //pour les images : 1:debout | 2:manger 
 	protected World w;
 	
 	public Animal(int x, int y, World w) {
@@ -13,7 +13,7 @@ public abstract class Animal {
 		vie=20;
 		this.x=x;
 		this.y=y;
-		direction= (int)(Math.random()*4); //0:haut | 1:droite | 2:bas | 3:gauche
+		direction= (int)(Math.random()*4); //0:haut | 1:droite | 2:bas | 3:gauche | -1 :ne bouge pas
 		action= 1;
 	}
 	

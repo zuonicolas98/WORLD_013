@@ -32,9 +32,14 @@ public class Cochon extends Animal{
 	public void bouger() { //bouge aléatoirement
 		vie--;
 		action=1;
-		boolean b = true;
+		boolean b = true; //boolean pour l'arret boucle while
+		int c=0; //2 tentatives de deplacement
 		
-		do {
+		if(w.getWorld()[x][y] == 1) //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
+			vie++;
+
+		
+		while(b==true && c<2 ) {
 			this.direction=(int)(Math.random()*4);
 			switch(direction) {
 				case 0: 
@@ -63,18 +68,16 @@ public class Cochon extends Animal{
 						b=false;
 					}
 					break;
-				default: System.out.println("Erreur de direction");
+				default: System.out.println("ERREUR DE DIRECTION");
 			}	
-		}while(b);
-		
-		if(w.getWorld()[x][y] == 1) { //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie=vie+2;
-			cpt=cpt-2; //prend deux it�rations pour manger
-			action=2;
+			c++;
 		}
 		
+		if(b) //s'il n'a pas reussi a bouger
+			direction=-1;
+		
 	}	
-	public boolean chasser() {
+	public boolean chasser() { //cherche une proie dans son environnement
 		action=1;
 		for(int i=x-2; i<=x+2; i++) { //on parcourt les cases voisines du cochon avec un rayon de 2 cases (voisinage de Moore)
 			for(int j=y-2; j<=y+2; j++) {
@@ -88,16 +91,19 @@ public class Cochon extends Animal{
 								if(w.getWorld()[x-1][y] != 3) {
 									x--;
 									direction = 3;
-								}
-								if(j<y && w.getWorld()[x][y-1] != 3)	{	// et si la proie se trouve en haut du cochon.
+								}else
+									direction = -1;
+								
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1)	{	// et si la proie se trouve en haut du cochon.
 									y--;
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3) {	// et si la proie se trouve en bas du cochon.
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {	// et si la proie se trouve en bas du cochon.
 									y++;
 									direction = 2;
 								}
 							}
+							
 							else if (i==x) { //Si la proie se trouve sur le meme x que le cochon...
 								if(j<y && w.getWorld()[x][y-1] != 3)	{		// et si la proie se trouve en haut du cochon.
 									y--;
@@ -111,18 +117,23 @@ public class Cochon extends Animal{
 									vie=20;
 									action=2;
 									cpt=cpt-2;
+									direction=-1;
 								}
+								else
+									direction=-1;
 							}
 							else {			//Si la proie se trouve à droite de du cochon...
 								if(w.getWorld()[x+1][y] != 3) {
 									x++;
 									direction = 1;
 								}
-								if(j<y && w.getWorld()[x][y-1] != 3)	{		// et si la proie se trouve en haut de du cochon.
+								else
+									direction=-1;
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1)	{		// et si la proie se trouve en haut de du cochon.
 									y--;
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3) {    // et si la proie se trouve en bas de du cochon.
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1 ) {    // et si la proie se trouve en bas de du cochon.
 									y++;
 									direction = 2;
 								}
@@ -134,7 +145,7 @@ public class Cochon extends Animal{
 				}
 			}
 		}
-		return false; //renvoie true si une proie est trouve, false sinon.	
+		return false; //renvoie false s'il n'y a pas de proie a cote.	
 	}
 	
 	
