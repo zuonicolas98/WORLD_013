@@ -48,11 +48,11 @@ public class Panneau extends JPanel{
 								
 								if(w.tab_Animal.get(k) instanceof Cochon) {
 									if(w.tab_Animal.get(k).getAction()==1) //s'il est debout
+										
 										g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 									else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
 										g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
-									else //s'il dort
-										g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+									
 								}
 								
 								else if (w.tab_Animal.get(k) instanceof Chevre) {
@@ -60,8 +60,7 @@ public class Panneau extends JPanel{
 										g.drawImage(IMG_WOLF, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);	
 									else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
 										g.drawImage(IMG_WOLF, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
-									else //s'il dort
-										g.drawImage(IMG_WOLF, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+									
 								}
 								
 							}
