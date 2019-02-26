@@ -63,7 +63,7 @@ public class World {
 				world[_x][_y]=2;
 				tab_Arbre.add(new Arbre("Arbre",30,_x,_y, this));
 				if(Math.random()<1) {
-					tab_Arbre.get(i).setFeu();
+					tab_Arbre.get(i).setFeu(true);
 					//System.out.println(i+"  "+tab_Arbre.get(i).getFeu());
 				}
 			}else
