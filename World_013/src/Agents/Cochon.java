@@ -69,13 +69,13 @@ public class Cochon extends Animal{
 						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Chevre)) { //on trouve une proie dans un rayon de 2 cases
 							
 							//deplacement selon direction
-							if(direction == 0)
+							if((direction == 0) && (w.getWorld()[x][y-1]!=3))
 								y--;
-							else if(direction == 1)
+							else if((direction == 1) && (w.getWorld()[x+1][y]!=3))
 								x++;
-							else if(direction == 2)
+							else if((direction == 2) && (w.getWorld()[x][y+1]!=3))
 								y++;
-							else if(direction == 3)
+							else if((direction == 3) && (w.getWorld()[x-1][y]!=3))
 								x--;
 							
 							//initialisation direction
