@@ -13,8 +13,15 @@ public abstract class Animal {
 		vie=20;
 		this.x=x;
 		this.y=y;
-		direction= (int)(Math.random()*4); //0:haut | 1:droite | 2:bas | 3:gauche | -1 :ne bouge pas
 		action= 1;
+		
+		direction= (int)(Math.random()*4); //0:haut | 1:droite | 2:bas | 3:gauche | -1 :ne bouge pas
+		
+		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3))) //il ne peut pas se trouver sur un rocher
+		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3)))
+		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3))) 
+		|| ((direction == 3) && ((x-1<=0) || (w.getWorld()[x-1][y]==3))))
+			direction =-1;
 	}
 	
 	public abstract void bouger();
