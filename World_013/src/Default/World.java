@@ -74,7 +74,7 @@ public class World {
 			for(int i=0;i<nb_animal;i++) {
 				int _x=(int)(Math.random()*X);
 				int _y=(int)(Math.random()*Y);
-				int type=(int)(Math.random()*2);
+				int type=(int)(Math.random()*3);
 				if(world[_x][_y]!=2) {
 					switch(type) { // 0:Chevre | 1:Cochon
 						case 0: 
@@ -82,6 +82,9 @@ public class World {
 							break;
 						case 1: 
 							tab_Animal.add(new Cochon(_x,_y, this));
+							break;
+						case 2: 
+							tab_Animal.add(new Lapin(_x,_y, this));
 							break;
 						default:;
 					}		

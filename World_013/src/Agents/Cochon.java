@@ -6,13 +6,13 @@ public class Cochon extends Animal{
 	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
-		timer=2;
+		timer=4;
 		cpt=0;
 	}
 	
 	public void step() { //bouge selon l'environnement
 		if(cpt == timer) {
-			if(vie<10) {
+			if(vie<100) {
 				if(this.chasser() == false) { //on le fait bouger si il n'a pas trouve de proie (il ne bouge pas avec chasser() s'il n'y a pas de proie).
 					this.bouger();
 				}
@@ -31,9 +31,9 @@ public class Cochon extends Animal{
 	}
 	
 	public void bouger() { //bouge aléatoirement
-		vie--;
+		//vie--;
 		action=1;
-
+		pixel=0;
 		if(w.getWorld()[x][y] == 1) //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
 			vie++;
 		
@@ -59,6 +59,7 @@ public class Cochon extends Animal{
 	}	
 	public boolean chasser() { //cherche une proie dans son environnement
 		action=1;
+		pixel=0;
 		for(int i=x-2; i<=x+2; i++) { //on parcourt les cases voisines du cochon avec un rayon de 2 cases (voisinage de Moore)
 			for(int j=y-2; j<=y+2; j++) {
 				if( (i<0) || (j<0) || (i>=w.getX()) && (j>=w.getY())) { //si on sort du tableau, on passe a l'iteration suivante
@@ -120,7 +121,7 @@ public class Cochon extends Animal{
 									direction = 2;
 								}
 							}
-							vie--;
+							//vie--;
 							return true; //on s'arrete lorsqu'on trouve une proie et on renvoie true.
 						}
 					}

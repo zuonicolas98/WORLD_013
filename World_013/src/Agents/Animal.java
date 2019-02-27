@@ -7,6 +7,7 @@ public abstract class Animal {
 	protected int direction;
 	protected int action; //pour les images : 1:debout | 2:manger 
 	protected World w;
+	public int pixel=0;
 	
 	public Animal(int x, int y, World w) {
 		this.w=w;

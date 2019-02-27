@@ -12,7 +12,7 @@ public class Lapin extends Animal{
 	
 	public void step() { //bouge selon l'environnement
 		if(cpt == timer) {
-			if(vie<10) {
+			if(vie<100) {
 				if(this.chasser() == false) { //on le fait bouger si il n'a pas trouve de proie (il ne bouge pas avec chasser() s'il n'y a pas de proie).
 					this.bouger();
 				}
@@ -31,7 +31,7 @@ public class Lapin extends Animal{
 	}
 	
 	public void bouger() { //bouge aléatoirement
-		vie--;
+		//vie--;
 		action=1;
 
 		if(w.getWorld()[x][y] == 1) //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
@@ -120,7 +120,7 @@ public class Lapin extends Animal{
 									direction = 2;
 								}
 							}
-							vie--;
+							//vie--;
 							return true; //on s'arrete lorsqu'on trouve une proie et on renvoie true.
 						}
 					}
