@@ -1,10 +1,10 @@
 package Agents;
 import Default.*;
 
-public class Chevre extends Animal{
+public class Lapin extends Animal{
 	private int timer, cpt;
 	
-	public Chevre(int x, int y, World w) {
+	public Lapin(int x, int y, World w) {
 		super(x,y,w);
 		timer=2;
 		cpt=0;
@@ -27,15 +27,17 @@ public class Chevre extends Animal{
 		if(vie<=0)
 			w.tab_Animal.remove(this);
 		//System.out.println(vie);
+	
 	}
 	
 	public void bouger() { //bouge aléatoirement
-		action=1;
 		vie--;
-	
+		action=1;
+
 		if(w.getWorld()[x][y] == 1) //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
 			vie++;
 		
+		//bouge en fonction de sa direction
 		if(direction == 0)
 			y--;
 		else if(direction == 1)
@@ -57,14 +59,14 @@ public class Chevre extends Animal{
 	}	
 	public boolean chasser() { //cherche une proie dans son environnement
 		action=1;
-		for(int i=x-2; i<=x+2; i++) { //on parcourt les cases voisines de la chevre avec un rayon de 2 cases (voisinage de Moore)
+		for(int i=x-2; i<=x+2; i++) { //on parcourt les cases voisines du cochon avec un rayon de 2 cases (voisinage de Moore)
 			for(int j=y-2; j<=y+2; j++) {
 				if( (i<0) || (j<0) || (i>=w.getX()) && (j>=w.getY())) { //si on sort du tableau, on passe a l'iteration suivante
 					continue;
 					
 				}else { //si on ne sort pas du tableau
 					for(int k=0; k<w.tab_Animal.size(); k++) { //parcours de la liste d'animaux
-						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Lapin)) { //on trouve une proie dans un rayon de 2 cases
+						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon)) { //on trouve une proie dans un rayon de 2 cases
 							
 							//deplacement selon direction
 							if((direction == 0) && (w.getWorld()[x][y-1]!=3))
@@ -125,7 +127,8 @@ public class Chevre extends Animal{
 				}
 			}
 		}
-		return false; //renvoie false s'il n'y a pas de proie a cote.
+		return false; //renvoie false s'il n'y a pas de proie a cote.	
 	}
+	
 	
 }
