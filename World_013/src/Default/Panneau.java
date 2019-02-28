@@ -25,13 +25,14 @@ public class Panneau extends JPanel{
 	public Image IMG_PIG;
 	public Image IMG_GOAT;
 	public Image IMG_FIRE;
-	private int pixel_pig=0;
+	public Image IMG_PIG_DROITE;
+
 	
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
 		this.f=f;
 		IMG_RABBIT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/LAPIN/lapin_devant.gif");
-		IMG_PIG = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/COCHON/cochon_devant.gif");
+		IMG_PIG_DROITE = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/PIG.gif");
 		IMG_GOAT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/CHEVRE/chevre_devant.gif");
 		IMG_FIRE = Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/fire.gif");
 	}
@@ -45,10 +46,11 @@ public class Panneau extends JPanel{
 				IMG_FIRE1 = ImageIO.read(new File("IMAGES/ELEMENTS/feu1.png"));
 				IMG_FIRE2 = ImageIO.read(new File("IMAGES/ELEMENTS/feu2.png"));
 				IMG_FIRE3 = ImageIO.read(new File("IMAGES/ELEMENTS/feu3.png"));
-
+				IMG_PIG =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/cochon_droite.gif"));
+				afficher_terrain(g);
 				for(int i=0;i<w.getY();i++) {
 					for(int j=0;j<w.getX();j++) {
-						g.drawImage(IMG_GRASS, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+						//afficher_terrain(g);
 						//g.drawImage(IMG_GRASS,0,0,800,600,this);
 						//affichage des animaux
 						afficher_animaux(i,j,g);
@@ -68,6 +70,14 @@ public class Panneau extends JPanel{
 	
 	}
 	
+	public void afficher_terrain(Graphics g) {
+		for(int i=0;i<w.getY();i++) {
+			for(int j=0;j<w.getX();j++) {
+				g.drawImage(IMG_GRASS, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+			}
+		}
+	}
+	
 	public void afficher_animaux(int i,int j,Graphics g) {
 		for(int k=0; k<w.tab_Animal.size();k++) {
 			if((w.tab_Animal.get(k).getX()==j) && (w.tab_Animal.get(k).getY()==i) ) {
@@ -75,12 +85,11 @@ public class Panneau extends JPanel{
 				if(w.tab_Animal.get(k) instanceof Cochon) {
 					if(w.tab_Animal.get(k).getAction()==1) //s'il est debout
 					{				
-						
-						g.drawImage(IMG_PIG, w.tab_Animal.get(k).pixel + (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
-						
-						w.tab_Animal.get(k).pixel=w.tab_Animal.get(k).pixel+(f.getX()/(w.getX()))/17;
-						
-						System.out.println(w.tab_Animal.get(k).pixel+" "+w.tab_Animal.get(k).pixel);
+						if(w.tab_Animal.get(k).getDirection()==1)
+							g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);
+						else
+							g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+
 					}
 					else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
 						g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
@@ -163,6 +172,7 @@ public class Panneau extends JPanel{
 		default:;
 	}
 	}
+	
 }
 
 

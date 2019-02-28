@@ -6,7 +6,7 @@ public class Cochon extends Animal{
 	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
-		timer=4;
+		timer=1;
 		cpt=0;
 	}
 	
@@ -33,7 +33,6 @@ public class Cochon extends Animal{
 	public void bouger() { //bouge aléatoirement
 		//vie--;
 		action=1;
-		pixel=0;
 		if(w.getWorld()[x][y] == 1) //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
 			vie++;
 		
@@ -59,7 +58,6 @@ public class Cochon extends Animal{
 	}	
 	public boolean chasser() { //cherche une proie dans son environnement
 		action=1;
-		pixel=0;
 		for(int i=x-2; i<=x+2; i++) { //on parcourt les cases voisines du cochon avec un rayon de 2 cases (voisinage de Moore)
 			for(int j=y-2; j<=y+2; j++) {
 				if( (i<0) || (j<0) || (i>=w.getX()) && (j>=w.getY())) { //si on sort du tableau, on passe a l'iteration suivante
