@@ -22,17 +22,24 @@ public class Panneau extends JPanel{
 	public Image IMG_FIRE2;
 	public Image IMG_FIRE3;
 	public Image IMG_RABBIT;
-	public Image IMG_PIG;
 	public Image IMG_GOAT;
 	public Image IMG_FIRE;
+	public Image IMG_PIG0;
+	public Image IMG_PIG1;
+	public Image IMG_PIG2;
+	public Image IMG_PIG3;
 	public Image IMG_PIG_DROITE;
+	public Image IMG_PIG_BAS;
+	public Image IMG_PIG_HAUT;
 
 	
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
 		this.f=f;
 		IMG_RABBIT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/LAPIN/lapin_devant.gif");
-		IMG_PIG_DROITE = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/PIG.gif");
+		IMG_PIG_DROITE = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/COCHON/pig_droite.gif");
+		IMG_PIG_BAS = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/COCHON/pig_bas.gif");
+		IMG_PIG_HAUT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/COCHON/pig_haut.gif");
 		IMG_GOAT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/CHEVRE/chevre_devant.gif");
 		IMG_FIRE = Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/fire.gif");
 	}
@@ -46,7 +53,10 @@ public class Panneau extends JPanel{
 				IMG_FIRE1 = ImageIO.read(new File("IMAGES/ELEMENTS/feu1.png"));
 				IMG_FIRE2 = ImageIO.read(new File("IMAGES/ELEMENTS/feu2.png"));
 				IMG_FIRE3 = ImageIO.read(new File("IMAGES/ELEMENTS/feu3.png"));
-				IMG_PIG =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/cochon_droite.gif"));
+				IMG_PIG0 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_haut.png"));
+				IMG_PIG1 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_droite.png"));
+				IMG_PIG2 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_bas.png"));
+				IMG_PIG3 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_gauche.png"));
 				afficher_terrain(g);
 				for(int i=0;i<w.getY();i++) {
 					for(int j=0;j<w.getX();j++) {
@@ -83,16 +93,41 @@ public class Panneau extends JPanel{
 			if((w.tab_Animal.get(k).getX()==j) && (w.tab_Animal.get(k).getY()==i) ) {
 				
 				if(w.tab_Animal.get(k) instanceof Cochon) {
-					if(w.tab_Animal.get(k).getAction()==1) //s'il est debout
-					{				
-						if(w.tab_Animal.get(k).getDirection()==3)
-							g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,-f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);
-						else
-							g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+					if(w.tab_Animal.get(k).getAction()==1 ) //s'il est debout
+					{	
+						//System.out.print(w.tab_Animal.get(k).getCpt()+" ");
+						if(w.tab_Animal.get(k).getCpt()==4) {
+							//if(w.tab_Animal.get(k).getDirection()==0)
+								//g.drawImage(IMG_PIG_HAUT,(f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-20-10-f.getY()/(w.getY()),f.getX()/(w.getX()),f.getY()/(w.getY())+20+f.getY()/(w.getY())+10, this);
+							//else if(w.tab_Animal.get(k).getDirection()==1)
+								g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);
+								System.out.println(w.tab_Animal.get(k).getCpt()+" ");
+								//w.tab_Animal.get(k).setCpt(-1);
+							//else if(w.tab_Animal.get(k).getDirection()==2)
+								//g.drawImage(IMG_PIG_BAS, (f.getX()/(w.getX()))*i,((f.getY()-40)/(w.getY()))*j  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20+f.getY()/(w.getY())+10, this);
+							//else if(w.tab_Animal.get(k).getDirection()==3)
+							//	g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j+f.getY()/(w.getY())+9,((f.getY()-40)/(w.getY()))*i -21 ,-f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);*/
+						}
+						
+						else if(w.tab_Animal.get(k).getCpt()<4 ){
+							//System.out.println(w.tab_Animal.size());
+							//if(w.tab_Animal.get(k).getDirection()==0)
+								//g.drawImage(IMG_PIG0, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+							//else if(w.tab_Animal.get(k).getDirection()==1)
+								g.drawImage(IMG_PIG1, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+							//else if(w.tab_Animal.get(k).getDirection()==2)
+								//g.drawImage(IMG_PIG2, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+							//else if(w.tab_Animal.get(k).getDirection()==3)
+								//g.drawImage(IMG_PIG3, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);*/
+							//w.tab_Animal.get(k).changer_direction();
+						}
+						//w.tab_Animal.get(k).changer_direction();*/
 
 					}
+					
+						
 					else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
-						g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						g.drawImage(IMG_PIG0, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 					
 				}
 				
@@ -125,7 +160,6 @@ public class Panneau extends JPanel{
 		case 2: //Arbres
 			for(int a=0; a < w.tab_Arbre.size(); a++) {
 				if( (w.tab_Arbre.get(a).getX()==j) && (w.tab_Arbre.get(a).getY()==i) ) {
-					
 					if(w.tab_Arbre.get(a).getNom().equals("Arbre")) { //le nom "Arbre" � changer
 						switch(w.tab_Arbre.get(a).getCroissance()) {
 							case 1: //petit

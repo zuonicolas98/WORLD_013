@@ -2,11 +2,11 @@ package Agents;
 import Default.*;
 
 public class Cochon extends Animal{
-	private int timer, cpt;
+	private int timer;
 	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
-		timer=1;
+		timer=4;
 		cpt=0;
 	}
 	
@@ -22,8 +22,9 @@ public class Cochon extends Animal{
 			cpt=0;
 		}else {
 			cpt++;
+			
 		}
-		
+		//System.out.print(cpt+" ");
 		if(vie<=0)
 			w.tab_Animal.remove(this);
 		//System.out.println(vie);
@@ -38,13 +39,14 @@ public class Cochon extends Animal{
 		
 		//bouge en fonction de sa direction
 		if(direction == 0)
-			y--;
+			x++;//y--;
 		else if(direction == 1)
-			x++;
+			
+			x++;//y--;//x++;
 		else if(direction == 2)
-			y++;
+			x++;//y--;//y++;
 		else if(direction == 3)
-			x--;
+			x++;//y--;//x--;
 				
 		//initialise la direction pour le prochain mouvement
 		this.direction=(int)(Math.random()*4);
@@ -56,6 +58,16 @@ public class Cochon extends Animal{
 			direction =-1;
 		
 	}	
+	
+	public void changer_direction() {
+		this.direction=(int)(Math.random()*4);
+		
+		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3))) //il ne peut pas se trouver sur un rocher
+		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3)))
+		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3))) 
+		|| ((direction == 3) && ((x-1<=0) || (w.getWorld()[x-1][y]==3))))
+			direction =-1;
+	}
 	public boolean chasser() { //cherche une proie dans son environnement
 		action=1;
 		for(int i=x-2; i<=x+2; i++) { //on parcourt les cases voisines du cochon avec un rayon de 2 cases (voisinage de Moore)
@@ -128,6 +140,5 @@ public class Cochon extends Animal{
 		}
 		return false; //renvoie false s'il n'y a pas de proie a cote.	
 	}
-	
 	
 }

@@ -2,7 +2,7 @@ package Agents;
 import Default.*;
 
 public abstract class Animal {
-	protected int vie;
+	protected int vie,cpt;
 	protected int x,y;
 	protected int direction;
 	protected int action; //pour les images : 1:debout | 2:manger 
@@ -16,7 +16,12 @@ public abstract class Animal {
 		this.y=y;
 		action= 1;
 		
-		direction= (int)(Math.random()*4); //0:haut | 1:droite | 2:bas | 3:gauche | -1 :ne bouge pas
+		direction= 2; //0:haut | 1:droite | 2:bas | 3:gauche | -1 :ne bouge pas
+
+	}
+	
+	public void changer_direction() {
+		this.direction=(int)(Math.random()*4);
 		
 		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3))) //il ne peut pas se trouver sur un rocher
 		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3)))
@@ -35,5 +40,6 @@ public abstract class Animal {
 	public int getVie() { return vie;}
 	public int getDirection() { return direction;}
 	public int getAction() { return action;}
-	
+	public int getCpt() {return cpt;}
+	public void setCpt(int c) { cpt=c;}
 }

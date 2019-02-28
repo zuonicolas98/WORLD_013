@@ -55,7 +55,7 @@ public class World {
 			}
 		}
 		
-		//Initialisation des arbres
+		/*//Initialisation des arbres
 		for(int i=0;i<nb_arbre;i++) {
 			int _x=(int)(Math.random()*X);
 			int _y=(int)(Math.random()*Y);
@@ -90,7 +90,10 @@ public class World {
 					}		
 				}else
 					i--;
-			}
+			}*/
+		world[8][10]=2;
+		tab_Arbre.add(new Arbre("Arbre",30,8,10, this));
+		tab_Animal.add(new Cochon(10,10, this));
 		
 	}
 	
@@ -123,7 +126,7 @@ public class World {
 	public void step() {
 		
 		try {
-			Thread.sleep(200);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
