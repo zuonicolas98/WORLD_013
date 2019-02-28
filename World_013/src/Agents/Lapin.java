@@ -28,15 +28,6 @@ public class Lapin extends Animal{
 			w.tab_Animal.remove(this);
 		//System.out.println(vie);
 	
-		for(int k=0; k<w.tab_Animal.size(); k++) { //parcours de la liste d'animaux
-			if( (w.tab_Animal.get(k).getX() == x) && (w.tab_Animal.get(k).getY() == y) && (w.tab_Animal.get(k) instanceof Cochon)) {
-				w.tab_Animal.remove(k);
-				vie=20;
-				action=2;
-				cpt=cpt-2;
-				direction =-1;
-			}
-		}
 	}
 	
 	public void bouger() { //bouge aléatoirement
@@ -108,7 +99,12 @@ public class Lapin extends Animal{
 								}
 								else if(j>y && w.getWorld()[x][y+1] != 3) {    // et si la proie se trouve en bas de la chevre.
 									direction = 2;
-				
+								}else if( (i==x) && (j==y )) { //si ils sont sur la meme case
+									w.tab_Animal.remove(k);
+									vie=20;
+									action=2;
+									cpt=cpt-2;
+									direction =-1;
 								}else
 									direction =-1;
 							}

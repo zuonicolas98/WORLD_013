@@ -85,8 +85,8 @@ public class Panneau extends JPanel{
 				if(w.tab_Animal.get(k) instanceof Cochon) {
 					if(w.tab_Animal.get(k).getAction()==1) //s'il est debout
 					{				
-						if(w.tab_Animal.get(k).getDirection()==1)
-							g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);
+						if(w.tab_Animal.get(k).getDirection()==3)
+							g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,-f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);
 						else
 							g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20 ,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 
