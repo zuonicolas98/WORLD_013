@@ -7,7 +7,7 @@ public abstract class Animal {
 	protected int direction;
 	protected int action; //pour les images : 1:debout | 2:manger 
 	protected World w;
-
+	public int pixel=0;
 	
 	public Animal(int x, int y, World w) {
 		this.w=w;
@@ -16,7 +16,7 @@ public abstract class Animal {
 		this.y=y;
 		action= 1;
 		
-		direction= 2; //0:haut | 1:droite | 2:bas | 3:gauche | -1 :ne bouge pas
+		direction= -1; //0:haut | 1:droite | 2:bas | 3:gauche | -1 :ne bouge pas
 
 	}
 	
@@ -26,7 +26,7 @@ public abstract class Animal {
 		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3))) //il ne peut pas se trouver sur un rocher
 		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3)))
 		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3))) 
-		|| ((direction == 3) && ((x-1<=0) || (w.getWorld()[x-1][y]==3))))
+		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3))))
 			direction =-1;
 	}
 	

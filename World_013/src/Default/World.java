@@ -69,7 +69,7 @@ public class World {
 			}else
 				i--;
 		}
-		
+		*/
 		//Initialisation des animaux
 			for(int i=0;i<nb_animal;i++) {
 				int _x=(int)(Math.random()*X);
@@ -90,10 +90,14 @@ public class World {
 					}		
 				}else
 					i--;
-			}*/
-		world[8][10]=2;
-		tab_Arbre.add(new Arbre("Arbre",30,8,10, this));
-		tab_Animal.add(new Cochon(10,10, this));
+			}
+		//world[9][10]=2;
+		//world[9][11]=2;
+		//tab_Arbre.add(new Arbre("Arbre",30,9,10, this));
+		//tab_Arbre.add(new Arbre("Arbre",30,9,11, this));
+		
+		//tab_Animal.add(new Cochon(10,10, this));
+		//tab_Animal.add(new Cochon(11,10, this));
 		
 	}
 	
@@ -126,7 +130,7 @@ public class World {
 	public void step() {
 		
 		try {
-			Thread.sleep(500);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

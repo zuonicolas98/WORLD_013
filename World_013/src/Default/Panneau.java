@@ -17,46 +17,94 @@ public class Panneau extends JPanel{
 	public Image IMG_BUSH;
 	public Image IMG_GRASS;
 	public Image IMG_TREE_LITTLE;
-	public Image IMG_WOLF;
 	public Image IMG_FIRE1;
 	public Image IMG_FIRE2;
 	public Image IMG_FIRE3;
-	public Image IMG_RABBIT;
-	public Image IMG_GOAT;
 	public Image IMG_FIRE;
-	public Image IMG_PIG0;
-	public Image IMG_PIG1;
-	public Image IMG_PIG2;
-	public Image IMG_PIG3;
-	public Image IMG_PIG_DROITE;
-	public Image IMG_PIG_BAS;
-	public Image IMG_PIG_HAUT;
+	public Image IMG_PIG;
+	public Image[][] IMG_PIG_M;
+	public Image IMG_RABBIT;
+	public Image[][] IMG_RABBIT_M;
+	public Image IMG_GOAT;
+	public Image[][] IMG_GOAT_M;
 
 	
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
 		this.f=f;
-		IMG_RABBIT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/LAPIN/lapin_devant.gif");
-		IMG_PIG_DROITE = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/COCHON/pig_droite.gif");
-		IMG_PIG_BAS = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/COCHON/pig_bas.gif");
-		IMG_PIG_HAUT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/COCHON/pig_haut.gif");
-		IMG_GOAT = Toolkit.getDefaultToolkit().createImage("IMAGES/ANIMAL/CHEVRE/chevre_devant.gif");
+		IMG_PIG_M=new Image[4][3];
+		IMG_RABBIT_M=new Image[4][3];
+		IMG_GOAT_M=new Image[4][3];
 		IMG_FIRE = Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/fire.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
+		
 			try {
+				
+				//--------------------- PIG -----------------------
+				
+				IMG_PIG_M[0][0]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/haut/pig_haut0.png"));
+				IMG_PIG_M[0][1]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/haut/pig_haut1.png"));
+				IMG_PIG_M[0][2]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/haut/pig_haut2.png"));
+				
+				IMG_PIG_M[1][0]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/droite/pig_droite0.png"));
+				IMG_PIG_M[1][1]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/droite/pig_droite1.png"));
+				IMG_PIG_M[1][2]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/droite/pig_droite2.png"));
+				
+				IMG_PIG_M[2][0]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/bas/pig_bas0.png"));
+				IMG_PIG_M[2][1]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/bas/pig_bas1.png"));
+				IMG_PIG_M[2][2]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/bas/pig_bas2.png"));
+				
+				IMG_PIG_M[3][0]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/gauche/pig_gauche0.png"));
+				IMG_PIG_M[3][1]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/gauche/pig_gauche1.png"));
+				IMG_PIG_M[3][2]=ImageIO.read(new File("IMAGES/ANIMAL/COCHON/gauche/pig_gauche2.png"));
+				
+				//-------------------- RABBIT -----------------------
+				
+				IMG_RABBIT_M[0][0]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/haut/rabbit_haut0.png"));
+				IMG_RABBIT_M[0][1]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/haut/rabbit_haut1.png"));
+				IMG_RABBIT_M[0][2]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/haut/rabbit_haut2.png"));
+				
+				IMG_RABBIT_M[1][0]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/droite/rabbit_droite0.png"));
+				IMG_RABBIT_M[1][1]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/droite/rabbit_droite1.png"));
+				IMG_RABBIT_M[1][2]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/droite/rabbit_droite2.png"));
+				
+				IMG_RABBIT_M[2][0]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/bas/rabbit_bas0.png"));
+				IMG_RABBIT_M[2][1]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/bas/rabbit_bas1.png"));
+				IMG_RABBIT_M[2][2]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/bas/rabbit_bas2.png"));
+				
+				IMG_RABBIT_M[3][0]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/gauche/rabbit_gauche0.png"));
+				IMG_RABBIT_M[3][1]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/gauche/rabbit_gauche1.png"));
+				IMG_RABBIT_M[3][2]=ImageIO.read(new File("IMAGES/ANIMAL/LAPIN/gauche/rabbit_gauche2.png"));
+				
+				//--------------------- GOAT ------------------------
+				
+				IMG_GOAT_M[0][0]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/haut/goat_haut0.png"));
+				IMG_GOAT_M[0][1]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/haut/goat_haut1.png"));
+				IMG_GOAT_M[0][2]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/haut/goat_haut2.png"));
+				
+				IMG_GOAT_M[1][0]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/droite/goat_droite0.png"));
+				IMG_GOAT_M[1][1]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/droite/goat_droite1.png"));
+				IMG_GOAT_M[1][2]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/droite/goat_droite2.png"));
+				
+				IMG_GOAT_M[2][0]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/bas/goat_bas0.png"));
+				IMG_GOAT_M[2][1]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/bas/goat_bas1.png"));
+				IMG_GOAT_M[2][2]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/bas/goat_bas2.png"));
+				
+				IMG_GOAT_M[3][0]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/gauche/goat_gauche0.png"));
+				IMG_GOAT_M[3][1]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/gauche/goat_gauche1.png"));
+				IMG_GOAT_M[3][2]=ImageIO.read(new File("IMAGES/ANIMAL/CHEVRE/gauche/goat_gauche2.png"));
+				
+				//--------------------- DECORS --------------------
+				
 				IMG_BUSH = ImageIO.read(new File("IMAGES/ELEMENTS/bush.png"));
 				IMG_GRASS = ImageIO.read(new File("IMAGES/ELEMENTS/grass.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
-				IMG_WOLF = ImageIO.read(new File("IMAGES/ANIMAL/wolf.png"));
 				IMG_FIRE1 = ImageIO.read(new File("IMAGES/ELEMENTS/feu1.png"));
 				IMG_FIRE2 = ImageIO.read(new File("IMAGES/ELEMENTS/feu2.png"));
 				IMG_FIRE3 = ImageIO.read(new File("IMAGES/ELEMENTS/feu3.png"));
-				IMG_PIG0 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_haut.png"));
-				IMG_PIG1 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_droite.png"));
-				IMG_PIG2 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_bas.png"));
-				IMG_PIG3 =	ImageIO.read(new File("IMAGES/ANIMAL/COCHON/pig_gauche.png"));
+
 				afficher_terrain(g);
 				for(int i=0;i<w.getY();i++) {
 					for(int j=0;j<w.getX();j++) {
@@ -89,64 +137,216 @@ public class Panneau extends JPanel{
 	}
 	
 	public void afficher_animaux(int i,int j,Graphics g) {
+		try {
 		for(int k=0; k<w.tab_Animal.size();k++) {
 			if((w.tab_Animal.get(k).getX()==j) && (w.tab_Animal.get(k).getY()==i) ) {
 				
 				if(w.tab_Animal.get(k) instanceof Cochon) {
 					if(w.tab_Animal.get(k).getAction()==1 ) //s'il est debout
-					{	
-						//System.out.print(w.tab_Animal.get(k).getCpt()+" ");
-						if(w.tab_Animal.get(k).getCpt()==4) {
-							//if(w.tab_Animal.get(k).getDirection()==0)
-								//g.drawImage(IMG_PIG_HAUT,(f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-20-10-f.getY()/(w.getY()),f.getX()/(w.getX()),f.getY()/(w.getY())+20+f.getY()/(w.getY())+10, this);
-							//else if(w.tab_Animal.get(k).getDirection()==1)
-								g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);
-								System.out.println(w.tab_Animal.get(k).getCpt()+" ");
-								//w.tab_Animal.get(k).setCpt(-1);
-							//else if(w.tab_Animal.get(k).getDirection()==2)
-								//g.drawImage(IMG_PIG_BAS, (f.getX()/(w.getX()))*i,((f.getY()-40)/(w.getY()))*j  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20+f.getY()/(w.getY())+10, this);
-							//else if(w.tab_Animal.get(k).getDirection()==3)
-							//	g.drawImage(IMG_PIG_DROITE, (f.getX()/(w.getX()))*j+f.getY()/(w.getY())+9,((f.getY()-40)/(w.getY()))*i -21 ,-f.getX()/(w.getX())*2,f.getY()/(w.getY())+20, this);*/
+					{
+						if(w.tab_Animal.get(k).getDirection()!=-1) {
+						if(w.tab_Animal.get(k).getDirection()==1 || w.tab_Animal.get(k).getDirection()==3) {
+							if(w.tab_Animal.get(k).getCpt()==1) {
+								w.tab_Animal.get(k).pixel=(((f.getX()/w.getX()))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][1];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==2) {
+								w.tab_Animal.get(k).pixel=2*(((f.getX()/w.getX()))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==3) {
+								w.tab_Animal.get(k).pixel=3*(((f.getX()/w.getX()))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][2];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==0){
+								w.tab_Animal.get(k).pixel=0;
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+
+							}
+							else if(w.tab_Animal.get(k).getCpt()>3)
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+						}else {
+							if(w.tab_Animal.get(k).getCpt()==1) {
+								w.tab_Animal.get(k).pixel=(((f.getY()/w.getY()))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][1];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==2) {
+								w.tab_Animal.get(k).pixel=2*(((f.getY()/w.getY()))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==3) {
+								w.tab_Animal.get(k).pixel=3*(((f.getY()/w.getY()))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][2];
+							}
+						
+							else if(w.tab_Animal.get(k).getCpt()==0 ){
+								w.tab_Animal.get(k).pixel=0;
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+
+							}
+							else if(w.tab_Animal.get(k).getCpt()>3)
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
 						}
 						
-						else if(w.tab_Animal.get(k).getCpt()<4 ){
-							//System.out.println(w.tab_Animal.size());
-							//if(w.tab_Animal.get(k).getDirection()==0)
-								//g.drawImage(IMG_PIG0, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
-							//else if(w.tab_Animal.get(k).getDirection()==1)
-								g.drawImage(IMG_PIG1, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
-							//else if(w.tab_Animal.get(k).getDirection()==2)
-								//g.drawImage(IMG_PIG2, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
-							//else if(w.tab_Animal.get(k).getDirection()==3)
-								//g.drawImage(IMG_PIG3, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);*/
-							//w.tab_Animal.get(k).changer_direction();
-						}
-						//w.tab_Animal.get(k).changer_direction();*/
-
+						//System.out.println(w.tab_Animal.get(k).getDirection()+" "+pixel+" "+"X="+f.getX()/w.getX()+" Y="+f.getY()/w.getY());
+						if(w.tab_Animal.get(k).getDirection()==0)
+							g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20-w.tab_Animal.get(k).pixel,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						if(w.tab_Animal.get(k).getDirection()==1)
+							g.drawImage(IMG_PIG, w.tab_Animal.get(k).pixel+(f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						if(w.tab_Animal.get(k).getDirection()==2)
+							g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,w.tab_Animal.get(k).pixel+((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						if(w.tab_Animal.get(k).getDirection()==3)
+							g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j  -w.tab_Animal.get(k).pixel,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+					}else {
+						g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j ,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 					}
-					
+					}
 						
 					else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
-						g.drawImage(IMG_PIG0, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						g.drawImage(IMG_PIG, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 					
 				}
 				
+				//*******************************************************************************************************************************************************
+				
 				else if (w.tab_Animal.get(k) instanceof Chevre) {
-					if(w.tab_Animal.get(k).getAction()==1) 	//s'il est debout
-						g.drawImage(IMG_GOAT, (f.getX()/(w.getX()))*j-5,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX())+10,f.getY()/(w.getY())+20, this);	
+
+					if(w.tab_Animal.get(k).getAction()==1 ) //s'il est debout
+					{
+						if(w.tab_Animal.get(k).getDirection()!=-1) {
+						if(w.tab_Animal.get(k).getDirection()==1 || w.tab_Animal.get(k).getDirection()==3) {
+							if(w.tab_Animal.get(k).getCpt()==1) {
+								w.tab_Animal.get(k).pixel=(((f.getX()/w.getX()))/4);
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][1];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==2) {
+								w.tab_Animal.get(k).pixel=2*(((f.getX()/w.getX()))/4);
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==3) {
+								w.tab_Animal.get(k).pixel=3*(((f.getX()/w.getX()))/4);
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][2];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==0){
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+								w.tab_Animal.get(k).pixel=0;
+							}
+							else if(w.tab_Animal.get(k).getCpt()>3)
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+						}else {
+							if(w.tab_Animal.get(k).getCpt()==1) {
+								w.tab_Animal.get(k).pixel=(((f.getY()/w.getY()))/4);
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][1];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==2) {
+								w.tab_Animal.get(k).pixel=2*(((f.getY()/w.getY()))/4);
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==3) {
+								w.tab_Animal.get(k).pixel=3*(((f.getY()/w.getY()))/4);
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][2];
+							}
+						
+							else if(w.tab_Animal.get(k).getCpt()==0 ){
+								w.tab_Animal.get(k).pixel=0;
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+
+							}
+							else if(w.tab_Animal.get(k).getCpt()>3)
+								IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+						}
+						//System.out.println(w.tab_Animal.get(k).getDirection()+" "+pixel+" "+"X="+f.getX()/w.getX()+" Y="+f.getY()/w.getY());
+						if(w.tab_Animal.get(k).getDirection()==0)
+							g.drawImage(IMG_GOAT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20-w.tab_Animal.get(k).pixel,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						if(w.tab_Animal.get(k).getDirection()==1)
+							g.drawImage(IMG_GOAT, w.tab_Animal.get(k).pixel+(f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						if(w.tab_Animal.get(k).getDirection()==2)
+							g.drawImage(IMG_GOAT, (f.getX()/(w.getX()))*j,w.tab_Animal.get(k).pixel+((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						if(w.tab_Animal.get(k).getDirection()==3)
+							g.drawImage(IMG_GOAT, (f.getX()/(w.getX()))*j  -w.tab_Animal.get(k).pixel,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+
+					}else {
+						g.drawImage(IMG_GOAT, (f.getX()/(w.getX()))*j ,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+					}
+					}
+						
 					else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
-						g.drawImage(IMG_GOAT, (f.getX()/(w.getX()))*j-5,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX())+10,f.getY()/(w.getY())+20, this);
+						g.drawImage(IMG_GOAT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 					
 				}
+				
+				//*******************************************************************************************************************************************************
 				else if (w.tab_Animal.get(k) instanceof Lapin) {
 					if(w.tab_Animal.get(k).getAction()==1) 	//s'il est debout
-						g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);	
+					{
+						
+						if(w.tab_Animal.get(k).getDirection()!=-1) {
+							if(w.tab_Animal.get(k).getDirection()==1 || w.tab_Animal.get(k).getDirection()==3) {
+								if(w.tab_Animal.get(k).getCpt()==1) {
+									w.tab_Animal.get(k).pixel=(((f.getX()/w.getX()))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][1];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==2) {
+									w.tab_Animal.get(k).pixel=2*(((f.getX()/w.getX()))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==3) {
+									w.tab_Animal.get(k).pixel=3*(((f.getX()/w.getX()))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][2];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==0 ){
+									w.tab_Animal.get(k).pixel=0;
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+								}
+								else if(w.tab_Animal.get(k).getCpt()>3)
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+							}else {
+								if(w.tab_Animal.get(k).getCpt()==1) {
+									w.tab_Animal.get(k).pixel=(((f.getY()/w.getY()))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][1];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==2) {
+									w.tab_Animal.get(k).pixel=2*(((f.getY()/w.getY()))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==3) {
+									w.tab_Animal.get(k).pixel=3*(((f.getY()/w.getY()))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][2];
+								}
+							
+								else if(w.tab_Animal.get(k).getCpt()==0 ){
+									w.tab_Animal.get(k).pixel=0;
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+
+								}
+								else if(w.tab_Animal.get(k).getCpt()>3)
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							
+							//System.out.println(w.tab_Animal.get(k).getDirection()+" "+pixel+" "+"X="+f.getX()/w.getX()+" Y="+f.getY()/w.getY());
+							if(w.tab_Animal.get(k).getDirection()==0)
+								g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20-w.tab_Animal.get(k).pixel,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+							if(w.tab_Animal.get(k).getDirection()==1)
+								g.drawImage(IMG_RABBIT, w.tab_Animal.get(k).pixel+(f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+							if(w.tab_Animal.get(k).getDirection()==2)
+								g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,w.tab_Animal.get(k).pixel+((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+							if(w.tab_Animal.get(k).getDirection()==3)
+								g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j  -w.tab_Animal.get(k).pixel,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+							
+						}else {
+							g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j ,((f.getY()-40)/(w.getY()))*i  -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
+						}
+						
+					}
 					else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
 						g.drawImage(IMG_RABBIT, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i -20,f.getX()/(w.getX()),f.getY()/(w.getY())+20, this);
 					
 				}
 				
 			}
+		}
+		}catch(IndexOutOfBoundsException e){
+			e.printStackTrace();
 		}
 	}
 	

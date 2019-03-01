@@ -2,11 +2,11 @@ package Agents;
 import Default.*;
 
 public class Chevre extends Animal{
-	private int timer, cpt;
+	private int timer;
 	
 	public Chevre(int x, int y, World w) {
 		super(x,y,w);
-		timer=3;
+		timer=4;
 		cpt=0;
 	}
 	
@@ -51,7 +51,7 @@ public class Chevre extends Animal{
 		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3))) //il ne peut pas se trouver sur un rocher
 		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3)))
 		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3))) 
-		|| ((direction == 3) && ((x-1<=0) || (w.getWorld()[x-1][y]==3))))
+		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3))))
 			direction =-1;
 		
 	}	

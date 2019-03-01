@@ -6,7 +6,7 @@ public class Cochon extends Animal{
 	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
-		timer=4;
+		timer=5;
 		cpt=0;
 	}
 	
@@ -39,14 +39,14 @@ public class Cochon extends Animal{
 		
 		//bouge en fonction de sa direction
 		if(direction == 0)
-			x++;//y--;
+			y--;
 		else if(direction == 1)
 			
-			x++;//y--;//x++;
+			x++;
 		else if(direction == 2)
-			x++;//y--;//y++;
+			y++;
 		else if(direction == 3)
-			x++;//y--;//x--;
+			x--;
 				
 		//initialise la direction pour le prochain mouvement
 		this.direction=(int)(Math.random()*4);
@@ -54,7 +54,7 @@ public class Cochon extends Animal{
 		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3))) //il ne peut pas se trouver sur un rocher
 		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3)))
 		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3))) 
-		|| ((direction == 3) && ((x-1<=0) || (w.getWorld()[x-1][y]==3))))
+		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3))))
 			direction =-1;
 		
 	}	
