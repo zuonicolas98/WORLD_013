@@ -345,7 +345,7 @@ public class Panneau extends JPanel{
 				
 			}
 		}
-		}catch(IndexOutOfBoundsException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}

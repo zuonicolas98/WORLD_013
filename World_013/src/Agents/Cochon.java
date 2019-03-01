@@ -2,7 +2,7 @@ package Agents;
 import Default.*;
 
 public class Cochon extends Animal{
-	private int timer;
+	private int timer,rand;
 	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
@@ -88,7 +88,7 @@ public class Cochon extends Animal{
 								y++;
 							else if((direction == 3) && (w.getWorld()[x-1][y]!=3))
 								x--;
-							
+							//rand=(int)Math.random()*4;
 							//initialisation direction
 							if(i<x) {     // Si la proie se trouve a gauche par rapport à la chevre...
 								if(w.getWorld()[x-1][y] != 3) {

@@ -39,7 +39,7 @@ public class Arbre {
 			if(Math.random()<0.01) //1% de chance que le feu s'eteint
 				feu=false;
 			
-		}else if(Math.random()<0.006){ //Apparition d'un arbre à coté d'un autre
+		}else if(Math.random()<0.05){ //Apparition d'un arbre ï¿½ cotï¿½ d'un autre
 			boolean b=false;
 			int c=0;
 			do {
@@ -64,6 +64,8 @@ public class Arbre {
 				c++;
 			}while(b == false && c<4);
 		}
+		if(Math.random()<0.0005)
+			feu=true;
 		//System.out.println(vie);
 		
 		if((croissance < 3) && (cpt == 30)) { //l'arbre grandi 
@@ -73,8 +75,8 @@ public class Arbre {
 			cpt++;
 		}
 		
-		//Feu de forêt
-		if( (feu==false) && (w.RechercheArbres(x,y-1).getFeu()==true || w.RechercheArbres(x+1,y).getFeu()==true 
+		//Feu de forï¿½t
+		if( Math.random()<0.10 && (feu==false) && (w.RechercheArbres(x,y-1).getFeu()==true || w.RechercheArbres(x+1,y).getFeu()==true 
 							|| w.RechercheArbres(x,y+1).getFeu()==true || w.RechercheArbres(x-1,y).getFeu()==true)) 
 				feu=true;
 		

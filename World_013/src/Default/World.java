@@ -55,21 +55,17 @@ public class World {
 			}
 		}
 		
-		/*//Initialisation des arbres
+		//Initialisation des arbres
 		for(int i=0;i<nb_arbre;i++) {
 			int _x=(int)(Math.random()*X);
 			int _y=(int)(Math.random()*Y);
 			if(world[_x][_y]==0) { //s'il n'y a rien sur cette case
 				world[_x][_y]=2;
 				tab_Arbre.add(new Arbre("Arbre",30,_x,_y, this));
-				if(Math.random()<1) {
-					tab_Arbre.get(i).setFeu(true);
-					//System.out.println(i+"  "+tab_Arbre.get(i).getFeu());
-				}
 			}else
 				i--;
 		}
-		*/
+		
 		//Initialisation des animaux
 			for(int i=0;i<nb_animal;i++) {
 				int _x=(int)(Math.random()*X);
@@ -130,7 +126,7 @@ public class World {
 	public void step() {
 		
 		try {
-			Thread.sleep(100);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
