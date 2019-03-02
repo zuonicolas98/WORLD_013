@@ -2,7 +2,6 @@ package Agents;
 import Default.*;
 
 public class Lapin extends Animal{
-	private int timer;
 	
 	public Lapin(int x, int y, World w) {
 		super(x,y,w);
@@ -12,7 +11,8 @@ public class Lapin extends Animal{
 	
 	public void step() { //bouge selon l'environnement
 		if(cpt == timer) {
-			if(vie<100) {
+			reproduire++;
+			if(vie<25) {
 				if(this.chasser() == false) { //on le fait bouger si il n'a pas trouve de proie (il ne bouge pas avec chasser() s'il n'y a pas de proie).
 					this.bouger();
 				}
@@ -24,18 +24,46 @@ public class Lapin extends Animal{
 			cpt++;
 		}
 		//System.out.println(cpt);
+		
+		//Meurt
 		if(vie<=0)
 			w.tab_Animal.remove(this);
+		
 		//System.out.println(vie);
-	
+		
+		//manger
+		if(vie<25) {
+			for(int k=0; k < w.tab_Animal.size(); k++) {
+				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon)  ) { //si ils sont sur la meme case
+					w.tab_Animal.remove(k);
+					vie=50;
+					action=2;
+					cpt=cpt-2;
+					direction =-1;
+				}
+			}
+		}
+		
+		//reproduction
+		if(Math.random()<0.7) {
+			for(int k=0; k < w.tab_Animal.size(); k++) {
+				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Lapin) && (w.tab_Animal.get(k) != this) && (reproduire>timer*4) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*4)) {  //si ils sont sur la meme case
+					w.tab_Animal.add(new Lapin(x, y, w));
+					reproduire=0;
+					w.tab_Animal.get(k).setReproduire(0);
+					//System.out.println(reproduire);
+					break;
+				}
+			}
+		}
 	}
 	
 	public void bouger() { //bouge aléatoirement
-		//vie--;
+		vie--;
 		action=1;
 
 		if(w.getWorld()[x][y] == 1) //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie++;
+			vie=vie+3;
 		
 		//bouge en fonction de sa direction
 		if(direction == 0)
@@ -50,10 +78,10 @@ public class Lapin extends Animal{
 		//initialise la direction pour le prochain mouvement
 		this.direction=(int)(Math.random()*4);
 				
-		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3))) //il ne peut pas se trouver sur un rocher
-		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3)))
-		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3))) 
-		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3))))
+		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2))) //il ne peut pas se trouver sur un rocher ou arbre
+		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2)))
+		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3) || (w.getWorld()[x][y+1]==2))) 
+		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3) || (w.getWorld()[x-1][y]==2))))
 			direction =-1;
 		
 	}	
@@ -72,54 +100,49 @@ public class Lapin extends Animal{
 						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon)) { //on trouve une proie dans un rayon de 2 cases
 							
 							//deplacement selon direction
-							if((direction == 0) && (w.getWorld()[x][y-1]!=3))
+							if((direction == 0) && (w.getWorld()[x][y-1]!=3) && (w.getWorld()[x][y-1]!=2))
 								y--;
-							else if((direction == 1) && (w.getWorld()[x+1][y]!=3))
+							else if((direction == 1) && (w.getWorld()[x+1][y]!=3) && (w.getWorld()[x+1][y]!=2))
 								x++;
-							else if((direction == 2) && (w.getWorld()[x][y+1]!=3))
+							else if((direction == 2) && (w.getWorld()[x][y+1]!=3) && (w.getWorld()[x][y+1]!=2))
 								y++;
-							else if((direction == 3) && (w.getWorld()[x-1][y]!=3))
+							else if((direction == 3) && (w.getWorld()[x-1][y]!=3) && (w.getWorld()[x-1][y]!=2))
 								x--;
 							
 							//initialisation direction
-							if(i<x) {     // Si la proie se trouve a gauche par rapport à la chevre...
+							if(i<x) {     // Si la proie se trouve a gauche 
 								if(w.getWorld()[x-1][y] != 3) {
 									direction = 3;
 								}else
 									direction = -1;
 								
-								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {		// et si la proie se trouve en haut de la chevre.
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {		// et si la proie se trouve en haut 
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {	// et si la proie se trouve en bas de la chevre.
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {	// et si la proie se trouve en bas 
 									direction = 2;
 								}
 							}
 							
-							else if (i==x) { //Si la proie se trouve sur le meme x que la chevre...
-								if(j<y && w.getWorld()[x][y-1] != 3) {			// et si la proie se trouve en haut de la chevre.
+							else if (i==x) { //Si la proie se trouve sur le meme x que le lapin...
+								if(j<y && w.getWorld()[x][y-1] != 3) {			// et si la proie se trouve en haut
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3) {    // et si la proie se trouve en bas de la chevre.
+								else if(j>y && w.getWorld()[x][y+1] != 3) {    // et si la proie se trouve en bas 
 									direction = 2;
-								}else if( (i==x) && (j==y )) { //si ils sont sur la meme case
-									w.tab_Animal.remove(k);
-									vie=20;
-									action=2;
-									cpt=cpt-2;
-									direction =-1;
+
 								}else
 									direction =-1;
 							}
-							else {			//Si la proie se trouve à droite de la chevre...
+							else {			//Si la proie se trouve à droite du lapin...
 								if(w.getWorld()[x+1][y] != 3) {
 									direction = 1;
 								}else
 									direction=-1;
-								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {			// et si la proie se trouve en haut de la chevre.
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {			// et si la proie se trouve en haut
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {    // et si la proie se trouve en bas de la chevre.
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {    // et si la proie se trouve en bas
 									direction = 2;
 								}
 							}
@@ -132,5 +155,6 @@ public class Lapin extends Animal{
 		}
 		return false; //renvoie false s'il n'y a pas de proie a cote.	
 	}
+
 	
 }

@@ -345,13 +345,12 @@ public class Panneau extends JPanel{
 				
 			}
 		}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(IndexOutOfBoundsException e){}
 	}
 	
 	
 	public void afficher_decors(int i,int j,Graphics g) {
+		try {
 		switch(w.getWorld()[j][i]) {
 		case 1: //Herbes
 			g.drawImage(IMG_BUSH, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
@@ -405,8 +404,8 @@ public class Panneau extends JPanel{
 			
 		default:;
 	}
+	}catch(NullPointerException e) {}
 	}
-	
 }
 
 

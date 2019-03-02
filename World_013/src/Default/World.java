@@ -41,16 +41,20 @@ public class World {
 	}
 	//Initialisation du monde
 	/*	RIEN    = 0  *
-	 *	BUISSON = 1  *
+	 *	HERBES = 1  *
 	 *	ARBRE   = 2  *
 	 *	ROCHER  = 3  *
 	 *	EAU     = 4  *
 	 *	LAVE 	= 5  */
 
 	public void InitWorld() {
-		
+
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
+				double m=Math.random();
+				
+				if(m<0.1) //Herbes
+					world[x][y]=1;
 				
 			}
 		}
@@ -71,8 +75,8 @@ public class World {
 				int _x=(int)(Math.random()*X);
 				int _y=(int)(Math.random()*Y);
 				int type=(int)(Math.random()*3);
-				if(world[_x][_y]!=2) {
-					switch(type) { // 0:Chevre | 1:Cochon
+				if(world[_x][_y]!=2 && world[_x][_y]!=3  ) {
+					switch(type) { // 0:Chevre | 1:Cochon | 2:Lapin
 						case 0: 
 							tab_Animal.add(new Chevre(_x,_y, this));
 							break;
@@ -87,13 +91,6 @@ public class World {
 				}else
 					i--;
 			}
-		//world[9][10]=2;
-		//world[9][11]=2;
-		//tab_Arbre.add(new Arbre("Arbre",30,9,10, this));
-		//tab_Arbre.add(new Arbre("Arbre",30,9,11, this));
-		
-		//tab_Animal.add(new Cochon(10,10, this));
-		//tab_Animal.add(new Cochon(11,10, this));
 		
 	}
 	
@@ -110,8 +107,10 @@ public class World {
 	public Arbre RechercheArbres(int __x,int __y) {
 		Arbre a=new Arbre("a",0,-1,-1,this);
 		for(int id=0;id<tab_Arbre.size();id++) {
-			if(tab_Arbre.get(id).getX()==__x && tab_Arbre.get(id).getY()==__y) 
-				return tab_Arbre.get(id);	
+			try {
+				if(tab_Arbre.get(id).getX()==__x && tab_Arbre.get(id).getY()==__y) 
+					return tab_Arbre.get(id);	
+			}catch(NullPointerException e) {}
 		}
 		return a;	
 	}
@@ -126,7 +125,7 @@ public class World {
 	public void step() {
 		
 		try {
-			Thread.sleep(50);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

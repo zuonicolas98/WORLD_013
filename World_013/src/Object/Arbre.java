@@ -27,19 +27,22 @@ public class Arbre {
 		if(vie <= 0) { 
 			feu=false;
 			cendre=true;
-			if(cpt_cendre == 10) //reste en cendre pendant 10 iterations
+			if(cpt_cendre == 10) { //reste en cendre pendant 10 iterations
 				w.tab_Arbre.remove(this);
-			else
+				w.getWorld()[x][y]=0;
+			}else
 				cpt_cendre++;
 			//System.out.println(cpt_cendre);
 		}	
 		
+		//1% de chance que le feu s'eteint
 		if(feu == true) {
 			vie--;
-			if(Math.random()<0.01) //1% de chance que le feu s'eteint
+			if(Math.random()<0.01) 
 				feu=false;
 			
-		}else if(Math.random()<0.05){ //Apparition d'un arbre � cot� d'un autre
+		//Apparition d'un arbre a cote d'un autre
+		}else if(Math.random()<0.005){ 
 			boolean b=false;
 			int c=0;
 			do {
@@ -64,18 +67,21 @@ public class Arbre {
 				c++;
 			}while(b == false && c<4);
 		}
+		
+		//Mise en feu
 		if(Math.random()<0.0005)
 			feu=true;
 		//System.out.println(vie);
 		
-		if((croissance < 3) && (cpt == 30)) { //l'arbre grandi 
+		//Croissance de l'arbre
+		if((croissance < 3) && (cpt == 30)) { 
 			croissance++;
 			cpt=0;
 		}else {
 			cpt++;
 		}
 		
-		//Feu de for�t
+		//Feu de foret
 		if( Math.random()<0.10 && (feu==false) && (w.RechercheArbres(x,y-1).getFeu()==true || w.RechercheArbres(x+1,y).getFeu()==true 
 							|| w.RechercheArbres(x,y+1).getFeu()==true || w.RechercheArbres(x-1,y).getFeu()==true)) 
 				feu=true;
