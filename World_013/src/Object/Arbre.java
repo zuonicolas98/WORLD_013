@@ -27,7 +27,7 @@ public class Arbre {
 		if(vie <= 0) { 
 			feu=false;
 			cendre=true;
-			if(cpt_cendre == 10) { //reste en cendre pendant 10 iterations
+			if(cpt_cendre == 50) { //reste en cendre pendant x iterations
 				w.tab_Arbre.remove(this);
 				w.getWorld()[x][y]=0;
 			}else

@@ -17,6 +17,7 @@ public class Panneau extends JPanel{
 	public Image IMG_BUSH;
 	public Image IMG_GRASS;
 	public Image IMG_TREE_LITTLE;
+	public Image IMG_TREE_LITTLE_BURNED;
 	public Image IMG_FIRE1;
 	public Image IMG_FIRE2;
 	public Image IMG_FIRE3;
@@ -101,6 +102,7 @@ public class Panneau extends JPanel{
 				IMG_BUSH = ImageIO.read(new File("IMAGES/ELEMENTS/bush.png"));
 				IMG_GRASS = ImageIO.read(new File("IMAGES/ELEMENTS/grass.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
+				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
 				IMG_FIRE1 = ImageIO.read(new File("IMAGES/ELEMENTS/feu1.png"));
 				IMG_FIRE2 = ImageIO.read(new File("IMAGES/ELEMENTS/feu2.png"));
 				IMG_FIRE3 = ImageIO.read(new File("IMAGES/ELEMENTS/feu3.png"));
@@ -365,19 +367,19 @@ public class Panneau extends JPanel{
 								if(w.tab_Arbre.get(a).getCendre() == false)
 									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
 								else 
-									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_TREE_LITTLE_BURNED, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
 								break;
 							case 2: //moyen
 								if(w.tab_Arbre.get(a).getCendre() == false)
 									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
 								else 
-									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_TREE_LITTLE_BURNED, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
 								break;
 							case 3: //grand
 								if(w.tab_Arbre.get(a).getCendre() == false)
 									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
 								else 
-									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_TREE_LITTLE_BURNED, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
 								break;
 							default:;	
 						}
