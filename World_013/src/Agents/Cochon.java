@@ -31,11 +31,11 @@ public class Cochon extends Animal{
 		//System.out.println(vie);
 		
 		//manger
-		if(vie<25) {
+		if(vie<35) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Chevre)  ) { //si ils sont sur la meme case
 					w.tab_Animal.remove(k);
-					vie=50;
+					vie=vie+50;
 					action=2;
 					cpt=cpt-2;
 					direction =-1;
@@ -44,7 +44,7 @@ public class Cochon extends Animal{
 		}
 
 		//reproduction
-		if(Math.random()<0.5) {
+		if(Math.random()<0.9) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && (w.tab_Animal.get(k) != this) && (reproduire>timer*4) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*4)) { //si ils sont sur la meme case
 					w.tab_Animal.add(new Cochon(x, y, w));
@@ -60,9 +60,10 @@ public class Cochon extends Animal{
 	public void bouger() { //bouge aléatoirement
 		vie--;
 		action=1;
-		if(w.getWorld()[x][y] == 1) //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie=vie+3;
-		
+		if(w.getWorld()[x][y] == 1) { //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
+			vie=vie+5;
+			w.getWorld()[x][y]=0;
+		}
 		//bouge en fonction de sa direction
 		if(direction == 0)
 			y--;
@@ -74,7 +75,16 @@ public class Cochon extends Animal{
 			x--;
 				
 		//initialise la direction pour le prochain mouvement
-		this.direction=(int)(Math.random()*4);
+		if( (y-1>=0) && w.getWorld()[x][y-1]==1)
+			direction=0;
+		else if( (x+1<w.getX()) && w.getWorld()[x+1][y]==1)
+			direction=1;
+		else if( (y+1<w.getY()) && w.getWorld()[x][y+1]==1)
+			direction=2;
+		else if( (x-1>=0) && w.getWorld()[x-1][y]==1)
+			direction=3;
+		else
+			this.direction=(int)(Math.random()*4);
 				
 		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2))) //il ne peut pas se trouver sur un rocher ou arbre
 		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2)))
@@ -107,38 +117,38 @@ public class Cochon extends Animal{
 
 							//initialisation direction
 							if(i<x) {     // Si la proie se trouve a gauche par rapport au cochon...
-								if(w.getWorld()[x-1][y] != 3) {
+								if(w.getWorld()[x-1][y] != 3 && w.getWorld()[x-1][y] != 2) {
 									direction = 3;
 								}else
 									direction = -1;
 								
-								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {		// et si la proie se trouve en haut du cochon.
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] != 2) {		// et si la proie se trouve en haut du cochon.
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {	// et si la proie se trouve en bas du cochon
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] != 2) {	// et si la proie se trouve en bas du cochon
 									direction = 2;
 								}
 							}
 							
 							else if (i==x) { //Si la proie se trouve sur le meme x que le cochon...
-								if(j<y && w.getWorld()[x][y-1] != 3) {			// et si la proie se trouve en haut
+								if(j<y && w.getWorld()[x][y-1] != 3 && w.getWorld()[x][y-1] != 2) {			// et si la proie se trouve en haut
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3) {    // et si la proie se trouve en bas 
+								else if(j>y && w.getWorld()[x][y+1] != 3 && w.getWorld()[x][y+1] != 2) {    // et si la proie se trouve en bas 
 									direction = 2;
 								
 								}else
 									direction =-1;
 							}
 							else {			//Si la proie se trouve à droite du cochon...
-								if(w.getWorld()[x+1][y] != 3) {
+								if(w.getWorld()[x+1][y] != 3 && w.getWorld()[x+1][y] != 2) {
 									direction = 1;
 								}else
 									direction=-1;
-								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {			// et si la proie se trouve en haut 
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] != 2) {			// et si la proie se trouve en haut 
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {    // et si la proie se trouve en bas 
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] != 2) {    // et si la proie se trouve en bas 
 									direction = 2;
 								}
 							}

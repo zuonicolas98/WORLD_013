@@ -32,11 +32,11 @@ public class Chevre extends Animal{
 		
 		
 		//manger
-		if(vie<25) {
+		if(vie<35) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Lapin) ) { //si ils sont sur la meme case
 					w.tab_Animal.remove(k);
-					vie=50;
+					vie=vie+50;
 					action=2;
 					cpt=cpt-2;
 					direction =-1;
@@ -44,7 +44,7 @@ public class Chevre extends Animal{
 			}
 		}
 		//reproduction
-		if(Math.random()<0.6) {
+		if(Math.random()<0.8) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Chevre) && (w.tab_Animal.get(k) != this) && (reproduire>timer*4) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*4)) {  //si ils sont sur la meme case
 					w.tab_Animal.add(new Chevre(x, y, w));
@@ -61,7 +61,8 @@ public class Chevre extends Animal{
 		action=1;
 		vie--;
 		if(w.getWorld()[x][y] == 1) { //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie=vie+3;
+			vie=vie+6;
+			w.getWorld()[x][y]=0;
 			//System.out.println(vie);
 		}
 		if(direction == 0)
@@ -74,7 +75,16 @@ public class Chevre extends Animal{
 			x--;
 				
 		//initialise la direction pour le prochain mouvement
-		this.direction=(int)(Math.random()*4);
+		if( (y-1>=0) && w.getWorld()[x][y-1]==1)
+			direction=0;
+		else if( (x+1<w.getX()) && w.getWorld()[x+1][y]==1)
+			direction=1;
+		else if( (y+1<w.getY()) && w.getWorld()[x][y+1]==1)
+			direction=2;
+		else if( (x-1>=0) && w.getWorld()[x-1][y]==1)
+			direction=3;
+		else
+			this.direction=(int)(Math.random()*4);
 				
 		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2))) //il ne peut pas se trouver sur un rocher ou arbre
 		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2)))
@@ -106,24 +116,24 @@ public class Chevre extends Animal{
 							
 							//initialisation direction
 							if(i<x) {     // Si la proie se trouve a gauche par rapport à la chevre...
-								if(w.getWorld()[x-1][y] != 3) {
+								if(w.getWorld()[x-1][y] != 3 && w.getWorld()[x-1][y] != 2) {
 									direction = 3;
 								}else
 									direction = -1;
 								
-								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {		// et si la proie se trouve en haut de la chevre.
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] !=2) {		// et si la proie se trouve en haut de la chevre.
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {	// et si la proie se trouve en bas de la chevre.
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] !=2) {	// et si la proie se trouve en bas de la chevre.
 									direction = 2;
 								}
 							}
 							
 							else if (i==x) { //Si la proie se trouve sur le meme x que la chevre...
-								if(j<y && w.getWorld()[x][y-1] != 3) {			// et si la proie se trouve en haut de la chevre.
+								if(j<y && w.getWorld()[x][y-1] != 3 && w.getWorld()[x][y-1] != 2) {			// et si la proie se trouve en haut de la chevre.
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3) {    // et si la proie se trouve en bas de la chevre.
+								else if(j>y && w.getWorld()[x][y+1] != 3 && w.getWorld()[x][y+1] != 2) {    // et si la proie se trouve en bas de la chevre.
 									direction = 2;
 								
 								}else
@@ -134,10 +144,10 @@ public class Chevre extends Animal{
 									direction = 1;
 								}else
 									direction=-1;
-								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1) {			// et si la proie se trouve en haut de la chevre.
+								if(j<y && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] !=2) {			// et si la proie se trouve en haut de la chevre.
 									direction = 0;
 								}
-								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1) {    // et si la proie se trouve en bas de la chevre.
+								else if(j>y && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] !=2) {    // et si la proie se trouve en bas de la chevre.
 									direction = 2;
 								}
 							}
