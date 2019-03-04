@@ -3,7 +3,7 @@ import Default.*;
 
 public class Cochon extends Animal{
 	
-	private int fecond=1;//nb de case pour etre fecond
+	private int fecond=4;//nb de case pour etre fecond
 	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
@@ -11,7 +11,29 @@ public class Cochon extends Animal{
 		cpt=0;
 	}
 	
-	public void step() { //bouge selon l'environnement
+	public void step() { //bouge selon l'environnement	
+		boolean surpopulation = true;
+		for(int i=x-1; i<=x+1; i++) { //on parcourt les cases voisines avec un rayon de 2 cases (voisinage de Moore)
+			for(int j=y-1; j<=y+1; j++) {
+				if( (i<0) || (j<0) || (i>=w.getX()) && (j>=w.getY())) { //si on sort du tableau, on passe a l'iteration suivante
+					continue;
+				}else {
+					boolean b =false;
+					for(int k=0; k<w.tab_Animal.size(); k++) {
+						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon)) {
+							b=true;
+						}
+					}
+					if(b==false) {
+						surpopulation = false;
+					}
+				}
+				
+			}
+		}
+		if(surpopulation == true)
+			w.tab_Animal.remove(this);
+		
 		if(cpt == timer) {
 			reproduire++;
 			if(vie<25) {
@@ -77,6 +99,7 @@ public class Cochon extends Animal{
 			x--;
 				
 		//initialise la direction pour le prochain mouvement
+		//regarde s'il y a de l'herbe dans un rayon de 1 case
 		if( (y-1>=0) && w.getWorld()[x][y-1]==1)
 			direction=0;
 		else if( (x+1<w.getX()) && w.getWorld()[x+1][y]==1)
@@ -85,9 +108,20 @@ public class Cochon extends Animal{
 			direction=2;
 		else if( (x-1>=0) && w.getWorld()[x-1][y]==1)
 			direction=3;
+		//sinon regarde s'il y a de l'herbe dans un rayon de 2 cases
+		else if( (y-2>=0) && w.getWorld()[x][y-2]==1 && w.getWorld()[x][y-1]!=2 && w.getWorld()[x][y-1]!=3)
+			direction=0;
+		else if( (x+2<w.getX()) && w.getWorld()[x+2][y]==1 && w.getWorld()[x+1][y]!=2 && w.getWorld()[x+1][y]!=3)
+			direction=1;
+		else if( (y+2<w.getY()) && w.getWorld()[x][y+2]==1 && w.getWorld()[x][y+1]!=2 && w.getWorld()[x][y+1]!=3)
+			direction=2;
+		else if( (x-2>=0) && w.getWorld()[x-2][y]==1 && w.getWorld()[x-1][y]!=2 && w.getWorld()[x-1][y]!=3)
+			direction=3;
+		//s'il n'y a pas d'herbes dans un rayon de 2 cases
 		else
 			this.direction=(int)(Math.random()*4);
-				
+						
+		//ne bouge pas si impossible de se deplacer
 		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2))) //il ne peut pas se trouver sur un rocher ou arbre
 		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2)))
 		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3) || (w.getWorld()[x][y+1]==2))) 
