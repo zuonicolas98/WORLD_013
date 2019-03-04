@@ -3,6 +3,8 @@ import Default.*;
 
 public class Chevre extends Animal{
 	
+	private int fecond=2;//nb de case pour etre fecond
+	
 	public Chevre(int x, int y, World w) {
 		super(x,y,w);
 		timer=4;
@@ -46,7 +48,7 @@ public class Chevre extends Animal{
 		//reproduction
 		if(Math.random()<0.8) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
-				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Chevre) && (w.tab_Animal.get(k) != this) && (reproduire>timer*4) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*4)) {  //si ils sont sur la meme case
+				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Chevre) && (w.tab_Animal.get(k) != this) && (reproduire>timer*fecond) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*fecond)) {  //si ils sont sur la meme case
 					w.tab_Animal.add(new Chevre(x, y, w));
 					reproduire=0;
 					w.tab_Animal.get(k).setReproduire(0);

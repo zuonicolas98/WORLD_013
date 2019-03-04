@@ -3,6 +3,8 @@ import Default.*;
 
 public class Cochon extends Animal{
 	
+	private int fecond=1;//nb de case pour etre fecond
+	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
 		timer=5;
@@ -46,7 +48,7 @@ public class Cochon extends Animal{
 		//reproduction
 		if(Math.random()<0.9) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
-				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && (w.tab_Animal.get(k) != this) && (reproduire>timer*4) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*4)) { //si ils sont sur la meme case
+				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && (w.tab_Animal.get(k) != this) && (reproduire>timer*fecond) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*fecond)) { //si ils sont sur la meme case
 					w.tab_Animal.add(new Cochon(x, y, w));
 					reproduire=0;
 					w.tab_Animal.get(k).setReproduire(0);

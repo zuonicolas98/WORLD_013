@@ -124,9 +124,7 @@ public class Panneau extends JPanel{
 				else
 					time++;
 				//System.out.println(time);
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
+			}catch(Exception e) {}
 	
 	}
 	
@@ -347,7 +345,7 @@ public class Panneau extends JPanel{
 				
 			}
 		}
-		}catch(IndexOutOfBoundsException e){}
+		}catch(Exception e){}
 	}
 	
 	
