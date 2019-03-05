@@ -20,7 +20,7 @@ public class Lapin extends Animal{
 					continue;
 				}else {
 					for(int k=0; k<w.tab_Animal.size(); k++) {
-						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Lapin)) {
+						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Lapin) && (w.tab_Animal.get(k)!=this)) {
 							s++;
 						}
 					}
@@ -33,7 +33,6 @@ public class Lapin extends Animal{
 		}
 		if(surpopulation == true) {
 			w.tab_Animal.remove(this);
-			System.out.println("a");
 		}
 		if(cpt == timer) {
 			reproduire++;
@@ -51,7 +50,7 @@ public class Lapin extends Animal{
 		//System.out.println(cpt);
 		
 		//Meurt
-		if(vie<=0)
+		if(vie<=0 )
 			w.tab_Animal.remove(this);
 		
 		//System.out.println(vie);
@@ -88,7 +87,7 @@ public class Lapin extends Animal{
 		action=1;
 
 		if(w.getWorld()[x][y] == 1) { //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie=vie+7;
+			vie=vie+6;
 			w.getWorld()[x][y]=0;
 		}
 		//bouge en fonction de sa direction

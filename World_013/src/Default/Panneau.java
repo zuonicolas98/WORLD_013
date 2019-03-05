@@ -6,11 +6,13 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.IOException;
+//import java.io.IOException;
 import java.io.File;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 @SuppressWarnings("serial")
-public class Panneau extends JPanel{
+public class Panneau extends JPanel  implements KeyListener{
 	private World w;
 	private Fenetre f;
 	private int time=0;
@@ -33,6 +35,7 @@ public class Panneau extends JPanel{
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
 		this.f=f;
+		addKeyListener(this);
 		IMG_PIG_M=new Image[4][3];
 		IMG_RABBIT_M=new Image[4][3];
 		IMG_GOAT_M=new Image[4][3];
@@ -406,6 +409,28 @@ public class Panneau extends JPanel{
 	}
 	}catch(NullPointerException e) {}
 	}
+	
+	public void keyPressed(KeyEvent e)
+	{
+		int c= e.getKeyCode();
+		
+		if(c== KeyEvent.VK_LEFT) {
+			if(w.getDelay()>50) {
+				w.setDelay((w.getDelay())-50);
+				System.out.println("Thread.sleep : "+ w.getDelay());
+			}
+		}
+		else if(c== KeyEvent.VK_RIGHT) {
+			if(w.getDelay()<52) {
+				w.setDelay((w.getDelay())+50);
+				System.out.println("Thread.sleep : "+ w.getDelay());
+			}
+		}
+	}
+	
+	public void keyTyped(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {}
+	
 }
 
 

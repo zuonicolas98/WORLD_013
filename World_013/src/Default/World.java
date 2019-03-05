@@ -1,12 +1,12 @@
 package Default;
 
-import java.util.ArrayList;
 import Object.*;
 import Agents.*;
+import java.util.ArrayList;
 
 public class World {
 	private int[][] world;
-	private int X,Y;
+	private int X,Y,delay;
 	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
 	public ArrayList<Animal> tab_Animal;
@@ -22,6 +22,7 @@ public class World {
 		world=new int[x][y];
 		X=x;
 		Y=y;
+		delay = 51;
 		f= new Fenetre(this,tx,ty);
 		this.nb_arbre=nb_arbre;
 		this.nb_animal=nb_animal;
@@ -37,6 +38,8 @@ public class World {
 		}
 		
 		InitWorld();	
+		
+		System.out.println("Thread.sleep : "+ delay);
 
 	}
 	//Initialisation du monde
@@ -125,7 +128,7 @@ public class World {
 	public void step() {
 		
 		try {
-			Thread.sleep(1);
+			Thread.sleep(delay);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -148,12 +151,17 @@ public class World {
 			}
 		}
 		
+		
 		f.getPanneau().repaint();
 	}
-	
+
 	//Getters
 	public int[][] getWorld() { return world ;}
 	public int getX() { return X; }
 	public int getY() { return Y; }
+	public int getDelay() { return delay;}
+	
+	//Setters
+	public void setDelay(int d) { delay = d; }
 	
 }

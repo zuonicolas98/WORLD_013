@@ -17,7 +17,8 @@ public class Fenetre extends JFrame{
 		this.setResizable(false);
 		this.setAlwaysOnTop(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		p.setFocusable(true);
+		p.requestFocus();
 		this.setContentPane(p);
 		this.setVisible(false);
 	}

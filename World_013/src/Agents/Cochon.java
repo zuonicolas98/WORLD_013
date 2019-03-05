@@ -12,27 +12,28 @@ public class Cochon extends Animal{
 	}
 	
 	public void step() { //bouge selon l'environnement	
-		boolean surpopulation = true;
+		boolean surpopulation = false;
+		int s=0;
 		for(int i=x-1; i<=x+1; i++) { //on parcourt les cases voisines avec un rayon de 2 cases (voisinage de Moore)
 			for(int j=y-1; j<=y+1; j++) {
 				if( (i<0) || (j<0) || (i>=w.getX()) && (j>=w.getY())) { //si on sort du tableau, on passe a l'iteration suivante
 					continue;
 				}else {
-					boolean b =false;
 					for(int k=0; k<w.tab_Animal.size(); k++) {
-						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon)) {
-							b=true;
+						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon) && (w.tab_Animal.get(k)!=this)) {
+							s++;
 						}
 					}
-					if(b==false) {
-						surpopulation = false;
+					if(s>=4) {
+						surpopulation = true;
 					}
 				}
 				
 			}
 		}
-		if(surpopulation == true)
+		if(surpopulation == true) {
 			w.tab_Animal.remove(this);
+		}
 		
 		if(cpt == timer) {
 			reproduire++;
@@ -50,7 +51,7 @@ public class Cochon extends Animal{
 		//System.out.print(cpt+" ");
 		
 		//Meurt
-		if(vie<=0)
+		if(vie<=0 )
 			w.tab_Animal.remove(this);
 		//System.out.println(vie);
 		
@@ -85,7 +86,7 @@ public class Cochon extends Animal{
 		vie--;
 		action=1;
 		if(w.getWorld()[x][y] == 1) { //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie=vie+5;
+			vie=vie+6;
 			w.getWorld()[x][y]=0;
 		}
 		//bouge en fonction de sa direction
