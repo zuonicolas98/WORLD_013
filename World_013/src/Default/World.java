@@ -63,15 +63,22 @@ public class World {
 		}
 		
 		//Initialisation des arbres
+		
 		for(int i=0;i<nb_arbre;i++) {
+			int t=(int)(Math.random()*2);
 			int _x=(int)(Math.random()*X);
 			int _y=(int)(Math.random()*Y);
 			if(world[_x][_y]==0) { //s'il n'y a rien sur cette case
 				world[_x][_y]=2;
-				tab_Arbre.add(new Arbre("Arbre",30,_x,_y, this));
+				if(t==0)
+					tab_Arbre.add(new Arbre("Pommier",30,_x,_y, this));
+				else 
+					tab_Arbre.add(new Arbre("Cocotier",30,_x,_y, this));
 			}else
 				i--;
 		}
+		
+
 		
 		//Initialisation des animaux
 			for(int i=0;i<nb_animal;i++) {

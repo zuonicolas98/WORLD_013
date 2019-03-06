@@ -14,7 +14,7 @@ public class Fenetre extends JFrame{
 		this.setTitle("World");
 		this.setSize(x, y);
 		this.setLocationRelativeTo(null);
-		this.setResizable(false);
+		//this.setResizable(false);
 		this.setAlwaysOnTop(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		p.setFocusable(true);

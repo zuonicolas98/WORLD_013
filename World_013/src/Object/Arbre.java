@@ -74,7 +74,7 @@ public class Arbre {
 		//System.out.println(vie);
 		
 		//Croissance de l'arbre
-		if((croissance < 3) && (cpt == 30)) { 
+		if((croissance < 3) && (cpt == 200) && (cendre==false)) { 
 			croissance++;
 			cpt=0;
 		}else {

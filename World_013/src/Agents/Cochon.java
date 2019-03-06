@@ -3,7 +3,7 @@ import Default.*;
 
 public class Cochon extends Animal{
 	
-	private int fecond=4;//nb de case pour etre fecond
+	private int fecond=5;//nb de case pour etre fecond
 	
 	public Cochon(int x, int y, World w) {
 		super(x,y,w);
@@ -58,7 +58,7 @@ public class Cochon extends Animal{
 		//manger
 		if(vie<35) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
-				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Chevre)  ) { //si ils sont sur la meme case
+				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Chevre) && Math.random()>0.5 ) { //si ils sont sur la meme case
 					w.tab_Animal.remove(k);
 					vie=vie+50;
 					action=2;

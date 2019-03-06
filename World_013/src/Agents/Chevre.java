@@ -24,7 +24,7 @@ public class Chevre extends Animal{
 							s++;
 						}
 					}
-					if(s>=4) {
+					if(s>=5) {
 						surpopulation = true;
 					}
 				}

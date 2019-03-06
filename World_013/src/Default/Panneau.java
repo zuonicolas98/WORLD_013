@@ -18,19 +18,36 @@ public class Panneau extends JPanel  implements KeyListener{
 	private int time=0;
 	public Image IMG_BUSH;
 	public Image IMG_GRASS;
-	public Image IMG_TREE_LITTLE;
-	public Image IMG_TREE_LITTLE_BURNED;
+	//Variables images feu
 	public Image IMG_FIRE1;
 	public Image IMG_FIRE2;
 	public Image IMG_FIRE3;
 	public Image IMG_FIRE;
+	//Variables images animaux
 	public Image IMG_PIG;
 	public Image[][] IMG_PIG_M;
 	public Image IMG_RABBIT;
 	public Image[][] IMG_RABBIT_M;
 	public Image IMG_GOAT;
 	public Image[][] IMG_GOAT_M;
-
+	//Variables images arbres
+	public Image IMG_TREE_LITTLE;
+	public Image IMG_TREE_LITTLE_BURNED;
+	//--Pommier--
+	public Image IMG_POMMIER_P;
+	public Image IMG_POMMIER_PB;
+	public Image IMG_POMMIER_M;
+	public Image IMG_POMMIER_MB;
+	public Image IMG_POMMIER_G;
+	public Image IMG_POMMIER_GB;
+	
+	//--Cocotier--
+	public Image IMG_COCOTIER_P;
+	public Image IMG_COCOTIER_PB;
+	public Image IMG_COCOTIER_M;
+	public Image IMG_COCOTIER_MB;
+	public Image IMG_COCOTIER_G;
+	public Image IMG_COCOTIER_GB;
 	
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
@@ -109,17 +126,35 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_FIRE1 = ImageIO.read(new File("IMAGES/ELEMENTS/feu1.png"));
 				IMG_FIRE2 = ImageIO.read(new File("IMAGES/ELEMENTS/feu2.png"));
 				IMG_FIRE3 = ImageIO.read(new File("IMAGES/ELEMENTS/feu3.png"));
+				
+				IMG_POMMIER_P = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_petit.png"));
+				IMG_POMMIER_PB = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_petit_bruler.png"));
+				IMG_POMMIER_M = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_moyen.png")); 
+				IMG_POMMIER_MB = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_moyen_bruler.png"));
+				IMG_POMMIER_G = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_grand.png"));
+				IMG_POMMIER_GB = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_grand_bruler.png"));
+				
+				IMG_COCOTIER_P = ImageIO.read(new File("IMAGES/ELEMENTS/COCOTIER/cocotier_petit.png"));
+				IMG_COCOTIER_PB = ImageIO.read(new File("IMAGES/ELEMENTS/COCOTIER/cocotier_petit_bruler.png"));
+				IMG_COCOTIER_M = ImageIO.read(new File("IMAGES/ELEMENTS/COCOTIER/cocotier_moyen.png")); 
+				IMG_COCOTIER_MB = ImageIO.read(new File("IMAGES/ELEMENTS/COCOTIER/cocotier_moyen_bruler.png"));
+				IMG_COCOTIER_G = ImageIO.read(new File("IMAGES/ELEMENTS/COCOTIER/cocotier_grand.png"));
+				IMG_COCOTIER_GB = ImageIO.read(new File("IMAGES/ELEMENTS/COCOTIER/cocotier_grand_bruler.png"));
 
 				afficher_terrain(g);
+				
 				for(int i=0;i<w.getY();i++) {
 					for(int j=0;j<w.getX();j++) {
-						//afficher_terrain(g);
-						//g.drawImage(IMG_GRASS,0,0,800,600,this);
+						//int taille_x=(f.getX()/(w.getX()));
+						//int taille_y=(f.getY()-40)/(w.getY());
+						/////////////((f.getY()-40)/(w.getY()))
 						//affichage des animaux
 						afficher_animaux(i,j,g);
-						
+						//g.drawImage(IMG_BUSH, (f.getX()/(w.getX()))*4,((f.getY()-40)/(w.getY()))*5 ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+						//g.drawImage(IMG_POMMIER_G, taille_x*3-taille_x,taille_y*5-taille_y*3,taille_x*3,taille_y*4, this);
 						//affichage des éléments
 						afficher_decors(i,j,g);
+						
 					}
 				}
 				if(time==2)
@@ -141,6 +176,7 @@ public class Panneau extends JPanel  implements KeyListener{
 	
 	public void afficher_animaux(int i,int j,Graphics g) {
 		try {
+
 		for(int k=0; k<w.tab_Animal.size();k++) {
 			if((w.tab_Animal.get(k).getX()==j) && (w.tab_Animal.get(k).getY()==i) ) {
 				
@@ -360,37 +396,64 @@ public class Panneau extends JPanel  implements KeyListener{
 			break;
 				
 		case 2: //Arbres
+			int taille_x=(f.getX()/(w.getX()));
+			int taille_y=(f.getY()-40)/(w.getY());
 			for(int a=0; a < w.tab_Arbre.size(); a++) {
 				if( (w.tab_Arbre.get(a).getX()==j) && (w.tab_Arbre.get(a).getY()==i) ) {
-					if(w.tab_Arbre.get(a).getNom().equals("Arbre")) { //le nom "Arbre" � changer
+					if(w.tab_Arbre.get(a).getNom().equals("Pommier")) { 
+						
 						switch(w.tab_Arbre.get(a).getCroissance()) {
 							case 1: //petit
-								if(w.tab_Arbre.get(a).getCendre() == false)
-									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+								if(w.tab_Arbre.get(a).getCendre() == false) {
+									g.drawImage(IMG_POMMIER_P,  taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
+								}
 								else 
-									g.drawImage(IMG_TREE_LITTLE_BURNED, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_POMMIER_PB, taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
 								break;
 							case 2: //moyen
 								if(w.tab_Arbre.get(a).getCendre() == false)
-									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_POMMIER_M,  taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
 								else 
-									g.drawImage(IMG_TREE_LITTLE_BURNED, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_POMMIER_MB, taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
 								break;
 							case 3: //grand
 								if(w.tab_Arbre.get(a).getCendre() == false)
-									g.drawImage(IMG_TREE_LITTLE, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_POMMIER_G, taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
 								else 
-									g.drawImage(IMG_TREE_LITTLE_BURNED, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i-40 ,f.getX()/(w.getX()),f.getY()/(w.getY())+40, this);
+									g.drawImage(IMG_POMMIER_GB, taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
 								break;
 							default:;	
 						}
+						
+					}else if(w.tab_Arbre.get(a).getNom().equals("Cocotier")) {
+						switch(w.tab_Arbre.get(a).getCroissance()) {
+						case 1: //petit
+							if(w.tab_Arbre.get(a).getCendre() == false)
+								g.drawImage(IMG_COCOTIER_P,  taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
+							else 
+								g.drawImage(IMG_COCOTIER_PB,  taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
+							break;
+						case 2: //moyen
+							if(w.tab_Arbre.get(a).getCendre() == false)
+								g.drawImage(IMG_COCOTIER_M,  taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
+							else 
+								g.drawImage(IMG_COCOTIER_MB,  taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
+							break;
+						case 3: //grand
+							if(w.tab_Arbre.get(a).getCendre() == false)
+								g.drawImage(IMG_COCOTIER_G, taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
+							else 
+								g.drawImage(IMG_COCOTIER_GB,  taille_x*j-taille_x,taille_y*i-taille_y*3,taille_x*3,taille_y*4, this);
+							break;
+						default:;	
 					}
 					
-					//AUTRES ARBRES
+					}		
+					
 				}
 			}
 			if(w.RechercheArbres(j,i).getFeu()) { //Si l'arbre est en feu
-					g.drawImage(IMG_FIRE, (f.getX()/(w.getX()))*j-20,((f.getY()-40)/(w.getY()))*i-80,f.getX()/(w.getX())+40,f.getY()/(w.getY())+40, this);
+					g.drawImage(IMG_FIRE, taille_x*j-taille_x/2,(taille_y)*i-taille_y*2,taille_x*2,taille_y*2, this);
 
 			}
 			

@@ -3,7 +3,7 @@ import Default.*;
 
 public class Lapin extends Animal{
 	
-	private int fecond=6;//nb de case pour etre fecond
+	private int fecond=4;//nb de case pour etre fecond
 	
 	public Lapin(int x, int y, World w) {
 		super(x,y,w);
@@ -24,7 +24,7 @@ public class Lapin extends Animal{
 							s++;
 						}
 					}
-					if(s>=4) {
+					if(s>=5) {
 						surpopulation = true;
 					}
 				}
@@ -58,7 +58,7 @@ public class Lapin extends Animal{
 		//manger
 		if(vie<35) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
-				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon)  ) { //si ils sont sur la meme case
+				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && Math.random()<0.05 ) { //si ils sont sur la meme case
 					w.tab_Animal.remove(k);
 					vie=vie+50;
 					action=2;
@@ -72,6 +72,7 @@ public class Lapin extends Animal{
 		if(Math.random()<0.7) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Lapin) && (w.tab_Animal.get(k) != this) && (reproduire>timer*fecond) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*fecond)) {  //si ils sont sur la meme case
+					w.tab_Animal.add(new Lapin(x, y, w));
 					w.tab_Animal.add(new Lapin(x, y, w));
 					reproduire=0;
 					w.tab_Animal.get(k).setReproduire(0);
