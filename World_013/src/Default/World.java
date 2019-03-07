@@ -12,6 +12,7 @@ public class World {
 	public ArrayList<Animal> tab_Animal;
 	private int nb_arbre, nb_animal;
 	private Fenetre f;
+	private boolean fin;
 	
 	public World(int x, int y,int nb_arbre,int nb_animal, int tx,int ty) {
 		if(x==0 || y==0) {
@@ -22,6 +23,7 @@ public class World {
 		world=new int[x][y];
 		X=x;
 		Y=y;
+		fin=true;
 		delay = 51;
 		f= new Fenetre(this,tx,ty);
 		this.nb_arbre=nb_arbre;
@@ -127,9 +129,13 @@ public class World {
 	
 	public void run() {
 		f.setVisible(true);
-		while(true) {
+		while(fin) {
 			this.step();
-		}	
+		}
+		if(fin == false) {
+			System.out.println("Merci d'etre passe !");
+			
+		}
 	}
 	
 	public void step() {
@@ -170,5 +176,5 @@ public class World {
 	
 	//Setters
 	public void setDelay(int d) { delay = d; }
-	
+	public void setFin() { fin = false; }
 }

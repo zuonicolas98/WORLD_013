@@ -20,6 +20,8 @@ public class Fenetre extends JFrame{
 		p.setFocusable(true);
 		p.requestFocus();
 		this.setContentPane(p);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setUndecorated(true);
 		this.setVisible(false);
 	}
 	public Panneau getPanneau() {return p;}

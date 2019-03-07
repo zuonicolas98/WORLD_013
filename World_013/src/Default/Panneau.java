@@ -18,10 +18,7 @@ public class Panneau extends JPanel  implements KeyListener{
 	private int time=0;
 	public Image IMG_BUSH;
 	public Image IMG_GRASS;
-	//Variables images feu
-	public Image IMG_FIRE1;
-	public Image IMG_FIRE2;
-	public Image IMG_FIRE3;
+	//Variable image feu
 	public Image IMG_FIRE;
 	//Variables images animaux
 	public Image IMG_PIG;
@@ -123,9 +120,6 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_GRASS = ImageIO.read(new File("IMAGES/ELEMENTS/grass.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
-				IMG_FIRE1 = ImageIO.read(new File("IMAGES/ELEMENTS/feu1.png"));
-				IMG_FIRE2 = ImageIO.read(new File("IMAGES/ELEMENTS/feu2.png"));
-				IMG_FIRE3 = ImageIO.read(new File("IMAGES/ELEMENTS/feu3.png"));
 				
 				IMG_POMMIER_P = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_petit.png"));
 				IMG_POMMIER_PB = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_petit_bruler.png"));
@@ -477,17 +471,20 @@ public class Panneau extends JPanel  implements KeyListener{
 	{
 		int c= e.getKeyCode();
 		
-		if(c== KeyEvent.VK_LEFT) {
+		if(c == KeyEvent.VK_LEFT) {
 			if(w.getDelay()>50) {
 				w.setDelay((w.getDelay())-50);
 				System.out.println("Thread.sleep : "+ w.getDelay());
 			}
 		}
-		else if(c== KeyEvent.VK_RIGHT) {
+		else if(c == KeyEvent.VK_RIGHT) {
 			if(w.getDelay()<52) {
 				w.setDelay((w.getDelay())+50);
 				System.out.println("Thread.sleep : "+ w.getDelay());
 			}
+		}else if(c == KeyEvent.VK_F) {
+			f.dispose();
+			w.setFin();
 		}
 	}
 	

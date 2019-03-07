@@ -11,7 +11,6 @@ public abstract class Animal {
 	
 	public Animal(int x, int y, World w) {
 		this.w=w;
-		vie=100;
 		this.x=x;
 		this.y=y;
 		reproduire=0;

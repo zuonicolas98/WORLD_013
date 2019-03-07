@@ -9,6 +9,7 @@ public class Cochon extends Animal{
 		super(x,y,w);
 		timer=5;
 		cpt=0;
+		vie=75;
 	}
 	
 	public void step() { //bouge selon l'environnement	
@@ -24,7 +25,7 @@ public class Cochon extends Animal{
 							s++;
 						}
 					}
-					if(s>=4) {
+					if(s>=5) {
 						surpopulation = true;
 					}
 				}
@@ -37,7 +38,7 @@ public class Cochon extends Animal{
 		
 		if(cpt == timer) {
 			reproduire++;
-			if(vie<25) {
+			if(vie<35) {
 				if(this.chasser() == false) { //on le fait bouger si il n'a pas trouve de proie (il ne bouge pas avec chasser() s'il n'y a pas de proie).
 					this.bouger();
 				}
@@ -56,17 +57,7 @@ public class Cochon extends Animal{
 		//System.out.println(vie);
 		
 		//manger
-		if(vie<35) {
-			for(int k=0; k < w.tab_Animal.size(); k++) {
-				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Chevre) && Math.random()>0.5 ) { //si ils sont sur la meme case
-					w.tab_Animal.remove(k);
-					vie=vie+50;
-					action=2;
-					cpt=cpt-2;
-					direction =-1;
-				}
-			}	
-		}
+		manger();
 
 		//reproduction
 		if(Math.random()<0.9) {
@@ -82,11 +73,29 @@ public class Cochon extends Animal{
 		}
 	}
 	
+	public void manger() {
+		if(vie<55) {
+			for(int k=0; k < w.tab_Animal.size(); k++) {
+				if((Math.random()<0.7) && (w.tab_Animal.get(k) instanceof Chevre) && (((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y)) 		//si ils sont sur la meme case
+															|| ((w.tab_Animal.get(k).getX()==x-1) && (w.tab_Animal.get(k).getY()==y))		//si la proie est a gauche
+															|| ((w.tab_Animal.get(k).getX()==x+1) && (w.tab_Animal.get(k).getY()==y))		//si la proie est a droite
+															|| ((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y-1))		//si la proie est en haut
+															|| ((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y+1))) ) {  //si la proie est en bas
+					w.tab_Animal.remove(k);
+					vie=vie+50;
+					action=2;
+					cpt=cpt-2;
+					direction =-1;
+				}
+			}
+		}
+	}
+	
 	public void bouger() { //bouge aléatoirement
 		vie--;
 		action=1;
 		if(w.getWorld()[x][y] == 1) { //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie=vie+6;
+			vie=vie+5;
 			w.getWorld()[x][y]=0;
 		}
 		//bouge en fonction de sa direction

@@ -3,12 +3,13 @@ import Default.*;
 
 public class Lapin extends Animal{
 	
-	private int fecond=4;//nb de case pour etre fecond
+	private int fecond=5;//nb de case pour etre fecond
 	
 	public Lapin(int x, int y, World w) {
 		super(x,y,w);
 		timer=3;
 		cpt=0;
+		vie=60;
 	}
 	
 	public void step() { //bouge selon l'environnement
@@ -24,7 +25,7 @@ public class Lapin extends Animal{
 							s++;
 						}
 					}
-					if(s>=5) {
+					if(s>=4) {
 						surpopulation = true;
 					}
 				}
@@ -56,20 +57,10 @@ public class Lapin extends Animal{
 		//System.out.println(vie);
 		
 		//manger
-		if(vie<35) {
-			for(int k=0; k < w.tab_Animal.size(); k++) {
-				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && Math.random()<0.05 ) { //si ils sont sur la meme case
-					w.tab_Animal.remove(k);
-					vie=vie+50;
-					action=2;
-					cpt=cpt-2;
-					direction =-1;
-				}
-			}
-		}
+		manger();
 		
 		//reproduction
-		if(Math.random()<0.7) {
+		if(Math.random()<0.6) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Lapin) && (w.tab_Animal.get(k) != this) && (reproduire>timer*fecond) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*fecond)) {  //si ils sont sur la meme case
 					w.tab_Animal.add(new Lapin(x, y, w));
@@ -83,12 +74,26 @@ public class Lapin extends Animal{
 		}
 	}
 	
+	public void manger() {
+		if(vie<35) {
+			for(int k=0; k < w.tab_Animal.size(); k++) {
+				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && Math.random()<0.05 ) { //si ils sont sur la meme case
+					w.tab_Animal.remove(k);
+					vie=vie+50;
+					action=2;
+					cpt=cpt-2;
+					direction =-1;
+				}
+			}
+		}
+	}
+	
 	public void bouger() { //bouge aléatoirement
 		vie--;
 		action=1;
 
 		if(w.getWorld()[x][y] == 1) { //si cette animal se trouve sur de l'herbe alors il gagne une vie en mangeant
-			vie=vie+6;
+			vie=vie+5;
 			w.getWorld()[x][y]=0;
 		}
 		//bouge en fonction de sa direction

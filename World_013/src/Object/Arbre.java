@@ -42,7 +42,7 @@ public class Arbre {
 				feu=false;
 			
 		//Apparition d'un arbre a cote d'un autre
-		}else if(Math.random()<0.005){ 
+		}else if(Math.random()<0.005 && (croissance==3)){ 
 			boolean b=false;
 			int c=0;
 			do {
