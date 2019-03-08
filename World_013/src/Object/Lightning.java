@@ -11,14 +11,15 @@ import javax.imageio.ImageIO;
  
 public class Lightning {
 	
-	private int cpt=0;
-	private int frame=50;
+	public int cpt=0;
+	private int frame=10;//temps d'attente avant de rafficher 
+	private File file = new File("IMAGES/ELEMENTS/foudre.png");
 
 	public Lightning() {
 		try {
 			this.setLight();
 		} catch (IOException e) {}
-	};
+	}
 
     public void setLight() throws IOException {
  
@@ -85,12 +86,8 @@ public class Lightning {
         // Disposes of this graphics context and releases any system resources that it is using. 
         g2d.dispose();
  
-        // Save as PNG
-        File file = new File("IMAGES/ELEMENTS/foudre.png");
         ImageIO.write(bufferedImage, "png", file);
-        //file.delete();
-        //System.out.println(file.exists());
- 
+
  
     }
 
@@ -101,6 +98,12 @@ public class Lightning {
     	cpt=0;
     	return false;
     }
+    public void deleteImage() {
+    	file.delete();
+    }
     public void setCpt() {cpt++;}
+    public boolean Existe() {
+    	return file.exists();
+    }
  
 }

@@ -161,7 +161,7 @@ public class World {
 		//Apparition de nouvelles herbes
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {	
-				if(Math.random()<0.0003 && world[x][y]==0) //Herbes
+				if(Math.random()<0.000005 && world[x][y]==0) //Herbes
 					world[x][y]=1;			
 			}
 		}

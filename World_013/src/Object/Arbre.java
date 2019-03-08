@@ -69,8 +69,8 @@ public class Arbre {
 		}
 		
 		//Mise en feu
-		if(Math.random()<0.000)
-			feu=true;
+		//if(Math.random()<0.000)
+			//feu=true;
 		//System.out.println(vie);
 		
 		//Croissance de l'arbre

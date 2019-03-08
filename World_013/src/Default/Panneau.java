@@ -468,7 +468,7 @@ public class Panneau extends JPanel  implements KeyListener{
 			}
 
 			if(w.RechercheArbres(j,i).getFeu()) { //Si l'arbre est en feu
-					g.drawImage(IMG_FIRE, taille_x*j-taille_x*2,(taille_y)*i-taille_y*5,taille_x*5,taille_y*6, this);
+					g.drawImage(IMG_FIRE, taille_x*j-taille_x*2,(taille_y)*i-taille_y*7,taille_x*5,taille_y*8, this);
 
 			}
 			
@@ -508,7 +508,9 @@ public class Panneau extends JPanel  implements KeyListener{
 			w.setFin();
 		}
 		try {
-		if(c == KeyEvent.VK_B) {
+		if(c == KeyEvent.VK_L) {
+			w.l.setLight();
+			w.l.cpt=0;
 			foudre=true;
 			arbre=w.tab_Arbre.get((int)(Math.random()*w.tab_Arbre.size()));
 			arbre.setFeu(true);
