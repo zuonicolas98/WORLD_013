@@ -13,6 +13,7 @@ public class World {
 	private int nb_arbre, nb_animal;
 	private Fenetre f;
 	private boolean fin;
+	public Lightning l=new Lightning();
 	
 	public World(int x, int y,int nb_arbre,int nb_animal, int tx,int ty) {
 		if(x==0 || y==0) {
@@ -145,7 +146,8 @@ public class World {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+		//step() light
+		l.setCpt();
 		//step() animaux
 		for(int i=0; i < tab_Animal.size(); i++) {
 			tab_Animal.get(i).step();

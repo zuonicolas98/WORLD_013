@@ -1,5 +1,6 @@
 package Default;
 import Agents.*;
+import Object.*;
 
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
@@ -8,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 //import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -16,10 +18,15 @@ public class Panneau extends JPanel  implements KeyListener{
 	private World w;
 	private Fenetre f;
 	private int time=0;
+	private boolean foudre=false;
+
+	private Arbre arbre;
 	public Image IMG_BUSH;
 	public Image IMG_GRASS;
 	//Variable image feu
 	public Image IMG_FIRE;
+	//Variable foudre
+	public Image IMG_LIGHT;
 	//Variables images animaux
 	public Image IMG_PIG;
 	public Image[][] IMG_PIG_M;
@@ -45,6 +52,7 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_COCOTIER_MB;
 	public Image IMG_COCOTIER_G;
 	public Image IMG_COCOTIER_GB;
+	
 	
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
@@ -120,6 +128,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_GRASS = ImageIO.read(new File("IMAGES/ELEMENTS/grass.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
+				IMG_LIGHT = ImageIO.read(new File("IMAGES/ELEMENTS/foudre.png"));
 				
 				IMG_POMMIER_P = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_petit.png"));
 				IMG_POMMIER_PB = ImageIO.read(new File("IMAGES/ELEMENTS/POMMIER/pommier_petit_bruler.png"));
@@ -446,8 +455,18 @@ public class Panneau extends JPanel  implements KeyListener{
 					
 				}
 			}
+			if(foudre) {
+				if(w.l.estAfficher()) {
+					g.drawImage(IMG_LIGHT,  taille_x*arbre.getX()-taille_x,taille_y*arbre.getY()-taille_y*5,taille_x*3,taille_y*6, this);
+
+				}
+				else {
+					foudre=false;
+					w.l.setLight();
+				}
+			}
 			if(w.RechercheArbres(j,i).getFeu()) { //Si l'arbre est en feu
-					g.drawImage(IMG_FIRE, taille_x*j-taille_x/2,(taille_y)*i-taille_y*2,taille_x*2,taille_y*2, this);
+					g.drawImage(IMG_FIRE, taille_x*j-taille_x*2,(taille_y)*i-taille_y*5,taille_x*5,taille_y*6, this);
 
 			}
 			
@@ -464,11 +483,11 @@ public class Panneau extends JPanel  implements KeyListener{
 			
 		default:;
 	}
-	}catch(NullPointerException e) {}
+	}catch(Exception e) {}
 	}
 	
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
+	
 		int c= e.getKeyCode();
 		
 		if(c == KeyEvent.VK_LEFT) {
@@ -486,6 +505,13 @@ public class Panneau extends JPanel  implements KeyListener{
 			f.dispose();
 			w.setFin();
 		}
+		try {
+		if(c == KeyEvent.VK_B) {
+			foudre=true;
+			arbre=w.tab_Arbre.get((int)(Math.random()*w.tab_Arbre.size()));
+			arbre.setFeu(true);
+		}
+		}catch(Exception x) {};
 	}
 	
 	public void keyTyped(KeyEvent e) {}
