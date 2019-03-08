@@ -14,7 +14,11 @@ public class Lightning {
 	private int cpt=0;
 	private int frame=50;
 
-	public Lightning() {};
+	public Lightning() {
+		try {
+			this.setLight();
+		} catch (IOException e) {}
+	};
 
     public void setLight() throws IOException {
  
