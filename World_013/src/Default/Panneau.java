@@ -454,10 +454,11 @@ public class Panneau extends JPanel  implements KeyListener{
 					}		
 					
 				}
+
 			}
 			if(foudre) {
 				if(w.l.estAfficher()) {
-					g.drawImage(IMG_LIGHT,  taille_x*arbre.getX()-taille_x,taille_y*arbre.getY()-taille_y*5,taille_x*3,taille_y*6, this);
+					g.drawImage(IMG_LIGHT,  taille_x*arbre.getX()-taille_x,taille_y*arbre.getY()-taille_y*7,taille_x*3,taille_y*8, this);
 
 				}
 				else {
@@ -465,6 +466,7 @@ public class Panneau extends JPanel  implements KeyListener{
 					w.l.setLight();
 				}
 			}
+
 			if(w.RechercheArbres(j,i).getFeu()) { //Si l'arbre est en feu
 					g.drawImage(IMG_FIRE, taille_x*j-taille_x*2,(taille_y)*i-taille_y*5,taille_x*5,taille_y*6, this);
 
