@@ -146,8 +146,7 @@ public class World {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		//step() light
-		l.setCpt();
+		
 		//step() animaux
 		for(int i=0; i < tab_Animal.size(); i++) {
 			tab_Animal.get(i).step();
@@ -158,18 +157,33 @@ public class World {
 			tab_Arbre.get(i).step();
 		}
 		
-		//Apparition de nouvelles herbes
-		for(int y=0;y<Y;y++) {
-			for(int x=0;x<X;x++) {	
-				if(Math.random()<0.000005 && world[x][y]==0) //Herbes
-					world[x][y]=1;			
-			}
-		}
+		//step() light
+		l.setCpt();
 		
+		refreshground();
 		
 		f.getPanneau().repaint();
 	}
-
+	
+	//Rafraichissement du sol + apparition d'herbes
+	void refreshground() {
+		for(int y=0;y<Y;y++) {
+			for(int x=0;x<X;x++) {
+				if(Math.random()<0.000005 && world[x][y]==0) //Herbes
+					world[x][y]=1;	
+				
+				if( (world[x][y]==-1) && (Math.random()<0.005) && 
+				(  ((y-1>=0) && ((world[x][y-1]==0) || (world[x][y-1]==2))) //il ne peut pas se trouver sur un rocher ou arbre
+				|| ((x+1<X)  && ((world[x+1][y]==0) || (world[x+1][y]==2)))
+				|| ((y+1<Y)  && ((world[x][y+1]==0) || (world[x][y+1]==2))) 
+				|| ((x-1>=0) && ((world[x-1][y]==0) || (world[x-1][y]==2))) ))
+					world[x][y]=0;
+					
+			}
+		}
+	}
+	
+	
 	//Getters
 	public int[][] getWorld() { return world ;}
 	public int getX() { return X; }

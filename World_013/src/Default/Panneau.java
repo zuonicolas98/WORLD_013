@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-//import java.io.IOException;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.KeyEvent;
@@ -23,6 +22,7 @@ public class Panneau extends JPanel  implements KeyListener{
 	private Arbre arbre;
 	public Image IMG_BUSH;
 	public Image IMG_GRASS;
+	public Image IMG_DRY;
 	//Variable image feu
 	public Image IMG_FIRE;
 	//Variable foudre
@@ -126,6 +126,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				
 				IMG_BUSH = ImageIO.read(new File("IMAGES/ELEMENTS/bush.png"));
 				IMG_GRASS = ImageIO.read(new File("IMAGES/ELEMENTS/grass.png"));
+				IMG_DRY = ImageIO.read(new File("IMAGES/ELEMENTS/dry.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
 				IMG_LIGHT = ImageIO.read(new File("IMAGES/ELEMENTS/foudre.png"));
@@ -172,7 +173,10 @@ public class Panneau extends JPanel  implements KeyListener{
 	public void afficher_terrain(Graphics g) {
 		for(int i=0;i<w.getY();i++) {
 			for(int j=0;j<w.getX();j++) {
-				g.drawImage(IMG_GRASS, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+				if(w.getWorld()[j][i]==-1)
+					g.drawImage(IMG_DRY, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
+				else
+					g.drawImage(IMG_GRASS, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
 			}
 		}
 	}

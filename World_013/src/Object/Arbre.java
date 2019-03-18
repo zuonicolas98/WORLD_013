@@ -29,7 +29,7 @@ public class Arbre {
 			cendre=true;
 			if(cpt_cendre == 50) { //reste en cendre pendant x iterations
 				w.tab_Arbre.remove(this);
-				w.getWorld()[x][y]=0;
+				w.getWorld()[x][y]=-1;
 			}else
 				cpt_cendre++;
 			//System.out.println(cpt_cendre);
