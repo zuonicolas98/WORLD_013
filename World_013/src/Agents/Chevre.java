@@ -9,7 +9,7 @@ public class Chevre extends Animal{
 		super(x,y,w);
 		timer=4;
 		cpt=0;
-		vie=75;
+		vie=100;
 	}
 	
 	public void step() { //bouge selon l'environnement

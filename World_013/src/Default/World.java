@@ -172,11 +172,11 @@ public class World {
 				if(Math.random()<0.000005 && world[x][y]==0) //Herbes
 					world[x][y]=1;	
 				
-				if( (world[x][y]==-1) && (Math.random()<0.005) && 
-				(  ((y-1>=0) && ((world[x][y-1]==0) || (world[x][y-1]==2))) //il ne peut pas se trouver sur un rocher ou arbre
-				|| ((x+1<X)  && ((world[x+1][y]==0) || (world[x+1][y]==2)))
-				|| ((y+1<Y)  && ((world[x][y+1]==0) || (world[x][y+1]==2))) 
-				|| ((x-1>=0) && ((world[x-1][y]==0) || (world[x-1][y]==2))) ))
+				if( (world[x][y]==-1) && (Math.random()<0.003) && 
+				(  ((y-1>=0) && ((world[x][y-1]==0) || (world[x][y-1]==1) || (world[x][y-1]==2))) 
+				|| ((x+1<X)  && ((world[x+1][y]==0) || (world[x+1][y]==1) || (world[x+1][y]==2)))
+				|| ((y+1<Y)  && ((world[x][y+1]==0) || (world[x][y+1]==1) || (world[x][y+1]==2))) 
+				|| ((x-1>=0) && ((world[x-1][y]==0) || (world[x-1][y]==1) || (world[x-1][y]==2))) ))
 					world[x][y]=0;
 					
 			}

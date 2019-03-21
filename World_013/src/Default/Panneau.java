@@ -18,11 +18,13 @@ public class Panneau extends JPanel  implements KeyListener{
 	private Fenetre f;
 	private int time=0;
 	private boolean foudre=false;
+	private int x1,x2,y1,y2,xtmp,ytmp;
 
 	private Arbre arbre;
 	public Image IMG_BUSH;
 	public Image IMG_GRASS;
 	public Image IMG_DRY;
+	public Image IMG_WATER;
 	//Variable image feu
 	public Image IMG_FIRE;
 	//Variable foudre
@@ -57,6 +59,10 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
 		this.f=f;
+		x1=0;
+		y1=0;
+		x2=w.getX();
+		y2=w.getY();
 		addKeyListener(this);
 		IMG_PIG_M=new Image[4][3];
 		IMG_RABBIT_M=new Image[4][3];
@@ -126,6 +132,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				
 				IMG_BUSH = ImageIO.read(new File("IMAGES/ELEMENTS/bush.png"));
 				IMG_GRASS = ImageIO.read(new File("IMAGES/ELEMENTS/grass.png"));
+				IMG_WATER = ImageIO.read(new File("IMAGES/ELEMENTS/water.png"));
 				IMG_DRY = ImageIO.read(new File("IMAGES/ELEMENTS/dry.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
@@ -147,6 +154,8 @@ public class Panneau extends JPanel  implements KeyListener{
 
 				afficher_terrain(g);
 				
+				xtmp=x1;
+				ytmp=y1;
 				for(int i=0;i<w.getY();i++) {
 					for(int j=0;j<w.getX();j++) {
 						//int taille_x=(f.getX()/(w.getX()));
@@ -169,10 +178,10 @@ public class Panneau extends JPanel  implements KeyListener{
 			}catch(Exception e) {}
 	
 	}
-	
+	/*
 	public void afficher_terrain(Graphics g) {
-		for(int i=0;i<w.getY();i++) {
-			for(int j=0;j<w.getX();j++) {
+		for(int i=y1;i<y2;i++) {
+			for(int j=x1;j<x2;j++) {
 				if(w.getWorld()[j][i]==-1)
 					g.drawImage(IMG_DRY, (f.getX()/(w.getX()))*j,((f.getY()-40)/(w.getY()))*i ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
 				else
@@ -180,7 +189,18 @@ public class Panneau extends JPanel  implements KeyListener{
 			}
 		}
 	}
-	
+	*/
+	public void afficher_terrain(Graphics g) {
+		for(int i=-1;i<=w.getY();i++) {
+			for(int j=-1;j<=w.getX();j++) {
+				if( i!=-1 && j!=-1 && i!=w.getY() && j!=w.getX() && w.getWorld()[j][i]==-1)
+					g.drawImage(IMG_DRY, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+				else
+					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+			}
+		}
+	}
+	/*
 	public void afficher_animaux(int i,int j,Graphics g) {
 		try {
 
@@ -393,8 +413,223 @@ public class Panneau extends JPanel  implements KeyListener{
 		}
 		}catch(Exception e){}
 	}
+	*/
 	
+	public void afficher_animaux(int i,int j,Graphics g) {
+		try {
+
+		for(int k=0; k<w.tab_Animal.size();k++) {
+			if((w.tab_Animal.get(k).getX()==j) && (w.tab_Animal.get(k).getY()==i) ) {
+				
+				if(w.tab_Animal.get(k) instanceof Cochon) {
+					if(w.tab_Animal.get(k).getAction()==1 ) //s'il est debout
+					{
+						if(w.tab_Animal.get(k).getDirection()!=-1) {
+						if(w.tab_Animal.get(k).getDirection()==1 || w.tab_Animal.get(k).getDirection()==3) {
+							if(w.tab_Animal.get(k).getCpt()==1) {
+								w.tab_Animal.get(k).pixel=(((f.getX()/(x2-x1)))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][1];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==2) {
+								w.tab_Animal.get(k).pixel=(2*(((f.getX()/(x2-x1)))/4));
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==3) {
+								w.tab_Animal.get(k).pixel=(3*(((f.getX()/(x2-x1)))/4));
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][2];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==0){
+								w.tab_Animal.get(k).pixel=0;
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+
+							}
+							else if(w.tab_Animal.get(k).getCpt()>3)
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+						}else {
+							if(w.tab_Animal.get(k).getCpt()==1) {
+								w.tab_Animal.get(k).pixel=(((f.getY()/(y2-y1)))/4);
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][1];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==2) {
+								w.tab_Animal.get(k).pixel=(2*(((f.getY()/(y2-y1)))/4));
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							else if(w.tab_Animal.get(k).getCpt()==3) {
+								w.tab_Animal.get(k).pixel=(3*(((f.getY()/(y2-y1)))/4));
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][2];
+							}
+						
+							else if(w.tab_Animal.get(k).getCpt()==0 ){
+								w.tab_Animal.get(k).pixel=0;
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+
+							}
+							else if(w.tab_Animal.get(k).getCpt()>3)
+								IMG_PIG=IMG_PIG_M[w.tab_Animal.get(k).getDirection()][0];
+						}
+						
+						//System.out.println(w.tab_Animal.get(k).getDirection()+" "+pixel+" "+"X="+f.getX()/(x2-x1)+" Y="+f.getY()/(y2-y1));
+						if(w.tab_Animal.get(k).getDirection()==0)
+							g.drawImage(IMG_PIG, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20-w.tab_Animal.get(k).pixel)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						if(w.tab_Animal.get(k).getDirection()==1)
+							g.drawImage(IMG_PIG, (w.tab_Animal.get(k).pixel+(f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						if(w.tab_Animal.get(k).getDirection()==2)
+							g.drawImage(IMG_PIG, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(w.tab_Animal.get(k).pixel+((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						if(w.tab_Animal.get(k).getDirection()==3)
+							g.drawImage(IMG_PIG, ((f.getX()/((x2-x1)))*j  -w.tab_Animal.get(k).pixel)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+					}else {
+						g.drawImage(IMG_PIG, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))) ,(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+					}
+					}
+						
+					else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
+						g.drawImage(IMG_PIG, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+					
+				}
+				
+				//*******************************************************************************************************************************************************
+				
+				else if (w.tab_Animal.get(k) instanceof Chevre) {
+
+					if(w.tab_Animal.get(k).getAction()==1 ) //s'il est debout
+					{
+						if(w.tab_Animal.get(k).getDirection()!=-1) {
+							if(w.tab_Animal.get(k).getDirection()==1 || w.tab_Animal.get(k).getDirection()==3) {
+								if(w.tab_Animal.get(k).getCpt()==1) {
+									w.tab_Animal.get(k).pixel=(((f.getX()/(x2-x1)))/4);
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][1];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==2) {
+									w.tab_Animal.get(k).pixel=(2*(((f.getX()/(x2-x1)))/4));
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==3) {
+									w.tab_Animal.get(k).pixel=(3*(((f.getX()/(x2-x1)))/4));
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][2];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==0){
+									w.tab_Animal.get(k).pixel=0;
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+
+								}
+								else if(w.tab_Animal.get(k).getCpt()>3)
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+							}else {
+								if(w.tab_Animal.get(k).getCpt()==1) {
+									w.tab_Animal.get(k).pixel=(((f.getY()/(y2-y1)))/4);
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][1];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==2) {
+									w.tab_Animal.get(k).pixel=(2*(((f.getY()/(y2-y1)))/4));
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==3) {
+									w.tab_Animal.get(k).pixel=(3*(((f.getY()/(y2-y1)))/4));
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][2];
+								}
+							
+								else if(w.tab_Animal.get(k).getCpt()==0 ){
+									w.tab_Animal.get(k).pixel=0;
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+
+								}
+								else if(w.tab_Animal.get(k).getCpt()>3)
+									IMG_GOAT=IMG_GOAT_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							
+							//System.out.println(w.tab_Animal.get(k).getDirection()+" "+pixel+" "+"X="+f.getX()/(x2-x1)+" Y="+f.getY()/(y2-y1));
+							if(w.tab_Animal.get(k).getDirection()==0)
+								g.drawImage(IMG_GOAT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20-w.tab_Animal.get(k).pixel)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+							if(w.tab_Animal.get(k).getDirection()==1)
+								g.drawImage(IMG_GOAT, (w.tab_Animal.get(k).pixel+(f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+							if(w.tab_Animal.get(k).getDirection()==2)
+								g.drawImage(IMG_GOAT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(w.tab_Animal.get(k).pixel+((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+							if(w.tab_Animal.get(k).getDirection()==3)
+								g.drawImage(IMG_GOAT, ((f.getX()/((x2-x1)))*j  -w.tab_Animal.get(k).pixel)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						}else {
+							g.drawImage(IMG_GOAT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))) ,(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						}
+						}
+							
+						else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
+							g.drawImage(IMG_GOAT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						
+					
+				}
+				
+				//*******************************************************************************************************************************************************
+				else if (w.tab_Animal.get(k) instanceof Lapin) {
+					if(w.tab_Animal.get(k).getAction()==1) 	//s'il est debout
+					{
+						
+						if(w.tab_Animal.get(k).getDirection()!=-1) {
+							if(w.tab_Animal.get(k).getDirection()==1 || w.tab_Animal.get(k).getDirection()==3) {
+								if(w.tab_Animal.get(k).getCpt()==1) {
+									w.tab_Animal.get(k).pixel=(((f.getX()/(x2-x1)))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][1];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==2) {
+									w.tab_Animal.get(k).pixel=(2*(((f.getX()/(x2-x1)))/4));
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==3) {
+									w.tab_Animal.get(k).pixel=(3*(((f.getX()/(x2-x1)))/4));
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][2];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==0){
+									w.tab_Animal.get(k).pixel=0;
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+
+								}
+								else if(w.tab_Animal.get(k).getCpt()>3)
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+							}else {
+								if(w.tab_Animal.get(k).getCpt()==1) {
+									w.tab_Animal.get(k).pixel=(((f.getY()/(y2-y1)))/4);
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][1];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==2) {
+									w.tab_Animal.get(k).pixel=(2*(((f.getY()/(y2-y1)))/4));
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+								}
+								else if(w.tab_Animal.get(k).getCpt()==3) {
+									w.tab_Animal.get(k).pixel=(3*(((f.getY()/(y2-y1)))/4));
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][2];
+								}
+							
+								else if(w.tab_Animal.get(k).getCpt()==0 ){
+									w.tab_Animal.get(k).pixel=0;
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+
+								}
+								else if(w.tab_Animal.get(k).getCpt()>3)
+									IMG_RABBIT=IMG_RABBIT_M[w.tab_Animal.get(k).getDirection()][0];
+							}
+							
+							//System.out.println(w.tab_Animal.get(k).getDirection()+" "+pixel+" "+"X="+f.getX()/(x2-x1)+" Y="+f.getY()/(y2-y1));
+							if(w.tab_Animal.get(k).getDirection()==0)
+								g.drawImage(IMG_RABBIT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20-w.tab_Animal.get(k).pixel)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+							if(w.tab_Animal.get(k).getDirection()==1)
+								g.drawImage(IMG_RABBIT, (w.tab_Animal.get(k).pixel+(f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+							if(w.tab_Animal.get(k).getDirection()==2)
+								g.drawImage(IMG_RABBIT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(w.tab_Animal.get(k).pixel+((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+							if(w.tab_Animal.get(k).getDirection()==3)
+								g.drawImage(IMG_RABBIT, ((f.getX()/((x2-x1)))*j  -w.tab_Animal.get(k).pixel)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						}else {
+							g.drawImage(IMG_RABBIT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))) ,(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						}
+						}
+							
+						else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
+							g.drawImage(IMG_RABBIT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
+						
+				}
+			}
+		}
+		}catch(Exception e){}
+	}
 	
+	/*
 	public void afficher_decors(int i,int j,Graphics g) {
 		try {
 		switch(w.getWorld()[j][i]) {
@@ -491,12 +726,134 @@ public class Panneau extends JPanel  implements KeyListener{
 	}
 	}catch(Exception e) {}
 	}
+	*/
+	
+	public void afficher_decors(int i,int j,Graphics g) {
+		try {
+		switch(w.getWorld()[j][i]) {
+		case 1: //Herbes
+			g.drawImage(IMG_BUSH, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+			break;
+				
+		case 2: //Arbres
+			int taille_x=(f.getX()/(x2-x1));
+			int taille_y=(f.getY()-40)/(y2-y1);
+			for(int a=0; a < w.tab_Arbre.size(); a++) {
+				if( (w.tab_Arbre.get(a).getX()==j) && (w.tab_Arbre.get(a).getY()==i) ) {
+					if(w.tab_Arbre.get(a).getNom().equals("Pommier")) { 
+						
+						switch(w.tab_Arbre.get(a).getCroissance()) {
+							case 1: //petit
+								if(w.tab_Arbre.get(a).getCendre() == false) {
+									g.drawImage(IMG_POMMIER_P,  ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+								}
+								else 
+									g.drawImage(IMG_POMMIER_PB, ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+								break;
+							case 2: //moyen
+								if(w.tab_Arbre.get(a).getCendre() == false)
+									g.drawImage(IMG_POMMIER_M,  ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+								else 
+									g.drawImage(IMG_POMMIER_MB, ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+								break;
+							case 3: //grand
+								if(w.tab_Arbre.get(a).getCendre() == false)
+									g.drawImage(IMG_POMMIER_G, ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+								else 
+									g.drawImage(IMG_POMMIER_GB, ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+								break;
+							default:;	
+						}
+						
+					}else if(w.tab_Arbre.get(a).getNom().equals("Cocotier")) {
+						switch(w.tab_Arbre.get(a).getCroissance()) {
+						case 1: //petit
+							if(w.tab_Arbre.get(a).getCendre() == false)
+								g.drawImage(IMG_COCOTIER_P,  ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+							else 
+								g.drawImage(IMG_COCOTIER_PB,  ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+							break;
+						case 2: //moyen
+							if(w.tab_Arbre.get(a).getCendre() == false)
+								g.drawImage(IMG_COCOTIER_M,  ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+							else 
+								g.drawImage(IMG_COCOTIER_MB,  ((taille_x*j)-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+							break;
+						case 3: //grand
+							if(w.tab_Arbre.get(a).getCendre() == false)
+								g.drawImage(IMG_COCOTIER_G, (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+							else 
+								g.drawImage(IMG_COCOTIER_GB,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+							break;
+						default:;	
+					}
+					
+					}		
+					
+				}
+
+			}
+			if(foudre) {
+				if(w.l.estAfficher()) {
+					g.drawImage(IMG_LIGHT,  (taille_x*arbre.getX()-taille_x)-(xtmp*(taille_x*3)),(taille_y*arbre.getY()-taille_y*7)-(ytmp*(taille_y*8)),taille_x*3,taille_y*8, this);
+
+				}
+				else {
+					foudre=false;
+					w.l.setLight();
+				}
+			}
+
+			if(w.RechercheArbres(j,i).getFeu()) { //Si l'arbre est en feu
+					g.drawImage(IMG_FIRE, (taille_x*j-taille_x*2)-(xtmp*(taille_x*5 )),((taille_y)*i-taille_y*7)-(ytmp*(taille_y*8)),taille_x*5,taille_y*8, this);
+
+			}
+			
+			break;
+				
+		case 3: //Rochers
+			break;
+		
+		case 4:	 //Eau
+			break;
+		
+		case 5: //Lave	
+			break;
+			
+		default:;
+	}
+	}catch(Exception e) {}
+	}
 	
 	public void keyPressed(KeyEvent e) {
 	
 		int c= e.getKeyCode();
+		//deplacement zoom
+		if(c == KeyEvent.VK_NUMPAD8) {
+			if(y1>0) {
+				y1--;
+				y2--;
+			}
+		}else if(c == KeyEvent.VK_NUMPAD5) {
+			if(y2<w.getY()) {
+				y1++;
+				y2++;
+			}
 		
-		if(c == KeyEvent.VK_LEFT) {
+		}else if(c == KeyEvent.VK_NUMPAD4) {
+			if(x1>0) {
+				x1--;
+				x2--;
+			}
+		
+		}else if(c == KeyEvent.VK_NUMPAD6) {
+			if(x2<w.getX()) {
+				x1++;
+				x2++;
+			}
+		}
+		//flèches
+		else if(c == KeyEvent.VK_LEFT) {
 			if(w.getDelay()>50) {
 				w.setDelay((w.getDelay())-50);
 				System.out.println("Thread.sleep : "+ w.getDelay());
@@ -507,18 +864,39 @@ public class Panneau extends JPanel  implements KeyListener{
 				w.setDelay((w.getDelay())+50);
 				System.out.println("Thread.sleep : "+ w.getDelay());
 			}
-		}else if(c == KeyEvent.VK_F) {
+		}else if(c == KeyEvent.VK_UP) { //zoom
+			if (x2>x1+10) 
+				x2=x2-2;
+			else if (x1<x2-10)
+				x1=x1+2;	
+			if (y2>y1+10)
+				y2=y2-2;
+			else if (y1<y2-10)
+				y1=y1+2;
+		}else if(c == KeyEvent.VK_DOWN) { //de-zoom
+			if (x2+1<w.getX())
+				x2=x2+2;
+			else if (x1-1>0)
+				x1=x1-2;	
+			if (y2+1<w.getY())
+				y2=y2+2;
+			else if (y1-1>0)
+				y1=y1-2;
+			
+		//autres	
+		}else if(c == KeyEvent.VK_F) { //fin
 			f.dispose();
 			w.setFin();
+		
 		}
 		try {
-		if(c == KeyEvent.VK_L) {
-			w.l.setLight();
-			w.l.cpt=0;
-			foudre=true;
-			arbre=w.tab_Arbre.get((int)(Math.random()*w.tab_Arbre.size()));
-			arbre.setFeu(true);
-		}
+			if(c == KeyEvent.VK_L) { //foudre
+				w.l.setLight();
+				w.l.cpt=0;
+				foudre=true;
+				arbre=w.tab_Arbre.get((int)(Math.random()*w.tab_Arbre.size()));
+				arbre.setFeu(true);
+			}
 		}catch(Exception x) {};
 	}
 	

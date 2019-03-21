@@ -9,7 +9,7 @@ public class Lapin extends Animal{
 		super(x,y,w);
 		timer=3;
 		cpt=0;
-		vie=60;
+		vie=85;
 	}
 	
 	public void step() { //bouge selon l'environnement
