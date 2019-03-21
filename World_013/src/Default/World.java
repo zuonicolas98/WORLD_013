@@ -14,6 +14,7 @@ public class World {
 	private Fenetre f;
 	private boolean fin;
 	public Lightning l=new Lightning();
+	public int[][] alti;
 	
 	public World(int x, int y,int nb_arbre,int nb_animal, int tx,int ty) {
 		if(x==0 || y==0) {
@@ -22,6 +23,7 @@ public class World {
 		}
 		//Initialisations
 		world=new int[x][y];
+		alti=new int[x][y];
 		X=x;
 		Y=y;
 		fin=true;
