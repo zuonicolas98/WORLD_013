@@ -14,7 +14,7 @@ public class World {
 	private Fenetre f;
 	private boolean fin;
 	public Lightning l=new Lightning();
-	public int[][] alti;
+	public Noise n;
 	
 	public World(int x, int y,int nb_arbre,int nb_animal, int tx,int ty) {
 		if(x==0 || y==0) {
@@ -23,7 +23,8 @@ public class World {
 		}
 		//Initialisations
 		world=new int[x][y];
-		alti=new int[x][y];
+		n=new Noise(x,y);
+
 		X=x;
 		Y=y;
 		fin=true;
@@ -59,12 +60,15 @@ public class World {
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
 				double m=Math.random();
-				
-				if(m<0.1) //Herbes
+				System.out.print("-"+n.alti[x][y]+"-");
+				if(m<0.1 && n.alti[x][y]>=0) //Herbes
+				{
+					System.out.print(n.alti[x][y]+" ");
 					world[x][y]=1;
-				
+				}
 			}
 		}
+		System.out.println();
 		
 		//Initialisation des arbres
 		
@@ -72,7 +76,7 @@ public class World {
 			int t=(int)(Math.random()*2);
 			int _x=(int)(Math.random()*X);
 			int _y=(int)(Math.random()*Y);
-			if(world[_x][_y]==0) { //s'il n'y a rien sur cette case
+			if(world[_x][_y]==0 && n.alti[_x][_y]>=0) { //s'il n'y a rien sur cette case et compris dans l'altitude
 				world[_x][_y]=2;
 				if(t==0)
 					tab_Arbre.add(new Arbre("Pommier",30,_x,_y, this));
@@ -89,7 +93,7 @@ public class World {
 				int _x=(int)(Math.random()*X);
 				int _y=(int)(Math.random()*Y);
 				int type=(int)(Math.random()*3);
-				if(world[_x][_y]!=2 && world[_x][_y]!=3  ) {
+				if(world[_x][_y]!=2 && world[_x][_y]!=3 && n.alti[_x][_y]>=0 ) {
 					switch(type) { // 0:Chevre | 1:Cochon | 2:Lapin
 						case 0: 
 							tab_Animal.add(new Chevre(_x,_y, this));
@@ -184,7 +188,7 @@ public class World {
 		}
 	}
 	
-	
+
 	//Getters
 	public int[][] getWorld() { return world ;}
 	public int getX() { return X; }

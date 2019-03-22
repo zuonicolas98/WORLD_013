@@ -15,12 +15,12 @@ public class Noise {
 	private int x_max,y_max;
 	private int X,Y;
 	private int n0,n1,n;
-	private int[][] alti;
+	public int[][] alti;
 	
-	public Noise (World w) { 
-		X=w.getX();
-		Y=w.getY();
-		this.alti=w.alti;
+	public Noise (int x,int y) { 
+		X=x;
+		Y=y;
+		alti=new int[x][y];
 		this.generateur();
 	}
 	

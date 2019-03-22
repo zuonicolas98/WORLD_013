@@ -175,7 +175,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				else
 					time++;
 				//System.out.println(time);
-			}catch(Exception e) {}
+			}catch(IOException e) {}
 	
 	}
 	/*
@@ -193,10 +193,13 @@ public class Panneau extends JPanel  implements KeyListener{
 	public void afficher_terrain(Graphics g) {
 		for(int i=-1;i<=w.getY();i++) {
 			for(int j=-1;j<=w.getX();j++) {
-				if( i!=-1 && j!=-1 && i!=w.getY() && j!=w.getX() && w.getWorld()[j][i]==-1)
+				if( i!=-1 && j!=-1 && i!= w.getY() && j!=w.getX() && w.n.alti[j][i]==-1 ) {
+					g.drawImage(IMG_WATER, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+				}
+				else if( i!=-1 && j!=-1 && i!=w.getY() && j!=w.getX() && w.getWorld()[j][i]==-1)
 					g.drawImage(IMG_DRY, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 				else
-					g.drawImage(IMG_WATER, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 			}
 		}
 	}
