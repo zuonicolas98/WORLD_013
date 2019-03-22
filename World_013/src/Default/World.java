@@ -44,7 +44,6 @@ public class World {
 		
 		InitWorld();	
 		
-		System.out.println("Thread.sleep : "+ delay);
 
 	}
 	//Initialisation du monde

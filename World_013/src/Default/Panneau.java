@@ -68,6 +68,7 @@ public class Panneau extends JPanel  implements KeyListener{
 		IMG_RABBIT_M=new Image[4][3];
 		IMG_GOAT_M=new Image[4][3];
 		IMG_FIRE = Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/fire.gif");
+		IMG_WATER= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/water.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -132,7 +133,6 @@ public class Panneau extends JPanel  implements KeyListener{
 				
 				IMG_BUSH = ImageIO.read(new File("IMAGES/ELEMENTS/bush.png"));
 				IMG_GRASS = ImageIO.read(new File("IMAGES/ELEMENTS/grass.png"));
-				IMG_WATER = ImageIO.read(new File("IMAGES/ELEMENTS/water.png"));
 				IMG_DRY = ImageIO.read(new File("IMAGES/ELEMENTS/dry.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
@@ -196,7 +196,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				if( i!=-1 && j!=-1 && i!=w.getY() && j!=w.getX() && w.getWorld()[j][i]==-1)
 					g.drawImage(IMG_DRY, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 				else
-					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+					g.drawImage(IMG_WATER, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 			}
 		}
 	}
@@ -856,13 +856,11 @@ public class Panneau extends JPanel  implements KeyListener{
 		else if(c == KeyEvent.VK_LEFT) {
 			if(w.getDelay()>50) {
 				w.setDelay((w.getDelay())-50);
-				System.out.println("Thread.sleep : "+ w.getDelay());
 			}
 		}
 		else if(c == KeyEvent.VK_RIGHT) {
 			if(w.getDelay()<52) {
 				w.setDelay((w.getDelay())+50);
-				System.out.println("Thread.sleep : "+ w.getDelay());
 			}
 		}else if(c == KeyEvent.VK_UP) { //zoom
 			if (x2>x1+10) 
