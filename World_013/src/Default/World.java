@@ -60,15 +60,12 @@ public class World {
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
 				double m=Math.random();
-				System.out.print("-"+n.alti[x][y]+"-");
 				if(m<0.1 && n.alti[x][y]>=0) //Herbes
 				{
-					System.out.print(n.alti[x][y]+" ");
 					world[x][y]=1;
 				}
 			}
 		}
-		System.out.println();
 		
 		//Initialisation des arbres
 		
