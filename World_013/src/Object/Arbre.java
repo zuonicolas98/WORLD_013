@@ -47,19 +47,19 @@ public class Arbre {
 			int c=0;
 			do {
 				int d=(int)(Math.random()*4);
-				if((d==0) && (y-1>=0) && (w.getWorld()[x][y-1]==0)) {
+				if((d==0) && (y-1>=0) && (w.getWorld()[x][y-1]==0) && (w.getNoise().alti[x][y-1]>=0) && (rebord(x,y-1)==0) ) {
 					w.getWorld()[x][y-1]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x,y-1, w));
 					b=true;
-				}else if((d==1) && (x+1<w.getX()) && (w.getWorld()[x+1][y]==0)) {
+				}else if((d==1) && (x+1<w.getX()) && (w.getWorld()[x+1][y]==0) && (w.getNoise().alti[x+1][y]>=0) && (rebord(x+1,y)==0) ) {
 					w.getWorld()[x+1][y]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x+1,y, w));
 					b=true;
-				}else if((d==2) && (y+1<w.getY()) && (w.getWorld()[x][y+1]==0)) {
+				}else if((d==2) && (y+1<w.getY()) && (w.getWorld()[x][y+1]==0) && (w.getNoise().alti[x][y+1]>=0) && (rebord(x,y+1)==0) ) {
 					w.getWorld()[x][y+1]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x,y+1, w));
 					b=true;
-				}else if((d==3) && (x-1>=0) && (w.getWorld()[x-1][y]==0)) {
+				}else if((d==3) && (x-1>=0) && (w.getWorld()[x-1][y]==0) && (w.getNoise().alti[x-1][y]>=0) && (rebord(x-1,y)==0)) {
 					w.getWorld()[x-1][y]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x-1,y, w));
 					b=true;
@@ -86,6 +86,17 @@ public class Arbre {
 							|| w.RechercheArbres(x,y+1).getFeu()==true || w.RechercheArbres(x-1,y).getFeu()==true)) 
 				feu=true;
 		
+	}
+	
+	public int rebord(int x, int y) {
+		if((y-1>=0 && w.getNoise().alti[x][y]!=w.getNoise().alti[x][y-1]) 
+		|| (x+1<w.getX() && w.getNoise().alti[x][y]!=w.getNoise().alti[x+1][y])
+		|| (y+1<w.getY() && w.getNoise().alti[x][y]!=w.getNoise().alti[x][y+1])
+		|| (x-1>=0 && w.getNoise().alti[x][y]!=w.getNoise().alti[x-1][y])) {
+			return 1;
+		}
+		
+		return 0;
 	}
 	
 	//Getters

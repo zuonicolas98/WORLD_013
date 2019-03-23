@@ -4,12 +4,14 @@ import Default.*;
 public class Lapin extends Animal{
 	
 	private int fecond=5;//nb de case pour etre fecond
+	public static int nb_lapin = 0;
 	
 	public Lapin(int x, int y, World w) {
 		super(x,y,w);
 		timer=3;
 		cpt=0;
 		vie=85;
+		nb_lapin++;
 	}
 	
 	public void step() { //bouge selon l'environnement
@@ -60,7 +62,7 @@ public class Lapin extends Animal{
 		manger();
 		
 		//reproduction
-		if(Math.random()<0.6) {
+		if(Math.random()<0.6 && nb_lapin<45) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Lapin) && (w.tab_Animal.get(k) != this) && (reproduire>timer*fecond) && (w.tab_Animal.get(k).getReproduire()>w.tab_Animal.get(k).getTimer()*fecond)) {  //si ils sont sur la meme case
 					w.tab_Animal.add(new Lapin(x, y, w));
@@ -130,11 +132,14 @@ public class Lapin extends Animal{
 			this.direction=(int)(Math.random()*4);
 						
 		//ne bouge pas si impossible de se deplacer	
-		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2))) //il ne peut pas se trouver sur un rocher ou arbre
-		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2)))
-		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3) || (w.getWorld()[x][y+1]==2))) 
-		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3) || (w.getWorld()[x-1][y]==2))))
+		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2) || (w.getNoise().alti[x][y-1]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x][y-1] ) || (w.rebord(x, y-1)==1))) //il ne peut pas se trouver sur un rocher ou arbre
+		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2) || (w.getNoise().alti[x+1][y]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x+1][y] ) || (w.rebord(x+1, y)==1)))
+		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3) || (w.getWorld()[x][y+1]==2) || (w.getNoise().alti[x][y+1]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x][y+1] ) || (w.rebord(x, y+1)==1))) 
+		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3) || (w.getWorld()[x-1][y]==2) || (w.getNoise().alti[x-1][y]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x-1][y] ) || (w.rebord(x-1, y)==1))) ) {
+			
 			direction =-1;
+		
+		}
 		
 	}	
 	
