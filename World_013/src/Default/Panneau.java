@@ -212,7 +212,7 @@ public class Panneau extends JPanel  implements KeyListener{
 	}
 
 	public void afficher_terrain(Graphics g) {
-		for(int i=-1;i<=w.getY();i++) {
+		for(int i=-1;i<w.getY();i++) {
 			for(int j=-1;j<=w.getX();j++) {
 				//sols
 				if( i!=-1 && j!=-1 && i!= w.getY() && j!=w.getX() && w.n.alti[j][i]==-1 ) {
@@ -221,8 +221,12 @@ public class Panneau extends JPanel  implements KeyListener{
 				else if( i!=-1 && j!=-1 && i!=w.getY() && j!=w.getX() && w.getWorld()[j][i]==-1)
 					g.drawImage(IMG_DRY, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 				else
-					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-				//bordures
+					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+			}
+		}
+		//bordures
+		for(int i=-1;i<=w.getY();i++) {
+			for(int j=-1;j<=w.getX();j++) {
 				if( i!=-1 && j!=-1 && i!= w.getY() && j!=w.getX() && w.n.alti[j][i]==-1) { //bordure_eau
 					if(i-1>=0 && w.n.alti[j][i-1]!=-1) { //haut
 						if(j+1<w.getX() && w.n.alti[j+1][i]!=-1) 
@@ -237,7 +241,7 @@ public class Panneau extends JPanel  implements KeyListener{
 							g.drawImage(IMG_BORD_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						else if(i+1<w.getY() && w.n.alti[j][i+1]!=-1) {
 							g.drawImage(IMG_BORD_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						}else 
 							g.drawImage(IMG_BORD_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 					}
@@ -247,7 +251,7 @@ public class Panneau extends JPanel  implements KeyListener{
 							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						}else if(j-1>=0 && w.n.alti[j-1][i]!=-1) {
 							g.drawImage(IMG_BORD_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						}else 
 							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 					}
@@ -256,7 +260,7 @@ public class Panneau extends JPanel  implements KeyListener{
 							g.drawImage(IMG_BORD_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						else if(i+1<w.getY() && w.n.alti[j][i+1]!=-1) {
 							g.drawImage(IMG_BORD_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+							g.drawImage(IMG_BORD_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						}else 
 							g.drawImage(IMG_BORD_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 					}	
@@ -274,20 +278,22 @@ public class Panneau extends JPanel  implements KeyListener{
 					}else if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]) { //droit
 						if(i-1>=0 && w.n.alti[j][i]>w.n.alti[j][i-1]  && w.n.alti[j][i-1]!=-1) 
 							g.drawImage(IMG_WALL_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]!=-1) 
+						else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]!=-1) {
 							g.drawImage(IMG_WALL_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						else 
+							//g.drawImage(IMG_WALL_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+						}else 
 							if(w.n.alti[j+1][i]!=-1)
 								g.drawImage(IMG_WALL_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 						
 					}else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]) { //bas
 						if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]  && w.n.alti[j+1][i]!=-1) 
 							g.drawImage(IMG_WALL_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]!=-1) 
+						else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]!=-1) {
 							g.drawImage(IMG_WALL_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						else {
+							//g.drawImage(IMG_WALL_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+						}else {
 							if(w.n.alti[j][i+1]!=-1) {
-								g.drawImage(IMG_WALL_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+								g.drawImage(IMG_WALL_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 							}
 						}
 					}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]) { //gauche

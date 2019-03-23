@@ -9,7 +9,7 @@ public class Main {
 		int largeur=hauteur=50;
 		//Lightning l=new Lightning();
 		//Noise n=new Noise(largeur,hauteur);
-		World w=new World(largeur,hauteur,20,50,1300,800); // (largeur_monde, hauteur_monde, nb_arbre, nb_animal, largeur_fenetre,hauteur_fenetre)
+		World w=new World(largeur,hauteur,20,50,1950,1100); // (largeur_monde, hauteur_monde, nb_arbre, nb_animal, largeur_fenetre,hauteur_fenetre)
 
 		for(int x=0;x<50;x++) {
 			for(int y=0;y<50;y++) {
