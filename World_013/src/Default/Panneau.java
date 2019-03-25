@@ -71,6 +71,8 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_COCOTIER_G;
 	public Image IMG_COCOTIER_GB;
 	
+	//--Nuage--
+	public Image IMG_NUAGE;
 	
 	public Panneau(World w,Fenetre f) {
 		this.w=w;
@@ -153,6 +155,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
 				IMG_LIGHT = ImageIO.read(new File("IMAGES/ELEMENTS/foudre.png"));
+				IMG_NUAGE = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage2.png"));
 				//bordures eau
 				IMG_BORD_BAS = ImageIO.read(new File("IMAGES/ELEMENTS/bordure_eau/bord_bas.png"));
 				IMG_BORD_DROITE = ImageIO.read(new File("IMAGES/ELEMENTS/bordure_eau/bord_droite.png"));
@@ -594,7 +597,7 @@ public class Panneau extends JPanel  implements KeyListener{
 			if(foudre) {
 				if(w.l.estAfficher()) {
 					g.drawImage(IMG_LIGHT,  (taille_x*arbre.getX()-taille_x)-(xtmp*(taille_x*3)),(taille_y*arbre.getY()-taille_y*7)-(ytmp*(taille_y*8)),taille_x*3,taille_y*8, this);
-
+					g.drawImage(IMG_NUAGE,  (taille_x*arbre.getX()-taille_x)-(xtmp*(taille_x*5)),(taille_y*arbre.getY()-taille_y*8)-(ytmp*(taille_y*8)),taille_x*5,taille_y*3, this);
 				}
 				else {
 					foudre=false;
