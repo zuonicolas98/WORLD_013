@@ -2,6 +2,7 @@ package Default;
 
 import Object.*;
 import java.io.IOException;
+import java.awt.Dimension;
 
 public class Main {
 	public static void main(String[] agrs) throws IOException {
@@ -9,7 +10,10 @@ public class Main {
 		int largeur=hauteur=50;
 		//Lightning l=new Lightning();
 		//Noise n=new Noise(largeur,hauteur);
-		World w=new World(largeur,hauteur,20,50,1950,1100); // (largeur_monde, hauteur_monde, nb_arbre, nb_animal, largeur_fenetre,hauteur_fenetre)
+		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		int height = (int)dimension.getHeight()+40;
+		int width  = (int)dimension.getWidth()+40;
+		World w=new World(largeur,hauteur,20,50,width,height); // (largeur_monde, hauteur_monde, nb_arbre, nb_animal, largeur_fenetre,hauteur_fenetre)
 
 		for(int x=0;x<50;x++) {
 			for(int y=0;y<50;y++) {
