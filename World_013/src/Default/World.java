@@ -60,10 +60,11 @@ public class World {
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
 				double m=Math.random();
-				if(m<0.1 && n.alti[x][y]>=0 && rebord(x,y)==0) //Herbes
-				{
+				if(m<0.1 && n.alti[x][y]>=0 && rebord(x,y)==0 && (x-1>=0 && y+1<Y && n.alti[x][y]==n.alti[x-1][y+1]) && (x+1<X && y+1<Y && n.alti[x][y]==n.alti[x+1][y+1])) //Herbes
 					world[x][y]=1;
-				}
+				else if(m<0.005 && n.alti[x][y]==-1) //Roches_eau
+					world[x][y]=3;
+				
 			}
 		}
 		
@@ -73,7 +74,7 @@ public class World {
 			int t=(int)(Math.random()*2);
 			int _x=(int)(Math.random()*X);
 			int _y=(int)(Math.random()*Y);
-			if(world[_x][_y]==0 && n.alti[_x][_y]>=0 && rebord(_x,_y)==0) { //s'il n'y a rien sur cette case et compris dans l'altitude
+			if(world[_x][_y]==0 && n.alti[_x][_y]>=0 && rebord(_x,_y)==0 && (_x-1>=0 && _y+1<Y && n.alti[_x][_y]==n.alti[_x-1][_y+1]) && (_x+1<X && _y+1<Y && n.alti[_x][_y]==n.alti[_x+1][_y+1])) { //s'il n'y a rien sur cette case et compris dans l'altitude
 				world[_x][_y]=2;
 				if(t==0)
 					tab_Arbre.add(new Arbre("Pommier",30,_x,_y, this));
@@ -90,7 +91,7 @@ public class World {
 				int _x=(int)(Math.random()*X);
 				int _y=(int)(Math.random()*Y);
 				int type=(int)(Math.random()*3);
-				if(world[_x][_y]!=2 && world[_x][_y]!=3 && n.alti[_x][_y]>=0 &&  rebord(_x,_y)==0) {
+				if(world[_x][_y]!=2 && world[_x][_y]!=3 && n.alti[_x][_y]>=0 && rebord(_x,_y)==0 && (_x-1>=0 && _y+1<Y && n.alti[_x][_y]==n.alti[_x-1][_y+1]) && (_x+1<X && _y+1<Y && n.alti[_x][_y]==n.alti[_x+1][_y+1])) {
 					switch(type) { // 0:Chevre | 1:Cochon | 2:Lapin
 						case 0: 
 							tab_Animal.add(new Chevre(_x,_y, this));
@@ -171,7 +172,7 @@ public class World {
 	void refreshground() {
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
-				if(Math.random()<0.000005 && world[x][y]==0 && n.alti[x][y]>=0 &&  rebord(x,y)==0) //Herbes
+				if(Math.random()<0.000005 && world[x][y]==0 && n.alti[x][y]>=0 &&  rebord(x,y)==0 && (x-1>=0 && y+1<Y && n.alti[x][y]==n.alti[x-1][y+1]) && (x+1<X && y+1<Y && n.alti[x][y]==n.alti[x+1][y+1])) //Herbes
 					world[x][y]=1;	
 				
 				if( (world[x][y]==-1) && (Math.random()<0.003) && 

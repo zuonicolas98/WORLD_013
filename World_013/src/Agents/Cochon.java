@@ -134,10 +134,10 @@ public class Cochon extends Animal{
 			this.direction=(int)(Math.random()*4);
 						
 		//ne bouge pas si impossible de se deplacer
-		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2) || (w.getNoise().alti[x][y-1]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x][y-1] ) || (w.rebord(x, y-1)==1))) //il ne peut pas se trouver sur un rocher ou arbre
-		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2) || (w.getNoise().alti[x+1][y]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x+1][y] ) || (w.rebord(x+1, y)==1)))
-		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3) || (w.getWorld()[x][y+1]==2) || (w.getNoise().alti[x][y+1]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x][y+1] ) || (w.rebord(x, y+1)==1))) 
-		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3) || (w.getWorld()[x-1][y]==2) || (w.getNoise().alti[x-1][y]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x-1][y] ) || (w.rebord(x-1, y)==1))) ) {		
+		if(((direction == 0) && ((y-1<0) || (w.getWorld()[x][y-1]==3) || (w.getWorld()[x][y-1]==2) || (w.getNoise().alti[x][y-1]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x][y-1] ) || (w.rebord(x, y-1)==1) )) //il ne peut pas se trouver sur un rocher ou arbre
+		|| ((direction == 1) && ((x+1>=w.getX()) || (w.getWorld()[x+1][y]==3) || (w.getWorld()[x+1][y]==2) || (w.getNoise().alti[x+1][y]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x+1][y] ) || (w.rebord(x+1, y)==1) || (x+2<w.getX() && y+1<w.getY() && w.n.alti[x+1][y]!=w.n.alti[x+2][y+1] ) ))
+		|| ((direction == 2) && ((y+1>=w.getY()) || (w.getWorld()[x][y+1]==3) || (w.getWorld()[x][y+1]==2) || (w.getNoise().alti[x][y+1]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x][y+1] ) || (w.rebord(x, y+1)==1) || (x-1>=0 && y+2<w.getY() && w.n.alti[x][y+1]!=w.n.alti[x-1][y+2] ) || (x+1<w.getX() && y+2<w.getY() && w.n.alti[x][y+1]!=w.n.alti[x+1][y+2] ) )) 
+		|| ((direction == 3) && ((x-1<0) || (w.getWorld()[x-1][y]==3) || (w.getWorld()[x-1][y]==2) || (w.getNoise().alti[x-1][y]==-1) || (w.getNoise().alti[x][y]!=w.getNoise().alti[x-1][y] ) || (w.rebord(x-1, y)==1) || (x-2>=0 && y+1<w.getY() && w.n.alti[x-1][y]!=w.n.alti[x-2][y+1] ) )) ) {		
 			
 			direction =-1;
 				
