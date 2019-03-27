@@ -243,7 +243,7 @@ public class Panneau extends JPanel  implements KeyListener{
 
 	public void afficher_terrain(Graphics g) {
 		for(int i=-1;i<w.getY();i++) {
-			for(int j=-1;j<=w.getX();j++) {
+			for(int j=-1;j<w.getX();j++) {
 				//sols
 				if( i!=-1 && j!=-1 && i!= w.getY() && j!=w.getX() && w.n.alti[j][i]==-1 ) {
 					g.drawImage(IMG_WATER, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
