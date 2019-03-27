@@ -359,7 +359,7 @@ public class Panneau extends JPanel  implements KeyListener{
 							else	
 								g.drawImage(IMG_WALL_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);							
 							if(i-1>=0 && j-1>=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) {
-								if(j-1>=0 && i-1>=0 && w.n.alti[j-1][i-1]<-1) 
+								if(j-1>=0 && i+1<w.getY() && w.n.alti[j-1][i+1]<-1) 
 									g.drawImage(IMG_MONTAGNE_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 								else
 									g.drawImage(IMG_WALL_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
