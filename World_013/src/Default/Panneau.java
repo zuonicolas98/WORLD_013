@@ -762,6 +762,8 @@ public class Panneau extends JPanel  implements KeyListener{
 		case 3: //Rochers
 			if(w.n.alti[j][i]==-1)
 				g.drawImage(IMG_ROCHER_EAU, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+			else
+				g.drawImage(IMG_ROCHER, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 			break;
 		
 		case 4:	 //Eau

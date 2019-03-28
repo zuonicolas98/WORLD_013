@@ -52,8 +52,7 @@ public class World {
 	 *	HERBES = 1  *
 	 *	ARBRE   = 2  *
 	 *	ROCHER  = 3  *
-	 *	EAU     = 4  *
-	 *	LAVE 	= 5  */
+	 *	LAVE 	= 4  */
 
 	public void InitWorld() {
 
@@ -62,7 +61,7 @@ public class World {
 				double m=Math.random();
 				if(m<0.1 && n.alti[x][y]>=0 && rebord(x,y)==0 && (x-1>=0 && y+1<Y && n.alti[x][y]==n.alti[x-1][y+1]) && (x+1<X && y+1<Y && n.alti[x][y]==n.alti[x+1][y+1])) //Herbes
 					world[x][y]=1;
-				else if(m<0.005 && n.alti[x][y]==-1) //Roches_eau
+				if(m<0.005 && n.alti[x][y]>=-1) //Roches_eau
 					world[x][y]=3;
 				
 			}
@@ -172,6 +171,9 @@ public class World {
 	void refreshground() {
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
+				if(Math.random()<0.00001 && world[x][y]==1)
+					world[x][y]=0;
+				
 				if(Math.random()<0.000005 && world[x][y]==0 && n.alti[x][y]>=0 &&  rebord(x,y)==0 && (x-1>=0 && y+1<Y && n.alti[x][y]==n.alti[x-1][y+1]) && (x+1<X && y+1<Y && n.alti[x][y]==n.alti[x+1][y+1])) //Herbes
 					world[x][y]=1;	
 				
