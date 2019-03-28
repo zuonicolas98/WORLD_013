@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class World {
 	private int[][] world;
 	private int X,Y,delay;
+	public ArrayList<Cloud> tab_Cloud;
 	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
 	public ArrayList<Animal> tab_Animal;
@@ -37,6 +38,7 @@ public class World {
 		object=new ArrayList<Object>();
 		tab_Arbre=new ArrayList<Arbre>();
 		tab_Animal= new ArrayList<Animal>();
+		tab_Cloud= new ArrayList<Cloud>();
 		
 		if(nb_arbre>x*y) {
 			System.out.println("Trop d'arbres par rapport a la taille du monde");
@@ -63,6 +65,9 @@ public class World {
 					world[x][y]=1;
 				if(m<0.005 && n.alti[x][y]>=-1) //Roches_eau
 					world[x][y]=3;
+				if(Math.random()<0.02 && n.alti[x][y]>=-1 && y<Y-10) {
+					tab_Cloud.add(new Cloud(x,y,10,this));
+				}
 				
 			}
 		}

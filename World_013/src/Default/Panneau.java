@@ -61,6 +61,12 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_FIRE;
 	//Variable foudre
 	public Image IMG_LIGHT;
+	//Variable nuage
+	public Image IMG_NUAGE;
+	public Image IMG_NUAGE0;
+	public Image IMG_NUAGE1;
+	public Image IMG_NUAGE2;
+	public Image IMG_OMBRE;
 	//Variables images animaux
 	public Image IMG_PIG;
 	public Image[][] IMG_PIG_M;
@@ -174,6 +180,12 @@ public class Panneau extends JPanel  implements KeyListener{
 				}catch(IndexOutOfBoundsException e) {}
 				IMG_ROCHER_EAU = ImageIO.read(new File("IMAGES/ELEMENTS/rocher_eau.png"));
 				IMG_ROCHER = ImageIO.read(new File("IMAGES/ELEMENTS/rocher.png"));
+				//NUAGE
+				IMG_NUAGE  = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage.png"));
+				IMG_NUAGE0 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage0.png"));
+				IMG_NUAGE1 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage1.png"));
+				IMG_NUAGE2 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage2.png"));
+				IMG_OMBRE  = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/ombre.png"));
 				//bordures eau
 				IMG_BORD_BAS = ImageIO.read(new File("IMAGES/ELEMENTS/bordure_eau/bord_bas.png"));
 				IMG_BORD_DROITE = ImageIO.read(new File("IMAGES/ELEMENTS/bordure_eau/bord_droite.png"));
@@ -233,6 +245,7 @@ public class Panneau extends JPanel  implements KeyListener{
 						//g.drawImage(IMG_POMMIER_G, taille_x*3-taille_x,taille_y*5-taille_y*3,taille_x*3,taille_y*4, this);
 						//affichage des éléments
 						afficher_decors(i,j,g);
+						afficherNuage(i,j,g); 
 						
 					}
 				}
@@ -259,6 +272,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				else
 					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 			}
+			
 		}
 		//bordures
 		for(int i=-1;i<=w.getY();i++) {
@@ -776,7 +790,17 @@ public class Panneau extends JPanel  implements KeyListener{
 	}
 	}catch(Exception e) {}
 	}
-	
+	public void afficherNuage(int i,int j,Graphics g) {
+		int taille_x=(f.getX()/(x2-x1));
+		int taille_y=(f.getY()-40)/(y2-y1);
+		for(int var=0;var<w.tab_Cloud.size();var++) {
+			Cloud c=w.tab_Cloud.get(var);
+			if(c.getY()==i && c.getX()==j) {
+				g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+				g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+			}
+		}
+	}
 	public void keyPressed(KeyEvent e) {
 	
 		int c= e.getKeyCode();
