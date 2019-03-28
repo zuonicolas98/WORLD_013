@@ -27,6 +27,7 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_WATER;
 	public Image IMG_ROCHER_EAU;
 	public Image IMG_ROCHER;
+	public Image IMG_ROCKY;
 	//Variables bordures eau
 	public Image IMG_BORD_BAS;
 	public Image IMG_BORD_DROITE;
@@ -167,7 +168,10 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_DRY = ImageIO.read(new File("IMAGES/ELEMENTS/dry.png"));
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
-				IMG_LIGHT = ImageIO.read(new File("IMAGES/ELEMENTS/foudre.png"));
+				IMG_ROCKY = ImageIO.read(new File("IMAGES/ELEMENTS/rocky.png"));
+				try {
+					IMG_LIGHT = ImageIO.read(new File("IMAGES/ELEMENTS/foudre.png"));
+				}catch(IndexOutOfBoundsException e) {}
 				IMG_ROCHER_EAU = ImageIO.read(new File("IMAGES/ELEMENTS/rocher_eau.png"));
 				IMG_ROCHER = ImageIO.read(new File("IMAGES/ELEMENTS/rocher.png"));
 				//bordures eau
@@ -250,6 +254,8 @@ public class Panneau extends JPanel  implements KeyListener{
 				}
 				else if( i!=-1 && j!=-1 && i!=w.getY() && j!=w.getX() && w.getWorld()[j][i]==-1)
 					g.drawImage(IMG_DRY, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+				else if( i!=-1 && j!=-1 && i!=w.getY() && j!=w.getX() && w.n.alti[j][i]<-1)
+					g.drawImage(IMG_ROCKY, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 				else
 					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 			}
@@ -296,108 +302,162 @@ public class Panneau extends JPanel  implements KeyListener{
 					}	
 				//----------------------------------------------------------------------------------------
 				}else if ( i!=-1 && j!=-1 && i!= w.getY() && j!=w.getX() && w.n.alti[j][i]>=0 )  { //wall
-					if(i-1>=0 && w.n.alti[j][i]>w.n.alti[j][i-1] && w.n.alti[j][i-1]!=-1) { //haut
-						if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]  && w.n.alti[j+1][i]!=-1) {
-							if(j+1<w.getX() && w.n.alti[j+1][i]<-1) {
-								g.drawImage(IMG_MONTAGNE_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-							}else {
+					if(i-1>=0 && w.n.alti[j][i]>w.n.alti[j][i-1] && w.n.alti[j][i-1]>-1) { //haut
+						if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]  && w.n.alti[j+1][i]>-1) {
 								g.drawImage(IMG_WALL_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-								g.drawImage(IMG_WALL_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-							}	
-						}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]!=-1) {
-							if(j-1>=0 && w.n.alti[j-1][i]<-1) {
-								g.drawImage(IMG_MONTAGNE_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j+1))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-							
-							}else {	
+								g.drawImage(IMG_WALL_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);								
+						}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]>-1) {
 								g.drawImage(IMG_WALL_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 								g.drawImage(IMG_WALL_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								g.drawImage(IMG_WALL_HAUT, ((f.getX()/(x2-x1))*(j+1))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-							}
 						}else 
-							if(w.n.alti[j][i-1]!=-1) {
-								if(i-1>=0 && w.n.alti[j][i-1]<-1) 
-									g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								else
+							if(w.n.alti[j][i-1]>-1) {
 									g.drawImage(IMG_WALL_HAUT, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 							}
 					}else if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]) { //droit
-						if(i-1>=0 && w.n.alti[j][i]>w.n.alti[j][i-1]  && w.n.alti[j][i-1]!=-1) {
-							if(i-1>=0 && w.n.alti[j][i-1]<-1) 
-								g.drawImage(IMG_MONTAGNE_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							else
+						if(i-1>=0 && w.n.alti[j][i]>w.n.alti[j][i-1]  && w.n.alti[j][i-1]>-1) {
 								g.drawImage(IMG_WALL_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						}else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]!=-1) {
-							if(i+1<w.getY() && w.n.alti[j][i+1]<-1) 
-								g.drawImage(IMG_MONTAGNE_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							else
+						}else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]>-1) {
 								g.drawImage(IMG_WALL_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						}else 
-							if(w.n.alti[j+1][i]!=-1) {
-								if(j+1<w.getX() && w.n.alti[j+1][i]<-1) 
-									g.drawImage(IMG_MONTAGNE_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								else
+							if(w.n.alti[j+1][i]>-1) {
 									g.drawImage(IMG_WALL_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 								
-							}if(i-1>=0 && j+1<w.getX() && w.n.alti[j][i]==w.n.alti[j+1][i-1] && (i+1<w.getY() && j+1<w.getX() && w.n.alti[j+1][i+1]!=-1 )) {
-								if((i-1>=0 && j+1<w.getX() && w.n.alti[j+1][i-1]<-1) || (i+1<w.getY() && j+1<w.getX() && w.n.alti[j+1][i+1]<-1) ) 
-									g.drawImage(IMG_MONTAGNE_INTER_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								else
+							}if(i-1>=0 && j+1<w.getX() && w.n.alti[j][i]==w.n.alti[j+1][i-1] && (i+1<w.getY() && j+1<w.getX() && w.n.alti[j+1][i+1]>-1 )) {
 									g.drawImage(IMG_WALL_INTER_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 							}
 					}else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]) { //bas
-						if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]  && w.n.alti[j+1][i]!=-1) {
-							if(j+1<w.getX() && w.n.alti[j+1][i]<-1) 
-								g.drawImage(IMG_MONTAGNE_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							else
+						if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]  && w.n.alti[j+1][i]>-1) {
 								g.drawImage(IMG_WALL_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]!=-1) {
-							if(j-1>=0 && w.n.alti[j-1][i]<-1) 
-								g.drawImage(IMG_MONTAGNE_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);							
-							else	
+						}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]>-1) {
 								g.drawImage(IMG_WALL_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);							
 							if(i-1>=0 && j-1>=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) {
-								if(j-1>=0 && i+1<w.getY() && w.n.alti[j-1][i+1]<-1) 
-									g.drawImage(IMG_MONTAGNE_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								else
 									g.drawImage(IMG_WALL_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 							}
 						}else {
-							if(w.n.alti[j][i+1]!=-1) {
-								if(i+1<w.getY() && w.n.alti[j][i+1]<-1) 
-									g.drawImage(IMG_MONTAGNE_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								else
+							if(w.n.alti[j][i+1]>-1) {
 									g.drawImage(IMG_WALL_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 							}
 						}
 					}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]) { //gauche
-						if(i-1>=0 &&  w.n.alti[j][i]>w.n.alti[j][i-1]  && w.n.alti[j][i-1]!=-1) {
-							if(i-1>=0 && w.n.alti[j][i-1]<-1) 
-								g.drawImage(IMG_MONTAGNE_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							else
+						if(i-1>=0 &&  w.n.alti[j][i]>w.n.alti[j][i-1]  && w.n.alti[j][i-1]>-1) {
 								g.drawImage(IMG_WALL_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);				
-						}else if(i+1<w.getY() &&  w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]!=-1) {
-							if(i+1<w.getY() && w.n.alti[j][i+1]<-1)
-								g.drawImage(IMG_MONTAGNE_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							else
+						}else if(i+1<w.getY() &&  w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]>-1) {
 								g.drawImage(IMG_WALL_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 						}else 
-							if(w.n.alti[j-1][i]!=-1) {
-								if(j-1>=0 && w.n.alti[j-1][i]<-1)
-									g.drawImage(IMG_MONTAGNE_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								else
+							if(w.n.alti[j-1][i]>-1) {
 									g.drawImage(IMG_WALL_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-							}if((i-1>=0 && j-1 >=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) && (i+1<w.getY() && j-1>=0 && w.n.alti[j-1][i+1]!=-1 )) {
-								if((i-1>=0 && j-1>=0 && w.n.alti[j-1][i-1]<-1) || (i+1<w.getY() && j-1>=0 && w.n.alti[j-1][i+1]<-1) )	
-									g.drawImage(IMG_MONTAGNE_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
-								else
+							}if((i-1>=0 && j-1 >=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) && (i+1<w.getY() && j-1>=0 && w.n.alti[j-1][i+1]>-1 )) {
 									g.drawImage(IMG_WALL_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 							}
 					}		
 			
+				}else if ( i!=-1 && j!=-1 && i!= w.getY() && j!=w.getX() && w.n.alti[j][i]<-1)  { //montagne
+					if(i-1>=0 && w.n.alti[j][i]<w.n.alti[j][i-1] && w.n.alti[j][i-1]!=-1 && w.n.alti[j][i-1]!=-2) { //haut
+						if(j+1<w.getX() && w.n.alti[j][i]<w.n.alti[j+1][i]  && w.n.alti[j+1][i]!=-1 && w.n.alti[j+1][i]!=-2) {
+								g.drawImage(IMG_MONTAGNE_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);		
+						}else if(j-1>=0 && w.n.alti[j][i]<w.n.alti[j-1][i]  && w.n.alti[j-1][i]!=-1  && w.n.alti[j-1][i]!=-2) {
+								g.drawImage(IMG_MONTAGNE_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j+1))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);						
+						}else 
+							if(w.n.alti[j][i-1]!=-1 && w.n.alti[j][i-1]!=-2) {
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);		
+							}
+					}else if(j+1<w.getX() && w.n.alti[j][i]<w.n.alti[j+1][i]) { //droit
+						if(i-1>=0 && w.n.alti[j][i]<w.n.alti[j][i-1]  && w.n.alti[j][i-1]!=-1 && w.n.alti[j][i-1]!=-2) {
+								g.drawImage(IMG_MONTAGNE_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+						}else if(i+1<w.getY() && w.n.alti[j][i]<w.n.alti[j][i+1]  && w.n.alti[j][i+1]!=-1 && w.n.alti[j][i+1]!=-2) {			
+								g.drawImage(IMG_MONTAGNE_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);			
+						}else 
+							if(w.n.alti[j+1][i]!=-1 && w.n.alti[j+1][i]!=-2) {
+									g.drawImage(IMG_MONTAGNE_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+															
+							}if(i-1>=0 && j+1<w.getX() && w.n.alti[j][i]==w.n.alti[j+1][i-1] && (i+1<w.getY() && j+1<w.getX() && w.n.alti[j+1][i+1]!=-1 && w.n.alti[j+1][i+1]!=-2)) {
+									g.drawImage(IMG_MONTAGNE_INTER_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+															}
+					}else if(i+1<w.getY() && w.n.alti[j][i]<w.n.alti[j][i+1]) { //bas
+						if(j+1<w.getX() && w.n.alti[j][i]<w.n.alti[j+1][i]  && w.n.alti[j+1][i]!=-1 && w.n.alti[j+1][i]!=-2) {
+								g.drawImage(IMG_MONTAGNE_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);		
+						}else if(j-1>=0 && w.n.alti[j][i]<w.n.alti[j-1][i]  && w.n.alti[j-1][i]!=-1 && w.n.alti[j-1][i]!=-2) {
+								g.drawImage(IMG_MONTAGNE_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);							
+							if(i-1>=0 && j-1>=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) {
+									g.drawImage(IMG_MONTAGNE_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);						
+							}
+						}else {
+							if(w.n.alti[j][i+1]!=-1 && w.n.alti[j][i+1]!=-2) {
+									g.drawImage(IMG_MONTAGNE_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+							}
+						}
+					}else if(j-1>=0 && w.n.alti[j][i]<w.n.alti[j-1][i]) { //gauche
+						if(i-1>=0 &&  w.n.alti[j][i]<w.n.alti[j][i-1]  && w.n.alti[j][i-1]!=-1 && w.n.alti[j][i-1]!=-2) {
+								g.drawImage(IMG_MONTAGNE_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+						}else if(i+1<w.getY() &&  w.n.alti[j][i]<w.n.alti[j][i+1]  && w.n.alti[j][i+1]!=-1 && w.n.alti[j][i+1]!=-2) {
+								g.drawImage(IMG_MONTAGNE_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+						}else 
+							if(w.n.alti[j-1][i]!=-1 && w.n.alti[j-1][i]!=-2) {
+									g.drawImage(IMG_MONTAGNE_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+							
+							}if((i-1>=0 && j-1 >=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) && (i+1<w.getY() && j-1>=0 && w.n.alti[j-1][i+1]!=-1 && w.n.alti[j-1][i+1]!=-2)) {
+									g.drawImage(IMG_MONTAGNE_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+							}
+					}		
+			
+				}if ( i!=-1 && j!=-1 && i!= w.getY() && j!=w.getX() && w.n.alti[j][i]<-1)  { //montagne
+					if(i-1>=0 && w.n.alti[j][i]>w.n.alti[j][i-1] && w.n.alti[j][i-1]==-3) { //haut
+						if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]  && w.n.alti[j+1][i]==-3) {
+								g.drawImage(IMG_MONTAGNE_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);		
+						}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]==-3) {
+								g.drawImage(IMG_MONTAGNE_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*(j+1))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);						
+						}else 
+							if(w.n.alti[j][i-1]==-3) {
+								g.drawImage(IMG_MONTAGNE_HAUT, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);		
+							}
+					}else if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]) { //droit
+						if(i-1>=0 && w.n.alti[j][i]>w.n.alti[j][i-1]  && w.n.alti[j][i-1]==-3) {
+								g.drawImage(IMG_MONTAGNE_HAUT_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+						}else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]==-3) {			
+								g.drawImage(IMG_MONTAGNE_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);			
+						}else 
+							if(w.n.alti[j+1][i]==-3) {
+									g.drawImage(IMG_MONTAGNE_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+															
+							}if(i-1>=0 && j+1<w.getX() && w.n.alti[j][i]==w.n.alti[j+1][i-1] && (i+1<w.getY() && j+1<w.getX() && w.n.alti[j+1][i+1]==-3 )) {
+									g.drawImage(IMG_MONTAGNE_INTER_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+															}
+					}else if(i+1<w.getY() && w.n.alti[j][i]>w.n.alti[j][i+1]) { //bas
+						if(j+1<w.getX() && w.n.alti[j][i]>w.n.alti[j+1][i]  && w.n.alti[j+1][i]==-3) {
+								g.drawImage(IMG_MONTAGNE_BAS_DROITE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);		
+						}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]  && w.n.alti[j-1][i]==-3) {
+								g.drawImage(IMG_MONTAGNE_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);							
+							if(i-1>=0 && j-1>=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) {
+									g.drawImage(IMG_MONTAGNE_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);						
+							}
+						}else {
+							if(w.n.alti[j][i+1]==-3) {
+									g.drawImage(IMG_MONTAGNE_BAS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+							}
+						}
+					}else if(j-1>=0 && w.n.alti[j][i]>w.n.alti[j-1][i]) { //gauche
+						if(i-1>=0 &&  w.n.alti[j][i]>w.n.alti[j][i-1]  && w.n.alti[j][i-1]==-3) {
+								g.drawImage(IMG_MONTAGNE_HAUT_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+						}else if(i+1<w.getY() &&  w.n.alti[j][i]>w.n.alti[j][i+1]  && w.n.alti[j][i+1]==-3) {
+								g.drawImage(IMG_MONTAGNE_BAS_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+						}else 
+							if(w.n.alti[j-1][i]==-3) {
+									g.drawImage(IMG_MONTAGNE_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+							
+							}if((i-1>=0 && j-1 >=0 && w.n.alti[j][i]==w.n.alti[j-1][i-1]) && (i+1<w.getY() && j-1>=0 && w.n.alti[j-1][i+1]==-3 )) {
+									g.drawImage(IMG_MONTAGNE_INTER_GAUCHE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
+							}
+					}		
+			
 				}
+				
+				
 			}
 		}
 	}
