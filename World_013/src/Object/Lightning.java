@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 public class Lightning {
 	
 	public int cpt=0;
-	private int frame=10;//temps d'attente avant de rafficher 
+	private int frame=50;//temps d'attente avant de rafficher 
 	private File file = new File("IMAGES/ELEMENTS/foudre.png");
 
 	public Lightning() {

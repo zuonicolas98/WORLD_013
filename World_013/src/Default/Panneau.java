@@ -765,7 +765,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				if(w.l.estAfficher()) {
 					g.drawImage(IMG_NUAGE2,  (taille_x*arbre.getX()-taille_x*2)-(xtmp*(taille_x)),(taille_y*arbre.getY()-taille_y*12)-(ytmp*(taille_y)),taille_x*6,taille_y*6, this);
 					g.drawImage(IMG_LIGHT,  (taille_x*arbre.getX()-taille_x)-(xtmp*(taille_x)),(taille_y*arbre.getY()-taille_y*7)-(ytmp*(taille_y)),taille_x*3,taille_y*8, this);
-					//w.l.setLight();//sa bug trop meme si c'est beau avec
+					w.l.setLight();//sa bug trop meme si c'est beau avec
 				}
 				else {
 					foudre=false;
@@ -805,7 +805,22 @@ public class Panneau extends JPanel  implements KeyListener{
 			if(c.getY()==i && c.getX()==j) {
 				int decalage=(taille_x/5);
 				//System.out.println(decalage+" "+taille_x+" "+(taille_x/5)*2);
-				if(c.pluie) {
+				if(c.fin_vie) {
+					int d=c.ombre_y-c.getY()-2;
+					g.drawImage(IMG_NUAGE2,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+					g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					g.drawImage(IMG_LIGHT,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i)-(ytmp*(taille_y)),taille_x*3,taille_y*(3+d), this);
+					try {
+						w.l.setLight();
+					} catch (IOException e) {}
+					int distance=0;
+					int d2=c.ombre_y-c.getY()-2;
+					while(distance<d2) {
+						if(distance%2==0)
+							g.drawImage(IMG_PLUIE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i+taille_y*distance)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						distance++;
+					}
+				}else if(c.pluie) {
 					g.drawImage(IMG_NUAGE1,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
 					g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
 					int distance=0;

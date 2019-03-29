@@ -58,7 +58,7 @@ public class Noise {
 						max=var;
 				}
 			}
-			System.out.println(n0+" "+n1+" "+n+" "+max);
+			//System.out.println(n0+" "+n1+" "+n+" "+max);
 			
 		} catch (IOException e) {}
 	}

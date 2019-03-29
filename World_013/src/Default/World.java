@@ -131,6 +131,16 @@ public class World {
 		return a;	
 	}
 	
+	public int RechercheAnimal(int __x,int __y) {
+		for(int id=0;id<tab_Arbre.size();id++) {
+			try {
+				if(tab_Animal.get(id).getX()==__x && tab_Animal.get(id).getY()==__y) 
+					return id;	
+			}catch(Exception e) {}
+		}
+		return -1;	
+	}
+	
 	public void run() {
 		f.setVisible(true);
 		while(fin) {

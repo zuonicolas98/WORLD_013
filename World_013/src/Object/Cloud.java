@@ -1,9 +1,6 @@
 package Object;
 
-import java.util.ArrayList;
-
 import Default.*;
-import Agents.*;
 
 public class Cloud {
 	private World w;
@@ -16,7 +13,8 @@ public class Cloud {
 	public int ombre_x,ombre_y;
 	public boolean pluie=false;
 	public boolean foudre=false;
-	private static int cpt_pluie=0,cpt_animaux=0;
+	public boolean fin_vie=false;
+	private static int cpt_pluie=0;
 	private int cpt=0;
 	private int direction;
 	private int ancien=-10;
@@ -30,7 +28,10 @@ public class Cloud {
 		this.x=x;
 		this.y=y;
 		this.age=age;
-		vie=w.getX()*2;
+		if(w.getX()*2<20)
+			vie=30;
+		else
+			vie=w.getX()*2;
 		ombre_x=x;
 		int d=(int)(Math.random()*2);
 		if(d==0)
@@ -68,6 +69,7 @@ public class Cloud {
 						alti[x][ombre_y]>=0 && // verifier que c pas dans l'eau sur montagne
 						pluie==false && //pour ne pas rerentrer dedans
 						foudre==false &&
+						fin_vie==false &&
 						alti[x+1][ombre_y]==alti[x][ombre_y] && alti[x-1][ombre_y]==alti[x][ombre_y] && //pour ne pas afficher sur sur un relief
 								Math.random()<0.05)//prob qui pleut 
 				{
@@ -78,7 +80,8 @@ public class Cloud {
 				//--------FOUDRE
 				if(w.tab_Arbre.size() > w.getX()*2 && // faire quand ils manquent d'arbres
 						w.RechercheArbres(x,ombre_y).getX()!=-1 &&
-						Math.random()<0.1 &&
+						Math.random()<0.01*(w.tab_Cloud.size()) &&
+						fin_vie==false &&
 						pluie==false
 						)
 				{
@@ -107,13 +110,12 @@ public class Cloud {
 						else
 							w.tab_Arbre.add(new Arbre("Cocotier",30,x,ombre_y, w));
 					}
-					System.out.println(cpt_pluie);
 					if(duree_instant==duree_pluie) {
 						cpt_pluie--;
 						w.tab_Cloud.remove(this);
 					}
 				}
-				if(pluie==false && foudre==false) {
+				if(pluie==false && foudre==false && fin_vie==false ) {
 					
 					if(	x+1>=w.getX()-1 || x-1<=1) {
 						this.changeDirection();
@@ -122,6 +124,7 @@ public class Cloud {
 						//this.changeDirection();
 				
 					if(direction==1) {
+						if(alti[x+1][ombre_y]>=-1) {
 						//System.out.println("x = "+x+" ombre_y = "+ombre_y);
 						if( x!=-1 && ancien!=alti[x][ombre_y]) {
 							ancien=-10;
@@ -135,8 +138,10 @@ public class Cloud {
 						}
 						ombre_x=ombre_x+1;
 						x=x+1;
-					
+						}else
+							this.changeDirection();
 					}else if(direction==3) {
+						if(alti[x-1][ombre_y]>=-1) {
 						if(ancien!=alti[x][ombre_y]) {
 							ancien=-10;
 						}
@@ -149,19 +154,34 @@ public class Cloud {
 						}
 						ombre_x=ombre_x-1;
 						x=x-1;
+						}else
+							this.changeDirection();
 					}
 					cpt=0;
 					flag=true;
-					vie--;
 				}
+				vie--;
 			}
 			else {
 				cpt++;
 			}
 		}
-		if(vie==0) {
+		if(vie>0 && vie<=10 && pluie==false && foudre ==false) {
+			
+			fin_vie=true;
+			if(alti[x][ombre_y]>=0)
+				w.world[x][ombre_y]=-1;
+			if(w.RechercheArbres(x,ombre_y).getX()!=-1)
+				w.RechercheArbres(x,ombre_y).setFeu(true);
+			for(int x_bis=x-1;x_bis<=x+1;x_bis++) {
+				int a=w.RechercheAnimal(x_bis, ombre_y);
+				if(a!=-1)
+					w.tab_Animal.remove(a);
+			}
+		}else if(vie<=0 && pluie==false && foudre ==false) {
 			w.tab_Cloud.remove(this);
 		}
+
 	}
 	
 	public void changeDirection() {
