@@ -29,9 +29,16 @@ public class Noise {
 			NOISE=ImageIO.read(new File("IMAGES/noise.png"));
 			int h=NOISE.getHeight();
 			int l=NOISE.getWidth();
-			
+			if(l<X || h<Y) {
+				System.out.println("ERREUR : Resolution trop grande");
+				System.exit(0);
+			}
 			x_max=(int)(Math.random()*(l+1));
 			y_max=(int)(Math.random()*(h+1));
+			while(x_max+X>l)
+				x_max=(int)(Math.random()*(l+1));
+			while(y_max+Y>h)
+				y_max=(int)(Math.random()*(h+1));
 			
 			for(int x=x_max;x<x_max+X;x++) {
 				for(int y=y_max;y<y_max+Y;y++) {
