@@ -113,7 +113,7 @@ public class Panneau extends JPanel  implements KeyListener{
 	}
 	
 	public void paintComponent(Graphics g) {
-		
+		super.paintComponent(g);
 			try {
 				
 				//--------------------- PIG -----------------------
