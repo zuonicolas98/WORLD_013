@@ -10,7 +10,7 @@ public class Chevre extends Animal{
 		super(x,y,w);
 		timer=4;
 		cpt=0;
-		vie=100;
+		vie=10000;
 		nb_chevre++;
 	}
 	
@@ -77,7 +77,7 @@ public class Chevre extends Animal{
 	}
 	
 	public void manger() {
-		if(vie<45) {
+		if(vie<4500) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if((Math.random()<0.7) && (w.tab_Animal.get(k) instanceof Lapin) && (((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y)) 		//si ils sont sur la meme case
 															|| ((w.tab_Animal.get(k).getX()==x-1) && (w.tab_Animal.get(k).getY()==y))		//si la proie est a gauche
@@ -213,7 +213,7 @@ public class Chevre extends Animal{
 		}
 		return false; //renvoie false s'il n'y a pas de proie a cote.
 	}
-	
+	public int getNb_chevre() { return nb_chevre;}
 
 	
 }

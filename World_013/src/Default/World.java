@@ -5,7 +5,7 @@ import Agents.*;
 import java.util.ArrayList;
 
 public class World {
-	private int[][] world;
+	public int[][] world;
 	private int X,Y,delay;
 	public ArrayList<Cloud> tab_Cloud;
 	public ArrayList<Object> object;
@@ -65,13 +65,9 @@ public class World {
 					world[x][y]=1;
 				if(m<0.005 && n.alti[x][y]>=-1) //Roches_eau
 					world[x][y]=3;
-				//if(Math.random()<0.005 && n.alti[x][y]>=-1 && y<Y-10) {
-					//tab_Cloud.add(new Cloud(25,25,10,this));
-				//}
 				
 			}
 		}
-		tab_Cloud.add(new Cloud(25,25,10,this));
 		//Initialisation des arbres
 		
 		for(int i=0;i<nb_arbre;i++) {
@@ -168,6 +164,15 @@ public class World {
 			tab_Cloud.get(i).step();
 		}
 		
+		if(Math.random()<0.01 && tab_Cloud.size()<Y/5) {//proba apparitin nuage 
+			int ___x=(int)(Math.random()*X);
+			int ___y=(int)(Math.random()*Y);
+			while((n.alti[___x][___y]<-1 || ___y>=Y-11 || ___x<3 || ___x>X-3)) {
+				___x=(int)(Math.random()*X);
+				___y=(int)(Math.random()*Y);
+			}
+			tab_Cloud.add(new Cloud(___x,___y,0,this));
+		}
 		//step() light
 		l.setCpt();
 		

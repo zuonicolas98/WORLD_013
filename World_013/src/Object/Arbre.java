@@ -38,7 +38,7 @@ public class Arbre {
 		//1% de chance que le feu s'eteint
 		if(feu == true) {
 			vie--;
-			if(Math.random()<0.01) 
+			if(Math.random()<0.0001) 
 				feu=false;
 			
 		//Apparition d'un arbre a cote d'un autre
@@ -82,7 +82,7 @@ public class Arbre {
 		}
 		
 		//Feu de foret
-		if( Math.random()<0.10 && (feu==false) && (w.RechercheArbres(x,y-1).getFeu()==true || w.RechercheArbres(x+1,y).getFeu()==true 
+		if( Math.random()<0.30 && (feu==false) && (w.RechercheArbres(x,y-1).getFeu()==true || w.RechercheArbres(x+1,y).getFeu()==true 
 							|| w.RechercheArbres(x,y+1).getFeu()==true || w.RechercheArbres(x-1,y).getFeu()==true)) 
 				feu=true;
 		

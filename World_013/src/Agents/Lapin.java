@@ -10,7 +10,7 @@ public class Lapin extends Animal{
 		super(x,y,w);
 		timer=3;
 		cpt=0;
-		vie=85;
+		vie=10000;
 		nb_lapin++;
 	}
 	
@@ -77,7 +77,7 @@ public class Lapin extends Animal{
 	}
 	
 	public void manger() {
-		if(vie<35) {
+		if(vie<3500) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && Math.random()<0.05 ) { //si ils sont sur la meme case
 					w.tab_Animal.remove(k);
@@ -211,6 +211,8 @@ public class Lapin extends Animal{
 		}
 		return false; //renvoie false s'il n'y a pas de proie a cote.	
 	}
+	
+	public int getNb_lapin() { return nb_lapin;}
 
 	
 }

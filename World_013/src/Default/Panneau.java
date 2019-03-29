@@ -66,7 +66,9 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_NUAGE0;
 	public Image IMG_NUAGE1;
 	public Image IMG_NUAGE2;
+	public Image IMG_NUAGE_NORMAL;
 	public Image IMG_OMBRE;
+	public Image IMG_PLUIE;
 	//Variables images animaux
 	public Image IMG_PIG;
 	public Image[][] IMG_PIG_M;
@@ -107,6 +109,7 @@ public class Panneau extends JPanel  implements KeyListener{
 		IMG_GOAT_M=new Image[4][3];
 		IMG_FIRE = Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/fire.gif");
 		IMG_WATER= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/water.gif");
+		IMG_PLUIE= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/pluie.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -181,7 +184,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_ROCHER_EAU = ImageIO.read(new File("IMAGES/ELEMENTS/rocher_eau.png"));
 				IMG_ROCHER = ImageIO.read(new File("IMAGES/ELEMENTS/rocher.png"));
 				//NUAGE
-				IMG_NUAGE  = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage.png"));
+				IMG_NUAGE_NORMAL  = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage.png"));
 				IMG_NUAGE0 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage0.png"));
 				IMG_NUAGE1 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage1.png"));
 				IMG_NUAGE2 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage2.png"));
@@ -244,9 +247,12 @@ public class Panneau extends JPanel  implements KeyListener{
 						//g.drawImage(IMG_BUSH, (f.getX()/(w.getX()))*4,((f.getY()-40)/(w.getY()))*5 ,f.getX()/(w.getX()),f.getY()/(w.getY()), this);
 						//g.drawImage(IMG_POMMIER_G, taille_x*3-taille_x,taille_y*5-taille_y*3,taille_x*3,taille_y*4, this);
 						//affichage des éléments
-						afficher_decors(i,j,g);
-						afficherNuage(i,j,g); 
-						
+						afficher_decors(i,j,g);	
+					}
+				}
+				for(int i=0;i<w.getY();i++) {
+					for(int j=0;j<w.getX();j++) {
+						afficherNuage(i,j,g); 	
 					}
 				}
 				if(time==2)
@@ -254,7 +260,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				else
 					time++;
 				//System.out.println(time);
-			}catch(IOException e) {}
+			}catch(Exception e) {}
 	
 	}
 
@@ -757,8 +763,9 @@ public class Panneau extends JPanel  implements KeyListener{
 			}
 			if(foudre) {
 				if(w.l.estAfficher()) {
-					g.drawImage(IMG_LIGHT,  (taille_x*arbre.getX()-taille_x)-(xtmp*(taille_x*3)),(taille_y*arbre.getY()-taille_y*7)-(ytmp*(taille_y*8)),taille_x*3,taille_y*8, this);
-
+					g.drawImage(IMG_NUAGE2,  (taille_x*arbre.getX()-taille_x*2)-(xtmp*(taille_x)),(taille_y*arbre.getY()-taille_y*12)-(ytmp*(taille_y)),taille_x*6,taille_y*6, this);
+					g.drawImage(IMG_LIGHT,  (taille_x*arbre.getX()-taille_x)-(xtmp*(taille_x)),(taille_y*arbre.getY()-taille_y*7)-(ytmp*(taille_y)),taille_x*3,taille_y*8, this);
+					//w.l.setLight();//sa bug trop meme si c'est beau avec
 				}
 				else {
 					foudre=false;
@@ -767,7 +774,7 @@ public class Panneau extends JPanel  implements KeyListener{
 			}
 
 			if(w.RechercheArbres(j,i).getFeu()) { //Si l'arbre est en feu
-					g.drawImage(IMG_FIRE, (taille_x*j-taille_x*2)-(xtmp*(taille_x*5 )),((taille_y)*i-taille_y*7)-(ytmp*(taille_y*8)),taille_x*5,taille_y*8, this);
+					g.drawImage(IMG_FIRE, (taille_x*j-taille_x*2)-(xtmp*(taille_x)),((taille_y)*i-taille_y*7)-(ytmp*(taille_y)),taille_x*5,taille_y*8, this);
 
 			}
 			
@@ -796,8 +803,86 @@ public class Panneau extends JPanel  implements KeyListener{
 		for(int var=0;var<w.tab_Cloud.size();var++) {
 			Cloud c=w.tab_Cloud.get(var);
 			if(c.getY()==i && c.getX()==j) {
-				g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
-				g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+				int decalage=(taille_x/5);
+				//System.out.println(decalage+" "+taille_x+" "+(taille_x/5)*2);
+				if(c.pluie) {
+					g.drawImage(IMG_NUAGE1,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+					g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					int distance=0;
+					int d=c.ombre_y-c.getY()-2;
+					while(distance<d) {
+						if(distance%2==0)
+							g.drawImage(IMG_PLUIE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i+taille_y*distance)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						distance++;
+					}
+				}else if(c.foudre) {
+					
+					int d=c.ombre_y-c.getY()-2;
+					g.drawImage(IMG_NUAGE2,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+					g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					if(c.duree_instant>=c.duree_foudre/2) {
+						g.drawImage(IMG_LIGHT,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i)-(ytmp*(taille_y)),taille_x*3,taille_y*(3+d), this);
+					try {
+						w.l.setLight();
+					} catch (IOException e) {}
+					}
+					
+					
+				}else if(c.getMature()==false) {
+					IMG_NUAGE=IMG_NUAGE_NORMAL;
+					int taillex=(taille_x*3)/5;
+					int tailley=(taille_y*4)/5;
+					if(c.getAge()<2 ) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taillex,tailley, this);
+					}
+					else if(c.getAge()<4 ) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taillex*2,tailley*2, this);
+					}else if(c.getAge()<6 ) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taillex*3,tailley*3, this);
+					}else if(c.getAge()<8 ) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taillex*4,tailley*4, this);
+					}else if(c.getAge()<=10 ) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taillex*5,tailley*5,this);
+					}
+				}else if(c.getDirection()==1 ) {
+					IMG_NUAGE=IMG_NUAGE0;
+					if(c.getCpt()<10 ) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}
+					else if(c.getCpt()<20) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x+decalage)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x+decalage)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}else if(c.getCpt()<30) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x+decalage*2)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x+decalage*2)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}else if(c.getCpt()<40) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x+decalage*3)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x+decalage*3)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}else if(c.getCpt()<=50) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x+decalage*4)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x+decalage*4)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}
+				}else if(c.getDirection()==3) {
+					IMG_NUAGE=IMG_NUAGE0;
+					if(c.getCpt()<10 ) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}
+					else if(c.getCpt()<20) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x-decalage)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x-decalage)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}else if(c.getCpt()<30) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x-decalage*2)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x-decalage*2)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}else if(c.getCpt()<40) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x-decalage*3)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x-decalage*3)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}else if(c.getCpt()<=50) {
+						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x-decalage*4)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x-decalage*4)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					}
+				}
 			}
 		}
 	}

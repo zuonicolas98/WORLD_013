@@ -10,7 +10,7 @@ public class Cochon extends Animal{
 		super(x,y,w);
 		timer=5;
 		cpt=0;
-		vie=100;
+		vie=10000;
 		nb_cochon++;
 	}
 	
@@ -40,7 +40,7 @@ public class Cochon extends Animal{
 		
 		if(cpt == timer) {
 			reproduire++;
-			if(vie<35) {
+			if(vie<3500) {
 				if(this.chasser() == false) { //on le fait bouger si il n'a pas trouve de proie (il ne bouge pas avec chasser() s'il n'y a pas de proie).
 					this.bouger();
 				}
@@ -76,7 +76,7 @@ public class Cochon extends Animal{
 	}
 	
 	public void manger() {
-		if(vie<55) {
+		if(vie<5500) {
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if((Math.random()<0.7) && (w.tab_Animal.get(k) instanceof Chevre) && (((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y)) 		//si ils sont sur la meme case
 															|| ((w.tab_Animal.get(k).getX()==x-1) && (w.tab_Animal.get(k).getY()==y))		//si la proie est a gauche
@@ -211,5 +211,5 @@ public class Cochon extends Animal{
 		}
 		return false; //renvoie false s'il n'y a pas de proie a cote.	
 	}
-	
+	public int getNb_cochon() { return nb_cochon;}
 }
