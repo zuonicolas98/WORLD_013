@@ -65,13 +65,13 @@ public class World {
 					world[x][y]=1;
 				if(m<0.005 && n.alti[x][y]>=-1) //Roches_eau
 					world[x][y]=3;
-				if(Math.random()<0.02 && n.alti[x][y]>=-1 && y<Y-10) {
-					tab_Cloud.add(new Cloud(x,y,10,this));
-				}
+				//if(Math.random()<0.005 && n.alti[x][y]>=-1 && y<Y-10) {
+					//tab_Cloud.add(new Cloud(25,25,10,this));
+				//}
 				
 			}
 		}
-		
+		tab_Cloud.add(new Cloud(25,25,10,this));
 		//Initialisation des arbres
 		
 		for(int i=0;i<nb_arbre;i++) {
@@ -162,6 +162,10 @@ public class World {
 		//step() arbres
 		for(int i=0; i < tab_Arbre.size(); i++) {
 			tab_Arbre.get(i).step();
+		}
+		
+		for(int i=0; i < tab_Cloud.size(); i++) {
+			tab_Cloud.get(i).step();
 		}
 		
 		//step() light

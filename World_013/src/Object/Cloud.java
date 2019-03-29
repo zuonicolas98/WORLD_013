@@ -10,6 +10,7 @@ public class Cloud {
 	private int age;
 	private int vie;
 	private boolean mature=false;
+	private boolean flag=false;
 	private int x,y;
 	public int ombre_x,ombre_y;
 	private int cpt;
@@ -23,7 +24,7 @@ public class Cloud {
 		this.age=age;
 		vie=10;
 		ombre_x=x;
-		int d=(int)Math.random()*2;
+		int d=0;//(int)(Math.random()*2);
 		if(d==0)
 			direction=1;
 		else
@@ -39,8 +40,8 @@ public class Cloud {
 	}
 	
 	public void step() {
-		if(mature=false) {
-			if (cpt>=300) {
+		if(mature==false) {
+			if (cpt>=200) {
 				cpt=0;
 				age++;
 				if(age>=10)
@@ -49,38 +50,33 @@ public class Cloud {
 			else
 				cpt++;
 		}else {
-			if(cpt==200) {
-				if(	x+1==w.getX() && x-1<0) {
+			if(cpt==10) {
+				if(	x+1==w.getX() || x-1<0) {
 					this.changeDirection();
 				}
-				else if(direction==1) {
-					if(alti[x+1][y]<=-2) {
-						if(Math.random()<0.0005)
-							this.changeDirection();
-					}else {
-						if(alti[x][ombre_y]<alti[x+1][ombre_y]) {
-							ombre_y=y-1;
-						}else if(alti[x+1][ombre_y]==-1){
-							ombre_y=y+1;
-						}
-						ombre_x=ombre_x+1;
-						x=x+1;
+				//if(Math.random()<0.05 && flag==true)
+					//this.changeDirection();
+				
+				if(direction==1) {
+					if(alti[x][ombre_y]<alti[x+1][ombre_y]) {
+						ombre_y=ombre_y-1;
+					}else if((alti[x][ombre_y]!=-1 && alti[x+1][ombre_y]==-1) || alti[x][ombre_y]>alti[x+1][ombre_y]){
+						ombre_y=ombre_y+1;
 					}
+					ombre_x=ombre_x+1;
+					x=x+1;
+					
 				}else if(direction==3) {
-					if(alti[x-1][y]<=-2) {
-						if(Math.random()<0.0005)
-							this.changeDirection();
-					}else {
-						if(alti[x][ombre_y]<alti[x-1][ombre_y]) {
-							ombre_y=y-1;
-						}else if(alti[x-1][ombre_y]==-1){
-							ombre_y=y-1;
-						}
-						ombre_x=ombre_x-1;
-						x=x-1;
+					if(alti[x][ombre_y]<alti[x-1][ombre_y]) {
+						ombre_y=ombre_y-1;
+					}else if((alti[x][ombre_y]!=-1 && alti[x-1][ombre_y]==-1) || alti[x][ombre_y]>alti[x-1][ombre_y]){
+						ombre_y=ombre_y+1;
 					}
+					ombre_x=ombre_x-1;
+					x=x-1;
 				}
 				cpt=0;
+				flag=true;
 			}
 			else
 				cpt++;
@@ -88,6 +84,7 @@ public class Cloud {
 	}
 	
 	public void changeDirection() {
+		flag=false;
 		if(direction==1)
 			direction=3;
 		else
