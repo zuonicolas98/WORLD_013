@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class World {
 	public int[][] world;
-	private int X,Y,delay;
+	public int[][] liquide;
+	private int X,Y,delay,lave,monte;
 	public ArrayList<Cloud> tab_Cloud;
 	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
@@ -24,12 +25,15 @@ public class World {
 		}
 		//Initialisations
 		world=new int[x][y];
+		liquide=new int[x][y];
 		n=new Noise(x,y);
 
 		X=x;
 		Y=y;
 		fin=true;
 		delay = 51;
+		lave=0;
+		monte=1;
 		f= new Fenetre(this,tx,ty);
 		this.nb_arbre=nb_arbre;
 		this.nb_animal=nb_animal;
@@ -107,7 +111,15 @@ public class World {
 				}else
 					i--;
 			}
-		
+		//Initialisation liquide
+			for(int i=0; i<X; i++) {
+				for(int j=0; j<Y; j++) {
+					if (n.alti[i][j]==-2 && rebord(i,j)==0)
+						liquide[i][j]=1;
+				}
+			}
+		//afficherAltitude();
+		//afficherLiquide();
 	}
 	
 
@@ -189,27 +201,67 @@ public class World {
 		refreshground();
 		
 		f.getPanneau().repaint();
+		
+		lave++;
 	}
 	
-	//Rafraichissement du sol + apparition d'herbes
+	//Rafraichissement du sol + apparitions d'herbes + liquide
 	void refreshground() {
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
-				if(Math.random()<0.00001 && world[x][y]==1)
+				if(Math.random()<0.00001 && world[x][y]==1) //disparition de l'herbe
 					world[x][y]=0;
-				
+				//apparitions herbes
 				if(Math.random()<0.000005 && world[x][y]==0 && n.alti[x][y]>=0 &&  rebord(x,y)==0 && (x-1>=0 && y+1<Y && n.alti[x][y]==n.alti[x-1][y+1]) && (x+1<X && y+1<Y && n.alti[x][y]==n.alti[x+1][y+1])) //Herbes
 					world[x][y]=1;	
 				
+				//sol non fertile qui redevient sol fertile
 				if( (world[x][y]==-1) && (Math.random()<0.003) && 
 				(  ((y-1>=0) && ((world[x][y-1]==0) || (world[x][y-1]==1) || (world[x][y-1]==2))) 
 				|| ((x+1<X)  && ((world[x+1][y]==0) || (world[x+1][y]==1) || (world[x+1][y]==2)))
 				|| ((y+1<Y)  && ((world[x][y+1]==0) || (world[x][y+1]==1) || (world[x][y+1]==2))) 
 				|| ((x-1>=0) && ((world[x-1][y]==0) || (world[x-1][y]==1) || (world[x-1][y]==2))) ))
 					world[x][y]=0;
-					
+				
+				//liquide
+				if(lave%50==0) {
+					if(n.alti[x][y]==-2) {
+						if(liquide[x][y]<10 && monte==1){
+							liquide[x][y]++;
+						}else {
+							monte=0;
+							ecoulement();
+						}
+					}
+				}
+				
 			}
 		}
+	}
+	
+	public void ecoulement() {		
+		for(int i=0; i<Y; i++) {
+			for(int j=0; j<X; j++) {
+				if(i-1>=0 && liquide[j][i-1]>0 && (n.alti[j][i]<n.alti[j][i-1] || (Math.random()<0.1 && n.alti[j][i]==n.alti[j][i-1])) ) {
+					liquide[j][i]++;
+					liquide[j][i-1]--;
+				}
+				if(j+1<X && liquide[j+1][i]>0 && (n.alti[j][i]<n.alti[j+1][i] || (Math.random()<0.1 && n.alti[j][i]==n.alti[j+1][i])) ) {
+					liquide[j][i]++;
+					liquide[j+1][i]--;
+				}
+				if(i+1<Y && liquide[j][i+1]>0 && (n.alti[j][i]<n.alti[j][i+1] || (Math.random()<0.1 && n.alti[j][i]==n.alti[j][i+1])) ) {
+					liquide[j][i]++;
+					liquide[j][i+1]--;
+				}
+				if(j-1>=0 && liquide[j-1][i]>0 && (n.alti[j][i]<n.alti[j-1][i] || (Math.random()<0.1 && n.alti[j][i]==n.alti[j-1][i])) ) {
+					liquide[j][i]++;
+					liquide[j-1][i]--;
+				}
+				
+			}
+		}
+		
 	}
 	
 	public int rebord(int x, int y) {
@@ -222,7 +274,25 @@ public class World {
 		return 0;
 	}
 	
-
+	public void afficherLiquide() {	
+		for(int i=0; i<Y; i++) {
+			for(int j=0; j<X; j++) {
+				System.out.print(liquide[j][i]);
+			}
+			System.out.println();
+		}	
+	}
+	
+	public void afficherAltitude() {	
+		for(int i=0; i<Y; i++) {
+			for(int j=0; j<X; j++) {
+				System.out.print(n.alti[j][i]);
+			}
+			System.out.println();
+		}
+		
+	}
+	
 	//Getters
 	public int[][] getWorld() { return world ;}
 	public int getX() { return X; }

@@ -34,7 +34,10 @@ public class Fenetre extends JFrame{
 		co.add(b, BorderLayout.SOUTH);
 		b.addActionListener(new EcouteurBoutonChanger());
 		b.requestFocus();
-		this.setContentPane(co);
+		//this.setContentPane(co);
+		
+		this.setContentPane(p);
+		p.setFocusable(true);
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setUndecorated(true);
