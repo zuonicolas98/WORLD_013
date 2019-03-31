@@ -58,8 +58,14 @@ public class Noise {
 						n1++;
 					}
 					else {
+						if (var>=200) {
+							alti[x-x_max][y-y_max]=(((int)(var/10))%10)+7;
+							n++;
+						}
+						else {
 						alti[x-x_max][y-y_max]=(((int)(var/10))%10)-3;
 						n++;
+						}
 					}
 					if(var>max)
 						max=var;

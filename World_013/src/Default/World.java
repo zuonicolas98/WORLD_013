@@ -189,7 +189,7 @@ public class World {
 		if(Math.random()<0.01 && tab_Cloud.size()<Y/5) {//proba apparitin nuage 
 			int ___x=(int)(Math.random()*X);
 			int ___y=(int)(Math.random()*Y);
-			while((n.alti[___x][___y]<-1 || ___y>=Y-11 || ___x<3 || ___x>X-3)) {
+			while((n.alti[___x][___y]<-1 || n.alti[___x][___y]>6 || ___y>=Y-11 || ___x<3 || ___x>X-3)) {
 				___x=(int)(Math.random()*X);
 				___y=(int)(Math.random()*Y);
 			}

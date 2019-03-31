@@ -213,6 +213,7 @@ public class Lapin extends Animal{
 	}
 	
 	public int getNb_lapin() { return nb_lapin;}
+	
 
 	
 }

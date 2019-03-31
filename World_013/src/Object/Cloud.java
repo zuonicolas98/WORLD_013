@@ -38,8 +38,10 @@ public class Cloud {
 			direction=1;
 		else
 			direction=3;
-		if(alti[x][y]<=-2 )
+		if(alti[x][y]>6 ) {
 			System.out.println("Mauvaise initialisation des nuages");
+			System.exit(0);
+		}
 		if(alti[x][y]==-1 || y+10<w.getY()) {
 			ombre_y=y+10;
 		}
@@ -124,7 +126,7 @@ public class Cloud {
 						//this.changeDirection();
 				
 					if(direction==1) {
-						if(alti[x+1][ombre_y]>=-1) {
+						if(alti[x+1][ombre_y]>=-1 && alti[x+1][ombre_y]<=6 ) {
 						//System.out.println("x = "+x+" ombre_y = "+ombre_y);
 						if( x!=-1 && ancien!=alti[x][ombre_y]) {
 							ancien=-10;
@@ -141,7 +143,7 @@ public class Cloud {
 						}else
 							this.changeDirection();
 					}else if(direction==3) {
-						if(alti[x-1][ombre_y]>=-1) {
+						if(alti[x-1][ombre_y]>=-1 && alti[x+1][ombre_y]<=6) {
 						if(ancien!=alti[x][ombre_y]) {
 							ancien=-10;
 						}
@@ -166,7 +168,7 @@ public class Cloud {
 				cpt++;
 			}
 		}
-		if(vie>0 && vie<=10 && pluie==false && foudre ==false) {
+		if(vie>0 && vie<=5 && pluie==false && foudre ==false) {
 			
 			fin_vie=true;
 			if(alti[x][ombre_y]>=0)
