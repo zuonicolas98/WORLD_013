@@ -36,6 +36,7 @@ public class Lapin extends Animal{
 		}
 		if(surpopulation == true) {
 			w.tab_Animal.remove(this);
+			nb_lapin--;
 		}
 		if(cpt == timer) {
 			reproduire++;
@@ -58,9 +59,10 @@ public class Lapin extends Animal{
 		//System.out.println(cpt);
 		
 		//Meurt
-		if(vie<=0 )
+		if(vie<=0 ) {
 			w.tab_Animal.remove(this);
-		
+			nb_lapin--;
+		}
 		//System.out.println(vie);
 		
 		//manger
@@ -86,6 +88,7 @@ public class Lapin extends Animal{
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && Math.random()<0.05 ) { //si ils sont sur la meme case
 					w.tab_Animal.remove(k);
+					nb_lapin--;
 					vie=vie+50;
 					action=2;
 					cpt=cpt-2;

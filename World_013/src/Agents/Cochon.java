@@ -36,6 +36,7 @@ public class Cochon extends Animal{
 		}
 		if(surpopulation == true) {
 			w.tab_Animal.remove(this);
+			nb_cochon--;
 		}
 		
 		if(cpt == timer) {
@@ -59,8 +60,10 @@ public class Cochon extends Animal{
 		//System.out.print(cpt+" ");
 		
 		//Meurt
-		if(vie<=0 )
+		if(vie<=0 ) {
 			w.tab_Animal.remove(this);
+			nb_cochon--;
+		}
 		//System.out.println(vie);
 		
 		//manger
@@ -89,6 +92,7 @@ public class Cochon extends Animal{
 															|| ((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y-1))		//si la proie est en haut
 															|| ((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y+1))) ) {  //si la proie est en bas
 					w.tab_Animal.remove(k);
+					nb_cochon--;
 					vie=vie+50;
 					action=2;
 					cpt=cpt-2;

@@ -36,6 +36,7 @@ public class Chevre extends Animal{
 		}
 		if(surpopulation == true) {
 			w.tab_Animal.remove(this);
+			nb_chevre--;
 		}
 		
 		if(cpt == timer) {
@@ -58,8 +59,10 @@ public class Chevre extends Animal{
 		}
 		
 		//Meurt
-		if(vie<=0)
+		if(vie<=0) {
 			w.tab_Animal.remove(this);
+			nb_chevre--;
+		}
 		//System.out.println(vie);
 		
 		
@@ -89,6 +92,7 @@ public class Chevre extends Animal{
 															|| ((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y-1))		//si la proie est en haut
 															|| ((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y+1))) ) {  //si la proie est en bas
 					w.tab_Animal.remove(k);
+					nb_chevre--;
 					vie=vie+50;
 					action=2;
 					cpt=cpt-2;
