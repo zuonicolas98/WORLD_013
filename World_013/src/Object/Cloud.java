@@ -1,6 +1,7 @@
 package Object;
 
 import Default.*;
+import Agents.*;
 
 public class Cloud {
 	private World w;
@@ -14,13 +15,17 @@ public class Cloud {
 	public boolean pluie=false;
 	public boolean foudre=false;
 	public boolean fin_vie=false;
+	public boolean heart=false;
 	private static int cpt_pluie=0;
+	private static int cpt_heart=0;
 	private int cpt=0;
 	private int direction;
 	private int ancien=-10;
 	private int duree_pluie=20;
 	public int duree_foudre=2;
+	public int duree_heart=20;
 	public int duree_instant=0;
+
 	
 	public Cloud(int x,int y,int age,World w) {
 		this.w=w;
@@ -79,6 +84,22 @@ public class Cloud {
 					cpt_pluie++;
 					pluie=true;
 				}
+				//--------HEART
+				if((Cochon.nb_cochon<6 || Chevre.nb_chevre<6 || Lapin.nb_lapin<6) && // faire quand ils manquent d'animaux
+						//x!=-1 && x-1>=0 && //erreur sur les coté de la map
+						cpt_heart < w.getX()/10 && //pour pas que tout les arbres pleuvent d'un coup
+						alti[x][ombre_y]>=0 && // verifier que c pas dans l'eau sur montagne
+						pluie==false && //pour ne pas rerentrer dedans
+						foudre==false &&
+						heart==false &&
+						fin_vie==false &&
+						alti[x+1][ombre_y]==alti[x][ombre_y] && alti[x-1][ombre_y]==alti[x][ombre_y] && //pour ne pas afficher sur sur un relief
+								Math.random()<0.05)//prob qui pleut 
+				{
+					//System.out.println(cpt_pluie);
+					cpt_heart++;
+					heart=true;
+				}
 				//--------FOUDRE
 				if(w.tab_Arbre.size() > w.getX()*2 && // faire quand ils manquent d'arbres
 						w.RechercheArbres(x,ombre_y).getX()!=-1 &&
@@ -101,6 +122,22 @@ public class Cloud {
 					}
 				}
 				
+				if(heart) {
+					duree_instant++;
+					if(duree_instant%2==0) {
+						if(Cochon.nb_cochon<6)
+							w.tab_Animal.add(new Cochon(x,ombre_y,w));
+						else if(Chevre.nb_chevre<6)
+							w.tab_Animal.add(new Chevre(x,ombre_y,w));
+						else if(Chevre.nb_chevre<6)
+							w.tab_Animal.add(new Cochon(x,ombre_y,w));
+					}
+					if(duree_instant==duree_heart) {
+						cpt_heart--;
+						w.tab_Cloud.remove(this);
+					}
+				}
+				
 				if(pluie) {
 					duree_instant++;
 					if(duree_instant==duree_pluie/2)
@@ -117,7 +154,7 @@ public class Cloud {
 						w.tab_Cloud.remove(this);
 					}
 				}
-				if(pluie==false && foudre==false && fin_vie==false ) {
+				if(pluie==false && foudre==false && fin_vie==false && heart==false) {
 					
 					if(	x+1>=w.getX()-1 || x-1<=1) {
 						this.changeDirection();
@@ -168,7 +205,7 @@ public class Cloud {
 				cpt++;
 			}
 		}
-		if(vie>0 && vie<=5 && pluie==false && foudre ==false) {
+		if(vie>0 && vie<=5 && pluie==false && foudre ==false && heart==false) {
 			
 			fin_vie=true;
 			if(alti[x][ombre_y]>=0)
@@ -180,7 +217,7 @@ public class Cloud {
 				if(a!=-1)
 					w.tab_Animal.remove(a);
 			}
-		}else if(vie<=0 && pluie==false && foudre ==false) {
+		}else if(vie<=0 && pluie==false && foudre ==false && heart==false) {
 			w.tab_Cloud.remove(this);
 		}
 
