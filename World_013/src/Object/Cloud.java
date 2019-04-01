@@ -8,6 +8,7 @@ public class Cloud {
 	private int[][] alti;
 	private int age;
 	private int vie;
+	private int nb_la=0,nb_ch=0,nb_co=0;
 	private boolean mature=false;
 	private boolean flag=false;
 	private int x,y;
@@ -87,8 +88,8 @@ public class Cloud {
 				//--------HEART
 				if((Cochon.nb_cochon<6 || Chevre.nb_chevre<6 || Lapin.nb_lapin<6) && // faire quand ils manquent d'animaux
 						//x!=-1 && x-1>=0 && //erreur sur les coté de la map
-						cpt_heart < w.getX()/10 && //pour pas que tout les arbres pleuvent d'un coup
-						alti[x][ombre_y]>=0 && // verifier que c pas dans l'eau sur montagne
+						cpt_heart < w.getX()/20 && //pour pas que tout les arbres pleuvent d'un coup
+						alti[x][ombre_y]>=0 && // verifier que c pas dans l'eau / sur montagne
 						pluie==false && //pour ne pas rerentrer dedans
 						foudre==false &&
 						heart==false &&
@@ -97,6 +98,9 @@ public class Cloud {
 								Math.random()<0.05)//prob qui pleut 
 				{
 					//System.out.println(cpt_pluie);
+					nb_la=Lapin.nb_lapin;
+					nb_co=Cochon.nb_cochon;
+					nb_ch=Chevre.nb_chevre;
 					cpt_heart++;
 					heart=true;
 				}
@@ -125,12 +129,31 @@ public class Cloud {
 				if(heart) {
 					duree_instant++;
 					if(duree_instant%2==0) {
-						if(Cochon.nb_cochon<6)
-							w.tab_Animal.add(new Cochon(x,ombre_y,w));
-						else if(Chevre.nb_chevre<6)
-							w.tab_Animal.add(new Chevre(x,ombre_y,w));
-						else if(Chevre.nb_chevre<6)
-							w.tab_Animal.add(new Cochon(x,ombre_y,w));
+						boolean ok=false;
+						while(ok==false) {
+							int r=(int)(Math.random()*3);
+							switch(r) { // 0:Chevre | 1:Cochon | 2:Lapin
+								case 0: 
+									if(nb_ch<6) {
+										w.tab_Animal.add(new Chevre(x,ombre_y,w));
+										ok=true;
+									}
+									break;
+								case 1: 
+									if(nb_co<6) {
+										w.tab_Animal.add(new Cochon(x,ombre_y,w));
+										ok=true;
+									}
+									break;
+								case 2: 
+									if(nb_la<6) {
+										w.tab_Animal.add(new Lapin(x,ombre_y,w));
+										ok=true;
+									}
+									break;
+								default:;
+							}
+						}
 					}
 					if(duree_instant==duree_heart) {
 						cpt_heart--;
