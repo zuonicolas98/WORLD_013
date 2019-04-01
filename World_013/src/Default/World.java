@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public class World {
 	public int[][] world;
 	public int[][] liquide;
-	private int X,Y,delay,lave,monte;
+	public Volcan v;
+	private int X,Y,delay,monte;
 	public ArrayList<Cloud> tab_Cloud;
 	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
@@ -27,12 +28,11 @@ public class World {
 		world=new int[x][y];
 		liquide=new int[x][y];
 		n=new Noise(x,y);
-
+		v=new Volcan(this);
 		X=x;
 		Y=y;
 		fin=true;
 		delay = 51;
-		lave=0;
 		monte=1;
 		f= new Fenetre(this,tx,ty);
 		this.nb_arbre=nb_arbre;
@@ -111,6 +111,8 @@ public class World {
 				}else
 					i--;
 			}
+		//Volcan
+			if(n.alti)
 		//Initialisation liquide
 			for(int i=0; i<X; i++) {
 				for(int j=0; j<Y; j++) {
@@ -202,7 +204,7 @@ public class World {
 		
 		f.getPanneau().repaint();
 		
-		lave++;
+		v.setLave(v.getLave()+1);
 	}
 	
 	//Rafraichissement du sol + apparitions d'herbes + liquide
@@ -224,61 +226,20 @@ public class World {
 					world[x][y]=0;
 				
 				//liquide
-				if(lave%10==0) {
+				if(v.getLave()%10==0) {
 					if(n.alti[x][y]==8) {
 						if(liquide[x][y]<10 && monte==1){
 							liquide[x][y]++;
 						}else {
 							monte=0;
-							ecoulement();
+							v.ecoulement();
 						}
 					}
 				}
 				
 			}
 		}
-	}
-	
-	public void ecoulement() {		
-		for(int i=0; i<Y; i++) {
-			for(int j=0; j<X; j++) {
-				/*
-				if(i-1>=0 && liquide[j][i-1]>0 && (n.alti[j][i]<n.alti[j][i-1] || (liquide[j][i-1]>2 && n.alti[j][i]==n.alti[j][i-1])) ) {
-					liquide[j][i]++;
-					liquide[j][i-1]--;
-				}
-				else if(j+1<X && liquide[j+1][i]>0 && (n.alti[j][i]<n.alti[j+1][i] || (liquide[j+1][i]>2 && n.alti[j][i]==n.alti[j+1][i])) ) {
-					liquide[j][i]++;
-					liquide[j+1][i]--;
-				}
-				else if(i+1<Y && liquide[j][i+1]>0 && (n.alti[j][i]<n.alti[j][i+1] || (liquide[j][i+1]>2 && n.alti[j][i]==n.alti[j][i+1])) ) {
-					liquide[j][i]++;
-					liquide[j][i+1]--;
-				}
-				else if(j-1>=0 && liquide[j-1][i]>0 && (n.alti[j][i]<n.alti[j-1][i] || (liquide[j-1][i]>2 && n.alti[j][i]==n.alti[j-1][i])) ) {
-					liquide[j][i]++;
-					liquide[j-1][i]--;
-				}
-				*/
-				if(i-1>=0 && liquide[j][i-1]>0 && ((n.alti[j][i]<n.alti[j][i-1]) || (liquide[j][i]==0 && n.alti[j][i]==n.alti[j][i-1])) ) {
-					liquide[j][i]++;
-					liquide[j][i-1]--;
-				}
-				else if(j+1<X && liquide[j+1][i]>0 && ((n.alti[j][i]<n.alti[j+1][i]) || (liquide[j][i]==0 && n.alti[j][i]==n.alti[j+1][i])) ) {
-					liquide[j][i]++;
-					liquide[j+1][i]--;
-				}
-				else if(i+1<Y && liquide[j][i+1]>0 && ((n.alti[j][i]<n.alti[j][i+1]) || (liquide[j][i]==0 && n.alti[j][i]==n.alti[j][i+1])) ) {
-					liquide[j][i]++;
-					liquide[j][i+1]--;
-				}
-				else if(j-1>=0 && liquide[j-1][i]>0 && ((n.alti[j][i]<n.alti[j-1][i]) || (liquide[j][i]==0 && n.alti[j][i]==n.alti[j-1][i])) ) {
-					liquide[j][i]++;
-					liquide[j-1][i]--;
-				}
-			}
-		}
-		
+		afficherLiquide();
 	}
 	
 	public int rebord(int x, int y) {
