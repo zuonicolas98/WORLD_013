@@ -47,19 +47,19 @@ public class Arbre {
 			int c=0;
 			do {
 				int d=(int)(Math.random()*4);
-				if((d==0) && (y-1>=0) && (w.getWorld()[x][y-1]==0) && (w.getNoise().alti[x][y-1]>=0) && (rebord(x,y-1)==0) ) {
+				if((d==0) && (y-1>=0) && (w.getWorld()[x][y-1]==0) && (w.getNoise().alti[x][y-1]>=0)  && (w.getNoise().alti[x][y-1]<7) && (rebord(x,y-1)==0) ) {
 					w.getWorld()[x][y-1]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x,y-1, w));
 					b=true;
-				}else if((d==1) && (x+1<w.getX()) && (w.getWorld()[x+1][y]==0) && (w.getNoise().alti[x+1][y]>=0) && (rebord(x+1,y)==0) && (x+2<w.getX() && y+1<w.getY() && w.n.alti[x+1][y]==w.n.alti[x+2][y+1]) ) {
+				}else if((d==1) && (x+1<w.getX()) && (w.getWorld()[x+1][y]==0) && (w.getNoise().alti[x+1][y]>=0) && (w.getNoise().alti[x+1][y]<7) && (rebord(x+1,y)==0) && (x+2<w.getX() && y+1<w.getY() && w.n.alti[x+1][y]==w.n.alti[x+2][y+1]) ) {
 					w.getWorld()[x+1][y]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x+1,y, w));
 					b=true;
-				}else if((d==2) && (y+1<w.getY()) && (w.getWorld()[x][y+1]==0) && (w.getNoise().alti[x][y+1]>=0) && (rebord(x,y+1)==0) && (x-1>=0 && y+2<w.getY() && w.n.alti[x][y+1]==w.n.alti[x-1][y+2]) && (x+1<w.getX() && y+2<w.getY() && w.n.alti[x][y+1]==w.n.alti[x+1][y+2]) ) {
+				}else if((d==2) && (y+1<w.getY()) && (w.getWorld()[x][y+1]==0) && (w.getNoise().alti[x][y+1]>=0) && (w.getNoise().alti[x][y+1]<7) && (rebord(x,y+1)==0) && (x-1>=0 && y+2<w.getY() && w.n.alti[x][y+1]==w.n.alti[x-1][y+2]) && (x+1<w.getX() && y+2<w.getY() && w.n.alti[x][y+1]==w.n.alti[x+1][y+2]) ) {
 					w.getWorld()[x][y+1]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x,y+1, w));
 					b=true;
-				}else if((d==3) && (x-1>=0) && (w.getWorld()[x-1][y]==0) && (w.getNoise().alti[x-1][y]>=0) && (rebord(x-1,y)==0) && (x-2>=0 && y+1<w.getY() && w.n.alti[x-1][y]==w.n.alti[x-2][y+1]) ) {
+				}else if((d==3) && (x-1>=0) && (w.getWorld()[x-1][y]==0) && (w.getNoise().alti[x-1][y]>=0) && (w.getNoise().alti[x-1][y]<7) && (rebord(x-1,y)==0) && (x-2>=0 && y+1<w.getY() && w.n.alti[x-1][y]==w.n.alti[x-2][y+1]) ) {
 					w.getWorld()[x-1][y]=2;
 					w.tab_Arbre.add(new Arbre(nom,30,x-1,y, w));
 					b=true;
