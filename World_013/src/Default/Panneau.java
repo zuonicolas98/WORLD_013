@@ -69,6 +69,9 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_NUAGE_NORMAL;
 	public Image IMG_OMBRE;
 	public Image IMG_PLUIE;
+	public Image IMG_HEART0;
+	public Image IMG_HEART1;
+	public Image IMG_NUAGE_HEART;
 	//Variables images animaux
 	public Image IMG_PIG;
 	public Image[][] IMG_PIG_M;
@@ -110,6 +113,8 @@ public class Panneau extends JPanel  implements KeyListener{
 		IMG_FIRE = Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/fire.gif");
 		IMG_WATER= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/water.gif");
 		IMG_PLUIE= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/pluie.gif");
+		IMG_HEART0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/rain_heart.gif");
+		IMG_HEART1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/rain_heart_inter.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -188,6 +193,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_NUAGE0 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage0.png"));
 				IMG_NUAGE1 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage1.png"));
 				IMG_NUAGE2 = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage2.png"));
+				IMG_NUAGE_HEART = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/nuage_rose.png"));
 				IMG_OMBRE  = ImageIO.read(new File("IMAGES/ELEMENTS/NUAGE/ombre.png"));
 				//bordures eau
 				IMG_BORD_BAS = ImageIO.read(new File("IMAGES/ELEMENTS/bordure_eau/bord_bas.png"));
@@ -774,6 +780,18 @@ public class Panneau extends JPanel  implements KeyListener{
 					while(distance<d) {
 						if(distance%2==0)
 							g.drawImage(IMG_PLUIE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i+taille_y*distance)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						distance++;
+					}
+				}else if(c.heart) {
+					g.drawImage(IMG_NUAGE_HEART,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+					g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
+					int distance=0;
+					int d=c.ombre_y-c.getY()-2;
+					while(distance<d) {
+						if(distance==d-1)
+							g.drawImage(IMG_HEART1,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i+taille_y*distance)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
+						else if(distance%2==0)
+							g.drawImage(IMG_HEART0,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i+taille_y*distance)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
 						distance++;
 					}
 				}else if(c.foudre) {
