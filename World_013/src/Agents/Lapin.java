@@ -166,13 +166,13 @@ public class Lapin extends Animal{
 						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon)) { //on trouve une proie dans un rayon de 2 cases
 							
 							//deplacement selon direction
-							if((direction == 0) && (w.getWorld()[x][y-1]!=3) && (w.getWorld()[x][y-1]!=2))
+							if(direction == 0)
 								y--;
-							else if((direction == 1) && (w.getWorld()[x+1][y]!=3) && (w.getWorld()[x+1][y]!=2))
+							else if(direction == 1)
 								x++;
-							else if((direction == 2) && (w.getWorld()[x][y+1]!=3) && (w.getWorld()[x][y+1]!=2))
+							else if(direction == 2)
 								y++;
-							else if((direction == 3) && (w.getWorld()[x-1][y]!=3) && (w.getWorld()[x-1][y]!=2))
+							else if(direction == 3)
 								x--;
 							
 							//initialisation direction
@@ -234,49 +234,49 @@ public class Lapin extends Animal{
 						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Chevre)) { //on trouve un predateur dans un rayon de 2 cases
 							
 							//deplacement selon direction
-							if((direction == 0) && (w.getWorld()[x][y-1]!=3) && (w.getWorld()[x][y-1]!=2))
+							if(direction == 0)
 								y--;
-							else if((direction == 1) && (w.getWorld()[x+1][y]!=3) && (w.getWorld()[x+1][y]!=2))
+							else if(direction == 1)
 								x++;
-							else if((direction == 2) && (w.getWorld()[x][y+1]!=3) && (w.getWorld()[x][y+1]!=2))
+							else if(direction == 2)
 								y++;
-							else if((direction == 3) && (w.getWorld()[x-1][y]!=3) && (w.getWorld()[x-1][y]!=2))
+							else if(direction == 3)
 								x--;
 
 							//initialisation direction
 							if(i<x) {     // Si le predateur se trouve a gauche par rapport au lapin...
-								if(x+1<w.getX() && w.getWorld()[x+1][y] != 3 && w.getWorld()[x+1][y] != 2) {
+								if(x+1<w.getX() && w.getWorld()[x+1][y] != 3 && w.getWorld()[x+1][y] != 2 && (w.n.alti[x+1][y]!=-1)) {
 									direction = 1;
 								}else
 									direction = -1;
 								
-								if(j<y && y+1<w.getY() && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] != 2) {		// et si le predateur se trouve en haut du lapin.
+								if(j<y && y+1<w.getY() && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] != 2 && (w.n.alti[x][y+1]!=-1)) {		// et si le predateur se trouve en haut du lapin
 									direction = 2;
 								}
-								else if(j>y && y-1>=0 && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] != 2) {	// ou si le predateur se trouve en bas du lapin
+								else if(j>y && y-1>=0 && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] != 2 && (w.n.alti[x][y-1]!=-1)) {	// ou si le predateur se trouve en bas du lapin
 									direction = 0;
 								}
 							}
 							
 							else if (i==x) { //Si le predateur se trouve sur le meme x que le lapin...
-								if(j<y && y+1<w.getY() && w.getWorld()[x][y+1] != 3 && w.getWorld()[x][y+1] != 2) {			// et si le predateur se trouve en haut
+								if(j<y && y+1<w.getY() && w.getWorld()[x][y+1] != 3 && w.getWorld()[x][y+1] != 2 && (w.n.alti[x][y+1]!=-1)) {			// et si le predateur se trouve en haut
 									direction = 2;
 								}
-								else if(j>y && y-1>=0 && w.getWorld()[x][y-1] != 3 && w.getWorld()[x][y-1] != 2) {    // et si le predateur se trouve en bas 
+								else if(j>y && y-1>=0 && w.getWorld()[x][y-1] != 3 && w.getWorld()[x][y-1] != 2 && (w.n.alti[x][y-1]!=-1)) {    // et si le predateur se trouve en bas 
 									direction = 0;
 								
 								}else
 									direction =-1;
 							}
 							else {			//Si le predateur se trouve à droite du lapin...
-								if(x-1>=0 && w.getWorld()[x-1][y] != 3 && w.getWorld()[x-1][y] != 2) {
+								if(x-1>=0 && w.getWorld()[x-1][y] != 3 && w.getWorld()[x-1][y] != 2 && (w.n.alti[x-1][y]!=-1)) {
 									direction = 3;
 								}else
 									direction=-1;
-								if(j<y && y+1<w.getY() && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] != 2) {			// et si le predateur se trouve en haut 
+								if(j<y && y+1<w.getY() && w.getWorld()[x][y+1] != 3 && direction == -1 && w.getWorld()[x][y+1] != 2 && (w.n.alti[x][y+1]!=-1)) {			// et si le predateur se trouve en haut 
 									direction = 2;
 								}
-								else if(j>y && y-1>=0 && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] != 2) {    // et si le predateur se trouve en bas 
+								else if(j>y && y-1>=0 && w.getWorld()[x][y-1] != 3 && direction == -1 && w.getWorld()[x][y-1] != 2 && (w.n.alti[x][y-1]!=-1)) {    // et si le predateur se trouve en bas 
 									direction = 0;
 								}
 							}
