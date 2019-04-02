@@ -78,6 +78,7 @@ public class Cloud {
 						pluie==false && //pour ne pas rerentrer dedans
 						foudre==false &&
 						fin_vie==false &&
+						heart==false &&
 						alti[x+1][ombre_y]==alti[x][ombre_y] && alti[x-1][ombre_y]==alti[x][ombre_y] && //pour ne pas afficher sur sur un relief
 								Math.random()<0.05)//prob qui pleut 
 				{
@@ -86,7 +87,7 @@ public class Cloud {
 					pluie=true;
 				}
 				//--------HEART
-				if((Cochon.nb_cochon<6 || Chevre.nb_chevre<6 || Lapin.nb_lapin<6) && // faire quand ils manquent d'animaux
+				if((w.nb_cochon<6 || w.nb_chevre<6 || w.nb_lapin<6) && // faire quand ils manquent d'animaux
 						//x!=-1 && x-1>=0 && //erreur sur les coté de la map
 						cpt_heart < w.getX()/20 && //pour pas que tout les arbres pleuvent d'un coup
 						alti[x][ombre_y]>=0 && // verifier que c pas dans l'eau / sur montagne
@@ -98,9 +99,9 @@ public class Cloud {
 								Math.random()<0.05)//prob qui pleut 
 				{
 					//System.out.println(cpt_pluie);
-					nb_la=Lapin.nb_lapin;
-					nb_co=Cochon.nb_cochon;
-					nb_ch=Chevre.nb_chevre;
+					nb_la=w.nb_lapin;
+					nb_co=w.nb_cochon;
+					nb_ch=w.nb_chevre;
 					cpt_heart++;
 					heart=true;
 				}
@@ -109,7 +110,8 @@ public class Cloud {
 						w.RechercheArbres(x,ombre_y).getX()!=-1 &&
 						Math.random()<0.01*(w.tab_Cloud.size()) &&
 						fin_vie==false &&
-						pluie==false
+						pluie==false &&
+						heart == false
 						)
 				{
 					foudre=true;

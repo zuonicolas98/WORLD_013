@@ -785,15 +785,9 @@ public class Panneau extends JPanel  implements KeyListener{
 				}else if(c.heart) {
 					g.drawImage(IMG_NUAGE_HEART,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
 					g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
-					int distance=0;
 					int d=c.ombre_y-c.getY()-2;
-					while(distance<d) {
-						if(distance==d-1)
-							g.drawImage(IMG_HEART1,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i+taille_y*distance)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
-						else if(distance%2==0)
-							g.drawImage(IMG_HEART0,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i+taille_y*distance)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
-						distance++;
-					}
+					g.drawImage(IMG_HEART0,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i)-(ytmp*(taille_y)),taille_x*3,taille_y*(3+d), this);
+
 				}else if(c.foudre) {
 					
 					int d=c.ombre_y-c.getY()-2;
@@ -929,7 +923,7 @@ public class Panneau extends JPanel  implements KeyListener{
 		}
 		try {
 			if(c == KeyEvent.VK_L) { //foudre
-				w.l.setLight();
+				//w.l.setLight();
 				w.l.cpt=0;
 				foudre=true;
 				arbre=w.tab_Arbre.get((int)(Math.random()*w.tab_Arbre.size()));

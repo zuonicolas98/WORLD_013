@@ -18,6 +18,7 @@ public class World {
 	private boolean fin;
 	public Lightning l=new Lightning();
 	public Noise n;
+	public int nb_lapin=0,nb_cochon=0,nb_chevre=0;
 	
 	public World(int x, int y,int nb_arbre,int nb_animal, int tx,int ty) {
 		if(x==0 || y==0) {
@@ -111,8 +112,16 @@ public class World {
 				}else
 					i--;
 			}
+			for(int i=0;i<tab_Animal.size();i++) {
+				if(tab_Animal.get(i).getClass()==Lapin.class) 
+					nb_lapin++;
+				else if(tab_Animal.get(i).getClass()==Chevre.class) 
+					nb_chevre++;
+				else if(tab_Animal.get(i).getClass()==Cochon.class) 
+					nb_cochon++;
+			}
 		//Volcan
-			if(n.alti)
+			//if(n.alti)
 		//Initialisation liquide
 			for(int i=0; i<X; i++) {
 				for(int j=0; j<Y; j++) {
@@ -122,6 +131,7 @@ public class World {
 			}
 		//afficherAltitude();
 		//afficherLiquide();
+			
 	}
 	
 
@@ -174,11 +184,22 @@ public class World {
 			e.printStackTrace();
 		}
 		
+		nb_lapin=0;
+		nb_chevre=0;
+		nb_cochon=0;
+		
 		//step() animaux
 		for(int i=0; i < tab_Animal.size(); i++) {
 			tab_Animal.get(i).step();
 		}
-		
+		for(int i=0;i<tab_Animal.size();i++) {
+			if(tab_Animal.get(i).getClass()==Lapin.class) 
+				nb_lapin++;
+			else if(tab_Animal.get(i).getClass()==Chevre.class) 
+				nb_chevre++;
+			else if(tab_Animal.get(i).getClass()==Cochon.class) 
+				nb_cochon++;
+		}
 		//step() arbres
 		for(int i=0; i < tab_Arbre.size(); i++) {
 			tab_Arbre.get(i).step();
@@ -205,6 +226,13 @@ public class World {
 		f.getPanneau().repaint();
 		
 		v.setLave(v.getLave()+1);
+		//if(Lapin.nb_lapin < 10 || Cochon.nb_cochon <10 || Chevre.nb_chevre<10) { // marche pas du au exception qui des fois ne fait pas les --;
+		//System.out.print(" Lapin: "+Lapin.nb_lapin);
+		//System.out.print(" Cochon: "+Cochon.nb_cochon);
+		//System.out.println(" Chevre: "+Chevre.nb_chevre);
+		//}
+
+
 	}
 	
 	//Rafraichissement du sol + apparitions d'herbes + liquide
@@ -239,7 +267,7 @@ public class World {
 				
 			}
 		}
-		afficherLiquide();
+		//afficherLiquide();
 	}
 	
 	public int rebord(int x, int y) {
