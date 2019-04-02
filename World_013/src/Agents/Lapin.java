@@ -10,7 +10,7 @@ public class Lapin extends Animal{
 		super(x,y,w);
 		timer=3;
 		cpt=0;
-		vie=400;
+		vie=80;
 		nb_lapin++;
 	}
 	
@@ -45,7 +45,7 @@ public class Lapin extends Animal{
 			if(Math.random()<0.8) //80% qu'il fuit
 				f=this.fuir();
 			if(f==false) { //s'il ne fuit pas
-				if(vie<200) { //commence à chasser ses proies 
+				if(vie<50) { //commence à chasser ses proies 
 					if(this.chasser() == false) { //on le fait bouger si il n'a pas trouve de proie (il ne bouge pas avec chasser() s'il n'y a pas de proie).
 						this.bouger();
 					}
@@ -86,7 +86,7 @@ public class Lapin extends Animal{
 	}
 	
 	public void manger() {
-		if(vie<300) { //commence à manger
+		if(vie<75) { //commence à manger
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && Math.random()<0.05 ) { //si ils sont sur la meme case
 					nb_lapin--;

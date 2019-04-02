@@ -10,7 +10,7 @@ public class Chevre extends Animal{
 		super(x,y,w);
 		timer=4;
 		cpt=0;
-		vie=400;
+		vie=100;
 		nb_chevre++;
 	}
 	
@@ -45,7 +45,7 @@ public class Chevre extends Animal{
 			if(Math.random()<0.8) //80% qu'il fuit
 				f=this.fuir();
 			if(f==false) { //s'il ne fuit pas
-				if(vie<200) { //commence à chasser ses proies 
+				if(vie<50) { //commence à chasser ses proies 
 					if(this.chasser() == false) { //on le fait bouger si il n'a pas trouve de proie (il ne bouge pas avec chasser() s'il n'y a pas de proie).
 						this.bouger();
 					}
@@ -84,7 +84,7 @@ public class Chevre extends Animal{
 	}
 	
 	public void manger() {
-		if(vie<300) { //commence à manger
+		if(vie<75) { //commence à manger
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if((Math.random()<0.7) && (w.tab_Animal.get(k) instanceof Lapin) && (((w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y)) 		//si ils sont sur la meme case
 															|| ((w.tab_Animal.get(k).getX()==x-1) && (w.tab_Animal.get(k).getY()==y))		//si la proie est a gauche
