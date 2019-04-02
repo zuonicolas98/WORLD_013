@@ -79,6 +79,8 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image[][] IMG_RABBIT_M;
 	public Image IMG_GOAT;
 	public Image[][] IMG_GOAT_M;
+	public Image IMG_GHOST;
+	public Image IMG_TOMBSTONE;
 	//Variables images arbres
 	public Image IMG_TREE_LITTLE;
 	public Image IMG_TREE_LITTLE_BURNED;
@@ -115,6 +117,7 @@ public class Panneau extends JPanel  implements KeyListener{
 		IMG_PLUIE= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/pluie.gif");
 		IMG_HEART0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/rain_heart.gif");
 		IMG_HEART1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/rain_heart_inter.gif");
+		IMG_GHOST= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/ghost.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -183,6 +186,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				IMG_TREE_LITTLE = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little.png"));
 				IMG_TREE_LITTLE_BURNED  = ImageIO.read(new File("IMAGES/ELEMENTS/tree_little_burned.png"));
 				IMG_ROCKY = ImageIO.read(new File("IMAGES/ELEMENTS/rocky.png"));
+				IMG_TOMBSTONE= ImageIO.read(new File("IMAGES/ELEMENTS/tombstone.png"));
 				try {
 					IMG_LIGHT = ImageIO.read(new File("IMAGES/ELEMENTS/foudre.png"));
 				}catch(IndexOutOfBoundsException e) {}
@@ -439,7 +443,16 @@ public class Panneau extends JPanel  implements KeyListener{
 
 		for(int k=0; k<w.tab_Animal.size();k++) {
 			if((w.tab_Animal.get(k).getX()==j) && (w.tab_Animal.get(k).getY()==i) ) {
-				
+				if(w.tab_Animal.get(k).mort) {
+					g.drawImage(IMG_TOMBSTONE, ((f.getX()/((x2-x1)))*j-10)-(xtmp*(f.getX()/(x2-x1))),
+							(((f.getY()-40)/((y2-y1)))*i  -20)-(ytmp*(f.getY()/((y2-y1)))),
+							(f.getX()/((x2-x1)))+20,
+							f.getY()/((y2-y1))+20, this);
+					g.drawImage(IMG_GHOST, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),
+							(((f.getY()-40)/((y2-y1)))*i  -20-w.tab_Animal.get(k).getCpt_mort())-(ytmp*(f.getY()/((y2-y1)))),
+							f.getX()/((x2-x1)),
+							f.getY()/((y2-y1))+20, this);
+				}else {
 				if(w.tab_Animal.get(k) instanceof Cochon) {
 					if(w.tab_Animal.get(k).getAction()==1 ) //s'il est debout
 					{
@@ -642,6 +655,7 @@ public class Panneau extends JPanel  implements KeyListener{
 						else if(w.tab_Animal.get(k).getAction()==2) //s'il mange
 							g.drawImage(IMG_RABBIT, ((f.getX()/((x2-x1)))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/((y2-y1)))*i -20)-(ytmp*(f.getY()/((y2-y1)))),f.getX()/((x2-x1)),f.getY()/((y2-y1))+20, this);
 						
+				}
 				}
 			}
 		}

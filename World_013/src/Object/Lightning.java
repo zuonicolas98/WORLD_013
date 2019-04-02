@@ -85,8 +85,9 @@ public class Lightning {
     	}
         // Disposes of this graphics context and releases any system resources that it is using. 
         g2d.dispose();
- 
+        try {
         ImageIO.write(bufferedImage, "png", file);
+        }catch(Exception e){}
 
  
     }

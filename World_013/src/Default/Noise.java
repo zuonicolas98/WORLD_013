@@ -8,6 +8,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Agents.Chevre;
+import Agents.Cochon;
+import Agents.Lapin;
+
 public class Noise {
 	public BufferedImage NOISE;
 	private int min=255;
@@ -26,7 +30,9 @@ public class Noise {
 	
 	public void generateur() {
 		try {
-			NOISE=ImageIO.read(new File("IMAGES/noise.png"));
+			int r=(int)(Math.random()*3+1);
+			NOISE=ImageIO.read(new File("IMAGES/noise"+r+".png"));
+
 			int h=NOISE.getHeight();
 			int l=NOISE.getWidth();
 			if(l<X || h<Y) {

@@ -2,7 +2,8 @@ package Agents;
 import Default.*;
 
 public abstract class Animal {
-	protected int vie,timer,cpt,reproduire;
+	protected int vie,timer,cpt,reproduire,cpt_mort=0;
+	public boolean mort=false;
 	protected int x,y;
 	protected int direction;
 	protected int action; //pour les images : 1:debout | 2:manger 
@@ -43,6 +44,7 @@ public abstract class Animal {
 	public int getCpt() {return cpt;}
 	public int getTimer() { return timer;}
 	public int getReproduire() {return reproduire;}
+	public int getCpt_mort() {return cpt_mort;}
 	//Setters
 	public void setCpt(int c) { cpt=c;}
 	public void setReproduire(int r) {reproduire = r;}

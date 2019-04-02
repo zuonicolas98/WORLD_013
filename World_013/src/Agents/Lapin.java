@@ -15,6 +15,11 @@ public class Lapin extends Animal{
 	}
 	
 	public void step() { //bouge selon l'environnement
+		if(mort) {
+			if(cpt_mort>=100)
+				w.tab_Animal.remove(this);
+			cpt_mort++;
+		}else {
 		boolean surpopulation = false;
 		int s=0;
 		for(int i=x-1; i<=x+1; i++) { //on parcourt les cases voisines avec un rayon de 2 cases (voisinage de Moore)
@@ -36,7 +41,8 @@ public class Lapin extends Animal{
 		}
 		if(surpopulation == true) {
 			nb_lapin--;
-			w.tab_Animal.remove(this);
+			mort=true;
+			//w.tab_Animal.remove(this);
 			
 		}
 		if(cpt == timer) {
@@ -62,7 +68,8 @@ public class Lapin extends Animal{
 		//Meurt
 		if(vie<=0 ) {
 			nb_lapin--;
-			w.tab_Animal.remove(this);
+			mort=true;
+			//w.tab_Animal.remove(this);
 			
 		}
 		//System.out.println(vie);
@@ -83,6 +90,7 @@ public class Lapin extends Animal{
 				}
 			}
 		}
+		}
 	}
 	
 	public void manger() {
@@ -90,7 +98,7 @@ public class Lapin extends Animal{
 			for(int k=0; k < w.tab_Animal.size(); k++) {
 				if( (w.tab_Animal.get(k).getX()==x) && (w.tab_Animal.get(k).getY()==y) && (w.tab_Animal.get(k) instanceof Cochon) && Math.random()<0.05 ) { //si ils sont sur la meme case
 					nb_lapin--;
-					w.tab_Animal.remove(k);
+					w.tab_Animal.get(k).mort=true;
 					vie=vie+50;
 					action=2;
 					cpt=cpt-2;
