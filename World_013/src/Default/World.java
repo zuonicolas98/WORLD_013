@@ -8,7 +8,7 @@ public class World {
 	public int[][] world;
 	public int[][] liquide;
 	public Volcan v;
-	private int X,Y,delay,monte;
+	private int X,Y,delay;
 	public ArrayList<Cloud> tab_Cloud;
 	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
@@ -34,7 +34,6 @@ public class World {
 		Y=y;
 		fin=true;
 		delay = 51;
-		monte=1;
 		f= new Fenetre(this,tx,ty);
 		this.nb_arbre=nb_arbre;
 		this.nb_animal=nb_animal;
@@ -254,20 +253,20 @@ public class World {
 					world[x][y]=0;
 				
 				//liquide
-				if(v.getLave()%10==0) {
+				if(v.getLave()%5==0) {
 					if(n.alti[x][y]==8) {
-						if(liquide[x][y]<10 && monte==1){
+						if(liquide[x][y]<10 && v.getMontee()==1){
 							liquide[x][y]++;
 						}else {
-							monte=0;
 							v.ecoulement();
+							v.setMontee(0);
 						}
 					}
 				}
 				
 			}
 		}
-		//afficherLiquide();
+		afficherLiquide();
 	}
 	
 	public int rebord(int x, int y) {
