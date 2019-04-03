@@ -223,8 +223,7 @@ public class World {
 		refreshground();
 		
 		f.getPanneau().repaint();
-		
-		v.setLave(v.getLave()+1);
+	
 		//if(Lapin.nb_lapin < 10 || Cochon.nb_cochon <10 || Chevre.nb_chevre<10) { // marche pas du au exception qui des fois ne fait pas les --;
 		//System.out.print(" Lapin: "+Lapin.nb_lapin);
 		//System.out.print(" Cochon: "+Cochon.nb_cochon);
@@ -253,20 +252,17 @@ public class World {
 					world[x][y]=0;
 				
 				//liquide
-				if(v.getLave()%5==0) {
 					if(n.alti[x][y]==8) {
 						if(liquide[x][y]<10 && v.getMontee()==1){
 							liquide[x][y]++;
 						}else {
 							v.ecoulement();
-							v.setMontee(0);
 						}
 					}
-				}
 				
 			}
 		}
-		afficherLiquide();
+		//afficherLiquide();
 	}
 	
 	public int rebord(int x, int y) {
