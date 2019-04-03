@@ -28,6 +28,16 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_ROCHER_EAU;
 	public Image IMG_ROCHER;
 	public Image IMG_ROCKY;
+	//Variable Lave
+	public Image IMG_LAVE;
+	public Image IMG_LAVE_DROITE0;
+	public Image IMG_LAVE_DROITE1;
+	public Image IMG_LAVE_GAUCHE0;
+	public Image IMG_LAVE_GAUCHE1;
+	public Image IMG_LAVE_HAUT0;
+	public Image IMG_LAVE_HAUT1;
+	public Image IMG_LAVE_BAS0;
+	public Image IMG_LAVE_BAS1;
 	//Variables bordures eau
 	public Image IMG_BORD_BAS;
 	public Image IMG_BORD_DROITE;
@@ -118,6 +128,15 @@ public class Panneau extends JPanel  implements KeyListener{
 		IMG_HEART0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/rain_heart.gif");
 		IMG_HEART1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/NUAGE/rain_heart_inter.gif");
 		IMG_GHOST= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/ghost.gif");
+		IMG_LAVE= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave.gif");
+		IMG_LAVE_DROITE0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_droite0.gif");
+		IMG_LAVE_DROITE1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_droite1.gif");
+		IMG_LAVE_GAUCHE0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_gauche0.gif");
+		IMG_LAVE_GAUCHE1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_gauche1.gif");
+		IMG_LAVE_HAUT0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_haut0.gif");
+		IMG_LAVE_HAUT1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_haut1.gif");
+		IMG_LAVE_BAS0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_bas0.gif");
+		IMG_LAVE_BAS1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_bas1.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -289,7 +308,7 @@ public class Panneau extends JPanel  implements KeyListener{
 				
 				//liquide
 				if(w.liquide[j][i]>=1) 
-					g.drawImage(IMG_WATER, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+					g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 			}
 			
 		}

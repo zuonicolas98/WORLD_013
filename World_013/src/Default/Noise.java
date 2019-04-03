@@ -26,6 +26,11 @@ public class Noise {
 		Y=y;
 		alti=new int[x][y];
 		this.generateur();
+		/*for(int x2=0;x2<x;x2++) {
+			for(int y2=0;y2<y;y2++) {
+				alti[x2][y2]=-1;
+			}
+		}*/
 	}
 	
 	public void generateur() {

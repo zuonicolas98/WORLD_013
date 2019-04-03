@@ -1,11 +1,63 @@
 package Default;
 
+import java.util.ArrayList;
+
 public class Volcan {
 	private World w;
+	private int alti_max=-2;
+	private boolean volcan=false;
+	private int change=5;
+	private int cpt=0;
+	private int x_max=0,y_max=0;
 	private int montee;
+	private ArrayList<Coor> max_alt;
+	
 	public Volcan(World w){
+		max_alt=new ArrayList<Coor>();
 		this.w=w;
 		montee=1;
+		RecherchePlusHautAlti();
+	}
+
+	public void step() {
+		if(volcan) {
+			if(cpt==1000) {
+				volcan=false;
+				RechercheAleatoireAlti();
+				cpt=0;
+				change=5;
+			}
+		}else {
+			if(cpt==500) {
+				if(alti_max<10) {
+					alti_max++;
+					for(int x=x_max-change ; x <= x_max+change ; x++) {
+						for(int y=y_max-change ; y <= y_max+change ; y++) {
+							if(y>=0 && y<w.getY() && x>=0 && x<w.getX() ){
+								if(w.n.alti[x][y]<=9)
+								w.n.alti[x][y]++;
+								w.world[x][y]=0;
+							}
+						}
+					}
+
+					change++;
+					change++;
+
+					System.out.println("---------MAP EN INT---------");
+					for(int x=0;x<w.getX();x++) {
+						for(int y=0;y<w.getY();y++) {
+							System.out.print(w.n.alti[y][x]);
+						}
+						System.out.println();
+					}
+					System.out.println("---------MAP EN INT---------");
+				}else
+					volcan=true;
+				cpt=0;
+			}
+		}
+		cpt++;
 	}
 	
 	public void ecoulement() {	
@@ -45,7 +97,38 @@ public class Volcan {
 		montee=0;
 	}
 	
-	public int getMontee() {return montee;}
 	
+	public void RechercheAleatoireAlti() {
+		x_max=(int)(Math.random()*w.getX());
+		y_max=(int)(Math.random()*w.getY());
+		while(w.n.alti[x_max][y_max]>8) {
+			x_max=(int)(Math.random()*w.getX());
+			y_max=(int)(Math.random()*w.getY());
+		}
+		alti_max=w.n.alti[x_max][y_max];
+	}
+	
+	public void RecherchePlusHautAlti() {
+		for(int y=0;y<w.getY();y++) {
+			for(int x=0;x<w.getX();x++) {
+				if(w.n.alti[x][y]>alti_max) {
+					alti_max=w.n.alti[x][y];
+				}
+			}
+		}
+		for(int y=0;y<w.getY();y++) {
+			for(int x=0;x<w.getX();x++) {
+				if(w.n.alti[x][y]==alti_max) {
+					max_alt.add(new Coor(x,y,w.n.alti[x][y]));
+				}
+			}
+		}
+		int x=(int)(Math.random()*max_alt.size());
+		//System.out.println(x+" "+max_alt.size()+" "+alti_max);
+		Coor var=max_alt.get(x);
+		x_max=var.x;
+		y_max=var.y;
+	}
+	public int getMontee() {return montee;}
 	public void setMontee(int m) {montee=m;}
 }

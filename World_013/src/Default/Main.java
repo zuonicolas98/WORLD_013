@@ -21,8 +21,8 @@ public class Main {
 			}
 			System.out.println();
 		}
-		System.out.println("---------MAP EN INT---------");
-		//world w=new World(20,20,2,0,1950,1100);*/
+		System.out.println("---------MAP EN INT---------");*/
+		//world w=new World(20,20,2,0,1950,1100);
 		w.displayWorld();
 		w.run();
 		w.l.deleteImage();

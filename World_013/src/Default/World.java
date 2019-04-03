@@ -29,9 +29,9 @@ public class World {
 		world=new int[x][y];
 		liquide=new int[x][y];
 		n=new Noise(x,y);
-		v=new Volcan(this);
 		X=x;
 		Y=y;
+		v=new Volcan(this);
 		fin=true;
 		delay = 51;
 		f= new Fenetre(this,tx,ty);
@@ -182,6 +182,7 @@ public class World {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		
 		nb_lapin=0;
 		nb_chevre=0;
@@ -221,6 +222,7 @@ public class World {
 		l.setCpt();
 		
 		refreshground();
+		v.step();
 		
 		f.getPanneau().repaint();
 	
@@ -252,7 +254,7 @@ public class World {
 					world[x][y]=0;
 				
 				//liquide
-					if(n.alti[x][y]==8) {
+					if(n.alti[x][y]==9) {
 						if(liquide[x][y]<10 && v.getMontee()==1){
 							liquide[x][y]++;
 						}else {
