@@ -65,7 +65,7 @@ public class Chevre extends Animal{
 		}
 		
 		//Meurt
-		if(vie<=0) {
+		if(vie<=0 || w.liquide[x][y]>0) {
 			nb_chevre--;
 			mort=true;
 			//w.tab_Animal.remove(this);
@@ -239,7 +239,7 @@ public class Chevre extends Animal{
 					
 				}else { //si on ne sort pas du tableau
 					for(int k=0; k<w.tab_Animal.size(); k++) { //parcours de la liste d'animaux
-						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon)) { //on trouve un predateur dans un rayon de 2 cases
+						if( (w.tab_Animal.get(k).getX() == i) && (w.tab_Animal.get(k).getY() == j) && (w.tab_Animal.get(k) instanceof Cochon) || ((i>=0) && (j>=0) && (i<w.getX()) && (j<w.getY()) && w.liquide[i][j]>0)) { //on trouve un predateur dans un rayon de 2 cases
 							
 							//deplacement selon direction
 							if(direction == 0)
