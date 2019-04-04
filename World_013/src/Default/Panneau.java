@@ -893,6 +893,18 @@ public class Panneau extends JPanel  implements KeyListener{
 				}
 			}
 		}
+		//Pour projectille
+		for(int v=0;v<w.tab_Volcan.size();v++) {
+			for(int p=0;p<w.tab_Volcan.get(i).tab_P.size();p++) {
+				int xp=w.tab_Volcan.get(i).tab_P.get(p).x_a;
+				int yp=w.tab_Volcan.get(i).tab_P.get(p).y_a;
+				g.drawImage(IMG_NUAGE_HEART,  xp-(xtmp*(taille_x)),yp-(ytmp*(taille_y)),taille_x,taille_y, this);
+				g.drawImage(IMG_NUAGE2, w.tab_Volcan.get(i).tab_P.get(p).x*taille_x -(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y*taille_y-(ytmp*(taille_y)),taille_x,taille_y*5, this);
+				g.drawImage(IMG_NUAGE2, w.tab_Volcan.get(i).tab_P.get(p).x2*taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y2*taille_y-(ytmp*(taille_y)),taille_x,taille_y*5, this);
+				g.drawImage(IMG_NUAGE2, w.tab_Volcan.get(i).tab_P.get(p).x_m*taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y_m*taille_y-(ytmp*(taille_y)),taille_x,taille_y*5, this);
+				
+			}
+		}
 	}
 	public void keyPressed(KeyEvent e) {
 	

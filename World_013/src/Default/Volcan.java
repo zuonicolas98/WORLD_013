@@ -28,13 +28,19 @@ public class Volcan {
 	public void step() {
 		if(volcan) {
 			
-			if(cpt==1000) {
+			if(cpt>=1000 && tab_P.size()==0) {
+				System.out.println(cpt);
 				w.tab_Volcan.remove(this);
 			}else {
 				if(cpt%50==0) {
 					//System.out.println("New P");
+					if(tab_P.size()<1)
 					tab_P.add(new Projectille(x_max,y_max,w));
 				}
+			}
+			for(int i=0;i<tab_P.size();i++) {
+				if(tab_P.get(i).sol)
+					tab_P.remove(i);
 			}
 		}else {
 			if(cpt==100) {
