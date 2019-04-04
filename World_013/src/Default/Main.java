@@ -7,7 +7,7 @@ import java.awt.Dimension;
 public class Main {
 	public static void main(String[] agrs) throws IOException {
 		int hauteur;//=400 max
-		int largeur=hauteur=100;//640 max
+		int largeur=hauteur=75;//640 max
 		//Lightning l=new Lightning();
 		//Noise n=new Noise(largeur,hauteur);
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();

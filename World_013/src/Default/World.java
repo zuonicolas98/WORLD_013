@@ -13,6 +13,7 @@ public class World {
 	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
 	public ArrayList<Animal> tab_Animal;
+	public ArrayList<Volcan> tab_Volcan;
 	private int nb_arbre, nb_animal;
 	private Fenetre f;
 	private boolean fin;
@@ -31,7 +32,6 @@ public class World {
 		n=new Noise(x,y);
 		X=x;
 		Y=y;
-		v=new Volcan(this);
 		fin=true;
 		delay = 51;
 		f= new Fenetre(this,tx,ty);
@@ -43,6 +43,9 @@ public class World {
 		tab_Arbre=new ArrayList<Arbre>();
 		tab_Animal= new ArrayList<Animal>();
 		tab_Cloud= new ArrayList<Cloud>();
+		tab_Volcan = new ArrayList<Volcan>();
+		
+		tab_Volcan.add(new Volcan(this));
 		
 		if(nb_arbre>x*y) {
 			System.out.println("Trop d'arbres par rapport a la taille du monde");
@@ -204,10 +207,11 @@ public class World {
 		for(int i=0; i < tab_Arbre.size(); i++) {
 			tab_Arbre.get(i).step();
 		}
-		
+		try {
 		for(int i=0; i < tab_Cloud.size(); i++) {
 			tab_Cloud.get(i).step();
 		}
+		}catch(Exception e) {}
 		
 		if(Math.random()<0.01 && tab_Cloud.size()<Y/5) {//proba apparition nuage 
 			int ___x=(int)(Math.random()*X);
@@ -222,7 +226,12 @@ public class World {
 		l.setCpt();
 		
 		refreshground();
-		v.step();
+
+		if(Math.random()<1 && tab_Volcan.size()<2)
+			tab_Volcan.add(new Volcan(this,"new_aleatoire"));
+		for(int i=0;i<tab_Volcan.size();i++) {
+			tab_Volcan.get(i).step();
+		}
 		
 		f.getPanneau().repaint();
 	
@@ -255,10 +264,12 @@ public class World {
 				
 				//liquide
 					if(n.alti[x][y]==9) {
-						if(liquide[x][y]<10 && v.getMontee()==1){
-							liquide[x][y]++;
-						}else {
-							v.ecoulement();
+						for(int i=0;i<tab_Volcan.size();i++) {
+							if(liquide[x][y]<10 && tab_Volcan.get(i).getMontee()==1){
+								liquide[x][y]++;
+							}else {
+								tab_Volcan.get(i).ecoulement();
+							}
 						}
 					}
 				

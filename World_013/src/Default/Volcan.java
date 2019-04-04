@@ -3,14 +3,15 @@ package Default;
 import java.util.ArrayList;
 
 public class Volcan {
-	private World w;
+	protected World w;
 	private int alti_max=-2;
 	private boolean volcan=false;
-	private int change=5;
+	private int change=2;
 	private int cpt=0;
 	private int x_max=0,y_max=0;
 	private int montee;
 	private ArrayList<Coor> max_alt;
+	public ArrayList<Projectille> tab_P=new ArrayList<Projectille>();
 	
 	public Volcan(World w){
 		max_alt=new ArrayList<Coor>();
@@ -18,23 +19,31 @@ public class Volcan {
 		montee=1;
 		RecherchePlusHautAlti();
 	}
+	public Volcan(World w,String n){
+		this.w=w;
+		montee=1;
+		RechercheAleatoireAlti();
+	}
 
 	public void step() {
 		if(volcan) {
+			
 			if(cpt==1000) {
-				volcan=false;
-				RechercheAleatoireAlti();
-				cpt=0;
-				change=5;
+				w.tab_Volcan.remove(this);
+			}else {
+				if(cpt%50==0) {
+					//System.out.println("New P");
+					tab_P.add(new Projectille(x_max,y_max,w));
+				}
 			}
 		}else {
-			if(cpt==500) {
+			if(cpt==100) {
 				if(alti_max<10) {
 					alti_max++;
 					for(int x=x_max-change ; x <= x_max+change ; x++) {
 						for(int y=y_max-change ; y <= y_max+change ; y++) {
 							if(y>=0 && y<w.getY() && x>=0 && x<w.getX() ){
-								if(w.n.alti[x][y]<=9)
+								if(w.n.alti[x][y]<9 && w.n.alti[x][y]<alti_max)
 								w.n.alti[x][y]++;
 								w.world[x][y]=0;
 							}
@@ -42,16 +51,15 @@ public class Volcan {
 					}
 
 					change++;
-					change++;
 
-					System.out.println("---------MAP EN INT---------");
+					/*System.out.println("---------MAP EN INT---------");
 					for(int x=0;x<w.getX();x++) {
 						for(int y=0;y<w.getY();y++) {
 							System.out.print(w.n.alti[y][x]);
 						}
 						System.out.println();
 					}
-					System.out.println("---------MAP EN INT---------");
+					System.out.println("---------MAP EN INT---------");*/
 				}else
 					volcan=true;
 				cpt=0;
