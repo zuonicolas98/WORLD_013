@@ -86,6 +86,9 @@ public class Arbre {
 							|| w.RechercheArbres(x,y+1).getFeu()==true || w.RechercheArbres(x-1,y).getFeu()==true)) 
 				feu=true;
 		
+		if(w.liquide[x][y]>0)
+			this.setFeu(true);
+		
 	}
 	
 	public int rebord(int x, int y) {
