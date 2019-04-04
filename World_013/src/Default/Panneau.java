@@ -686,11 +686,13 @@ public class Panneau extends JPanel  implements KeyListener{
 		switch(w.getWorld()[j][i]) {
 		case 1: //Herbes
 			g.drawImage(IMG_BUSH, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+			if(w.liquide[j][i]>0)
+				g.drawImage(IMG_FIRE, ((f.getX()/(x2-x1))*j-(f.getX()/(x2-x1))*2)-(xtmp*((f.getX()/(x2-x1)))),((((f.getY()-40)/(y2-y1)))*i-((f.getY()-40)/(y2-y1))*7)-(ytmp*(((f.getY()-40)/(y2-y1)))),(f.getX()/(x2-x1))*5,((f.getY()-40)/(y2-y1))*8, this);
 			break;
 				
 		case 2: //Arbres
 			int taille_x=(f.getX()/(x2-x1));
-			int taille_y=(f.getY()-40)/(y2-y1);
+			int taille_y=((f.getY()-40)/(y2-y1));
 			for(int a=0; a < w.tab_Arbre.size(); a++) {
 				if( (w.tab_Arbre.get(a).getX()==j) && (w.tab_Arbre.get(a).getY()==i) ) {
 					if(w.tab_Arbre.get(a).getNom().equals("Pommier")) { 
@@ -953,6 +955,16 @@ public class Panneau extends JPanel  implements KeyListener{
 			f.dispose();
 			w.setFin();
 		
+		}else if(c == KeyEvent.VK_V) { //fin
+			for(int i=0;i<w.tab_Volcan.size();i++) {
+				if(w.tab_Volcan.get(i).getMontee()==0) {
+					w.tab_Volcan.get(i).setMontee(1);
+					w.setLave(0);
+				}
+				if(w.tab_Volcan.get(i).getMontee()==1) {
+					w.setEcoulement(true);		
+			}
+			}
 		}
 		try {
 			if(c == KeyEvent.VK_L) { //foudre
@@ -969,20 +981,6 @@ public class Panneau extends JPanel  implements KeyListener{
 	public void keyReleased(KeyEvent e) {}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

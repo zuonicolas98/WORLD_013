@@ -8,7 +8,7 @@ public class World {
 	public int[][] world;
 	public int[][] liquide;
 	public Volcan v;
-	private int X,Y,delay;
+	private int X,Y,delay,cpt_lave;
 	public ArrayList<Cloud> tab_Cloud;
 	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
@@ -16,7 +16,7 @@ public class World {
 	public ArrayList<Volcan> tab_Volcan;
 	private int nb_arbre, nb_animal;
 	private Fenetre f;
-	private boolean fin;
+	private boolean fin,ecoulement;
 	public Lightning l=new Lightning();
 	public Noise n;
 	public int nb_lapin=0,nb_cochon=0,nb_chevre=0;
@@ -46,6 +46,8 @@ public class World {
 		tab_Volcan = new ArrayList<Volcan>();
 		
 		tab_Volcan.add(new Volcan(this));
+		cpt_lave=0;
+		ecoulement=false;
 		
 		if(nb_arbre>x*y) {
 			System.out.println("Trop d'arbres par rapport a la taille du monde");
@@ -127,12 +129,12 @@ public class World {
 		//Initialisation liquide
 			for(int i=0; i<X; i++) {
 				for(int j=0; j<Y; j++) {
-					if (n.alti[i][j]==8 && rebord(i,j)==0)
-						liquide[i][j]=1;
+					if (n.alti[i][j]==9 && rebord(i,j)==0)
+						liquide[i][j]=100;
 				}
 			}
 		//afficherAltitude();
-		//afficherLiquide();
+		//afficherLiquide()
 			
 	}
 	
@@ -230,6 +232,9 @@ public class World {
 		if(Math.random()<1 && tab_Volcan.size()<2)
 			tab_Volcan.add(new Volcan(this,"new_aleatoire"));
 		for(int i=0;i<tab_Volcan.size();i++) {
+			if(tab_Volcan.get(i).getMontee()==0) {
+				cpt_lave++;
+			}
 			tab_Volcan.get(i).step();
 		}
 		
@@ -263,17 +268,24 @@ public class World {
 					world[x][y]=0;
 				
 				//liquide
-					if(n.alti[x][y]==9) {
+					if(n.alti[x][y]>=8) { //volcan
 						for(int i=0;i<tab_Volcan.size();i++) {
-							if(liquide[x][y]<10 && tab_Volcan.get(i).getMontee()==1){
+							
+							if(liquide[x][y]<6 && tab_Volcan.get(i).getMontee()==1){ //montée de la lave
 								liquide[x][y]++;
-							}else {
-								tab_Volcan.get(i).ecoulement();
+							}else if(ecoulement) { //quantité de lave maximale atteinte et la touche v enclenchée
+								if(cpt_lave<1000) {
+									tab_Volcan.get(i).ecoulement();
+									tab_Volcan.get(i).setMontee(0);							
+								}else {
+									tab_Volcan.get(i).retirerlave();
+									ecoulement=false;
+								}
 							}
 						}
-					}
 				
-			}
+					}
+				}
 		}
 		//afficherLiquide();
 	}
@@ -312,9 +324,12 @@ public class World {
 	public int getX() { return X; }
 	public int getY() { return Y; }
 	public int getDelay() { return delay;}
+	public int getLave() { return cpt_lave;}
 	public Noise getNoise() { return n; }
 	
 	//Setters
 	public void setDelay(int d) { delay = d; }
+	public void setEcoulement(boolean e) { ecoulement=e; }
+	public void setLave(int l) {cpt_lave=l;}
 	public void setFin() { fin = false; }
 }

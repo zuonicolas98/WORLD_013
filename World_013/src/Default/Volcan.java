@@ -100,9 +100,25 @@ public class Volcan {
 					}
 					break;
 				default:;
+		}
+				
+		}
+		
+	}
+	
+	public void retirerlave() {
+
+		for(int y=0;y<w.getY();y++) {
+			for(int x=0;x<w.getX();x++) {
+				if(w.liquide[x][y]>0 && w.n.alti[x][y]==-1)
+					w.n.alti[x][y]=0;
+				if(w.liquide[x][y]>0) {
+					w.liquide[x][y]=0;
+					if(w.liquide[x][y]==0)
+						w.world[x][y]=-1;
+				}
 			}
 		}
-		montee=0;
 	}
 	
 	
