@@ -28,6 +28,11 @@ public class Panneau extends JPanel  implements KeyListener{
 	public Image IMG_ROCHER_EAU;
 	public Image IMG_ROCHER;
 	public Image IMG_ROCKY;
+	//Variable FLY STONE
+	public Image IMG_FLY_STONE_GAUCHE;
+	public Image IMG_FLY_STONE_DROITE;
+	public Image IMG_FLY_STONE_GAUCHE_SOL;
+	public Image IMG_FLY_STONE_DROITE_SOL;
 	//Variable Lave
 	public Image IMG_LAVE;
 	public Image IMG_LAVE_DROITE0;
@@ -137,6 +142,10 @@ public class Panneau extends JPanel  implements KeyListener{
 		IMG_LAVE_HAUT1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_haut1.gif");
 		IMG_LAVE_BAS0= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_bas0.gif");
 		IMG_LAVE_BAS1= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/LAVE/lave_bas1.gif");
+		IMG_FLY_STONE_GAUCHE= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/FLY_STONE/fly_stone_gauche.gif");
+		IMG_FLY_STONE_DROITE= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/FLY_STONE/fly_stone_droite.gif");
+		IMG_FLY_STONE_GAUCHE_SOL= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/FLY_STONE/fly_stone_gauche_sol.gif");
+		IMG_FLY_STONE_DROITE_SOL= Toolkit.getDefaultToolkit().createImage("IMAGES/ELEMENTS/FLY_STONE/fly_stone_droite_sol.gif");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -284,6 +293,11 @@ public class Panneau extends JPanel  implements KeyListener{
 						afficherNuage(i,j,g); 	
 					}
 				}
+				for(int i=0;i<w.getY();i++) {
+					for(int j=0;j<w.getX();j++) {
+						afficher_projectille(i,j,g);	
+					}
+				}
 				if(time==2)
 					time=0;
 				else
@@ -307,8 +321,12 @@ public class Panneau extends JPanel  implements KeyListener{
 					g.drawImage(IMG_GRASS, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);	
 				
 				//liquide
-				if(w.liquide[j][i]>=1) 
-					g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+				for(int i2=0;i2<w.tab_Volcan.size();i2++) {
+					if(w.tab_Volcan.get(i2).liquide[j][i]>=1) {
+						//System.out.println(w.tab_Volcan.get(i2).liquide[j][i]);
+						g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+					}
+				}
 			}
 			
 		}
@@ -686,8 +704,12 @@ public class Panneau extends JPanel  implements KeyListener{
 		switch(w.getWorld()[j][i]) {
 		case 1: //Herbes
 			g.drawImage(IMG_BUSH, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-			if(w.liquide[j][i]>0)
-				g.drawImage(IMG_FIRE, ((f.getX()/(x2-x1))*j-(f.getX()/(x2-x1))*2)-(xtmp*((f.getX()/(x2-x1)))),((((f.getY()-40)/(y2-y1)))*i-((f.getY()-40)/(y2-y1))*7)-(ytmp*(((f.getY()-40)/(y2-y1)))),(f.getX()/(x2-x1))*5,((f.getY()-40)/(y2-y1))*8, this);
+			for(int i2=0;i2<w.tab_Volcan.size();i2++) {
+				if(w.tab_Volcan.get(i2).liquide[j][i]>0) {
+					g.drawImage(IMG_FIRE, ((f.getX()/(x2-x1))*j-(f.getX()/(x2-x1))*2)-(xtmp*((f.getX()/(x2-x1)))),((((f.getY()-40)/(y2-y1)))*i-((f.getY()-40)/(y2-y1))*7)-(ytmp*(((f.getY()-40)/(y2-y1)))),(f.getX()/(x2-x1))*5,((f.getY()-40)/(y2-y1))*8, this);
+					w.world[j][i]=-1;
+				}
+			}
 			break;
 				
 		case 2: //Arbres
@@ -893,16 +915,26 @@ public class Panneau extends JPanel  implements KeyListener{
 				}
 			}
 		}
+	}
+	public void afficher_projectille(int i,int j,Graphics g) {
 		//Pour projectille
+		int taille_x=(f.getX()/(x2-x1));
+		int taille_y=(f.getY()-40)/(y2-y1);
 		for(int v=0;v<w.tab_Volcan.size();v++) {
 			for(int p=0;p<w.tab_Volcan.get(i).tab_P.size();p++) {
 				int xp=w.tab_Volcan.get(i).tab_P.get(p).x_a;
 				int yp=w.tab_Volcan.get(i).tab_P.get(p).y_a;
-				g.drawImage(IMG_NUAGE_HEART,  xp-(xtmp*(taille_x)),yp-(ytmp*(taille_y)),taille_x,taille_y, this);
-				g.drawImage(IMG_NUAGE2, w.tab_Volcan.get(i).tab_P.get(p).x*taille_x -(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y*taille_y-(ytmp*(taille_y)),taille_x,taille_y*5, this);
-				g.drawImage(IMG_NUAGE2, w.tab_Volcan.get(i).tab_P.get(p).x2*taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y2*taille_y-(ytmp*(taille_y)),taille_x,taille_y*5, this);
-				g.drawImage(IMG_NUAGE2, w.tab_Volcan.get(i).tab_P.get(p).x_m*taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y_m*taille_y-(ytmp*(taille_y)),taille_x,taille_y*5, this);
-				
+				if(w.tab_Volcan.get(i).tab_P.get(p).direction==0) {
+					if(w.tab_Volcan.get(v).tab_P.get(p).sol)
+						g.drawImage(IMG_FLY_STONE_DROITE_SOL,   (w.tab_Volcan.get(i).tab_P.get(p).x-xp)*taille_x-taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y*taille_y-taille_y-yp-(ytmp*(taille_y)),taille_x*2,taille_y*4, this);
+					else
+						g.drawImage(IMG_FLY_STONE_DROITE,   (w.tab_Volcan.get(i).tab_P.get(p).x-xp)*taille_x-taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y*taille_y-taille_y-yp-(ytmp*(taille_y)),taille_x*2,taille_y*4, this);
+				}else if(w.tab_Volcan.get(i).tab_P.get(p).direction==1) {
+					if(w.tab_Volcan.get(v).tab_P.get(p).sol)
+						g.drawImage(IMG_FLY_STONE_GAUCHE_SOL,   (w.tab_Volcan.get(i).tab_P.get(p).x-xp)*taille_x-taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y*taille_y-taille_y-yp-(ytmp*(taille_y)),taille_x*2,taille_y*4, this);
+					else
+						g.drawImage(IMG_FLY_STONE_GAUCHE,   (w.tab_Volcan.get(i).tab_P.get(p).x-xp)*taille_x-taille_x-(xtmp*(taille_x)),w.tab_Volcan.get(i).tab_P.get(p).y*taille_y-taille_y-yp-(ytmp*(taille_y)),taille_x*2,taille_y*4, this);
+				}				
 			}
 		}
 	}
@@ -967,7 +999,7 @@ public class Panneau extends JPanel  implements KeyListener{
 			f.dispose();
 			w.setFin();
 		
-		}else if(c == KeyEvent.VK_V) { //fin
+		}/*else if(c == KeyEvent.VK_V) { //fin
 			for(int i=0;i<w.tab_Volcan.size();i++) {
 				if(w.tab_Volcan.get(i).getMontee()==0) {
 					w.tab_Volcan.get(i).setMontee(1);
@@ -977,7 +1009,7 @@ public class Panneau extends JPanel  implements KeyListener{
 					w.setEcoulement(true);		
 			}
 			}
-		}
+		}*/
 		try {
 			if(c == KeyEvent.VK_L) { //foudre
 				//w.l.setLight();

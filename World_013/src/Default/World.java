@@ -16,16 +16,21 @@ public class World {
 	public ArrayList<Volcan> tab_Volcan;
 	private int nb_arbre, nb_animal;
 	private Fenetre f;
-	private boolean fin,ecoulement;
+	private boolean fin;
 	public Lightning l=new Lightning();
 	public Noise n;
 	public int nb_lapin=0,nb_cochon=0,nb_chevre=0;
+	public int tx,ty;
+	private int nb_max_volcan,cpt_volcan=0;
 	
-	public World(int x, int y,int nb_arbre,int nb_animal, int tx,int ty) {
+	public World(int x, int y,int nb_arbre,int nb_animal,int nb_max_volcan, int tx,int ty) {
 		if(x==0 || y==0) {
 			System.out.println("ERREUR DIMENSION DU TABLEAU !!!");
 			System.exit(0);
 		}
+		this.tx=tx;
+		this.ty=ty;
+		this.nb_max_volcan=nb_max_volcan;
 		//Initialisations
 		world=new int[x][y];
 		liquide=new int[x][y];
@@ -47,7 +52,6 @@ public class World {
 		
 		tab_Volcan.add(new Volcan(this));
 		cpt_lave=0;
-		ecoulement=false;
 		
 		if(nb_arbre>x*y) {
 			System.out.println("Trop d'arbres par rapport a la taille du monde");
@@ -72,9 +76,7 @@ public class World {
 				double m=Math.random();
 				if(m<0.1 && n.alti[x][y]>=0 && n.alti[x][y]<7 && rebord(x,y)==0 && (x-1>=0 && y+1<Y && n.alti[x][y]==n.alti[x-1][y+1]) && (x+1<X && y+1<Y && n.alti[x][y]==n.alti[x+1][y+1])) //Herbes
 					world[x][y]=1;
-				if(m<0.005 && n.alti[x][y]>=-1 && n.alti[x][y]<7) //Roches
-					world[x][y]=3;
-				
+			
 			}
 		}
 		//Initialisation des arbres
@@ -129,8 +131,7 @@ public class World {
 		//Initialisation liquide
 			for(int i=0; i<X; i++) {
 				for(int j=0; j<Y; j++) {
-					if (n.alti[i][j]==9 && rebord(i,j)==0)
-						liquide[i][j]=100;
+						liquide[i][j]=0;
 				}
 			}
 		//afficherAltitude();
@@ -188,7 +189,6 @@ public class World {
 			e.printStackTrace();
 		}
 
-		
 		nb_lapin=0;
 		nb_chevre=0;
 		nb_cochon=0;
@@ -218,7 +218,7 @@ public class World {
 		if(Math.random()<0.01 && tab_Cloud.size()<Y/5) {//proba apparition nuage 
 			int ___x=(int)(Math.random()*X);
 			int ___y=(int)(Math.random()*Y);
-			while((n.alti[___x][___y]<-1 || n.alti[___x][___y]>6 || ___y>=Y-11 || ___x<3 || ___x>X-3)) {
+			while((n.alti[___x][___y]<-1 || n.alti[___x][___y]>6 || ___y>=Y-15 || ___x<3 || ___x>X-3)) {
 				___x=(int)(Math.random()*X);
 				___y=(int)(Math.random()*Y);
 			}
@@ -228,24 +228,40 @@ public class World {
 		l.setCpt();
 		
 		refreshground();
+		
+		//remise a 0
+		for(int i=0; i<X; i++) {
+			for(int j=0; j<Y; j++) {
+					liquide[i][j]=0;
+			}
+		}
 
-		if(Math.random()<1 && tab_Volcan.size()<2)
+		if(Math.random()<0.005 && tab_Volcan.size()<nb_max_volcan) {
 			tab_Volcan.add(new Volcan(this,"new_aleatoire"));
+			cpt_volcan++;
+		}
 		for(int i=0;i<tab_Volcan.size();i++) {
 			if(tab_Volcan.get(i).getMontee()==0) {
 				cpt_lave++;
 			}
+			for(int i2=0;i2<tab_Volcan.get(i).tab_P.size();i2++) {
+					tab_Volcan.get(i).tab_P.get(i2).step();
+
+			}
 			tab_Volcan.get(i).step();
+		}
+		
+		for(int x=0;x<X;x++) {
+			for(int y=0;y<Y;y++) {
+				for(int i=0;i<tab_Volcan.size();i++) {
+					if(tab_Volcan.get(i).liquide[x][y]>liquide[x][y]) 
+						liquide[x][y]=tab_Volcan.get(i).liquide[x][y];
+				}
+			}
 		}
 		
 		f.getPanneau().repaint();
 	
-		//if(Lapin.nb_lapin < 10 || Cochon.nb_cochon <10 || Chevre.nb_chevre<10) { // marche pas du au exception qui des fois ne fait pas les --;
-		//System.out.print(" Lapin: "+Lapin.nb_lapin);
-		//System.out.print(" Cochon: "+Cochon.nb_cochon);
-		//System.out.println(" Chevre: "+Chevre.nb_chevre);
-		//}
-
 
 	}
 	
@@ -253,7 +269,7 @@ public class World {
 	void refreshground() {
 		for(int y=0;y<Y;y++) {
 			for(int x=0;x<X;x++) {
-				if(Math.random()<0.00001 && world[x][y]==1) //disparition de l'herbe
+				if((Math.random()<0.00001 && world[x][y]==1 ) || (world[x][y]==3 && Math.random()<0.0001)) //disparition de l'herbe et rocher
 					world[x][y]=0;
 				//apparitions herbes
 				if(Math.random()<0.000005 && world[x][y]==0 && n.alti[x][y]>=0 && n.alti[x][y]<7 &&  rebord(x,y)==0 && (x-1>=0 && y+1<Y && n.alti[x][y]==n.alti[x-1][y+1]) && (x+1<X && y+1<Y && n.alti[x][y]==n.alti[x+1][y+1])) //Herbes
@@ -267,25 +283,11 @@ public class World {
 				|| ((x-1>=0) && ((world[x-1][y]==0) || (world[x-1][y]==1) || (world[x-1][y]==2))) ))
 					world[x][y]=0;
 				
-				//liquide
-					if(n.alti[x][y]>=8) { //volcan
-						for(int i=0;i<tab_Volcan.size();i++) {
-							
-							if(liquide[x][y]<6 && tab_Volcan.get(i).getMontee()==1){ //montée de la lave
-								liquide[x][y]++;
-							}else if(ecoulement) { //quantité de lave maximale atteinte et la touche v enclenchée
-								if(cpt_lave<1000) {
-									tab_Volcan.get(i).ecoulement();
-									tab_Volcan.get(i).setMontee(0);							
-								}else {
-									tab_Volcan.get(i).retirerlave();
-									ecoulement=false;
-								}
-							}
-						}
-				
-					}
+				if(liquide[x][y]>0 && RechercheArbres(x,y).getX()==-1 && world[x][y]!=1) {
+					//System.out.println(liquide[x][y]);
+					world[x][y]=-1;
 				}
+			}
 		}
 		//afficherLiquide();
 	}
@@ -300,14 +302,6 @@ public class World {
 		return 0;
 	}
 	
-	public void afficherLiquide() {	
-		for(int i=0; i<Y; i++) {
-			for(int j=0; j<X; j++) {
-				System.out.print(liquide[j][i]);
-			}
-			System.out.println();
-		}	
-	}
 	
 	public void afficherAltitude() {	
 		for(int i=0; i<Y; i++) {
@@ -316,6 +310,9 @@ public class World {
 			}
 			System.out.println();
 		}
+		
+	}
+	public void FinDuMonde() {
 		
 	}
 	
@@ -329,7 +326,6 @@ public class World {
 	
 	//Setters
 	public void setDelay(int d) { delay = d; }
-	public void setEcoulement(boolean e) { ecoulement=e; }
 	public void setLave(int l) {cpt_lave=l;}
 	public void setFin() { fin = false; }
 }

@@ -58,6 +58,9 @@ public class Cloud {
 	}
 	
 	public void step() {
+		if(ombre_y-1>w.getY())
+			fin_vie=true;
+		
 		if(mature==false) {
 			if (cpt>=10) {
 				cpt=0;
@@ -74,13 +77,13 @@ public class Cloud {
 				if(w.tab_Arbre.size() < w.getX()*w.getY()/10 && // faire quand ils manquent d'arbres
 						//x!=-1 && x-1>=0 && //erreur sur les coté de la map
 						cpt_pluie < w.getX()/20 && //pour pas que tout les arbres pleuvent d'un coup
-						(alti[x][ombre_y]>=0 && alti[x][ombre_y]<=6) && // verifier que c pas dans l'eau sur montagne
+						(alti[x][ombre_y]>=0 && alti[x][ombre_y]<=5) && // verifier que c pas dans l'eau sur montagne
 						w.world[x][ombre_y]==0 && //verifie qu'il n'y a rien sur la case
 						pluie==false && //pour ne pas rerentrer dedans
 						foudre==false &&
 						fin_vie==false &&
 						heart==false &&
-						alti[x+1][ombre_y]==alti[x][ombre_y] && alti[x-1][ombre_y]==alti[x][ombre_y] && //pour ne pas afficher sur sur un relief
+						w.rebord(x, ombre_y)==0 && //pour ne pas afficher sur sur un relief
 								Math.random()<0.05)//prob qui pleut 
 				{
 					//System.out.println(cpt_pluie);
@@ -91,13 +94,13 @@ public class Cloud {
 				if((w.nb_cochon<6 || w.nb_chevre<6 || w.nb_lapin<6) && // faire quand ils manquent d'animaux
 						//x!=-1 && x-1>=0 && //erreur sur les coté de la map
 						cpt_heart < w.getX()/20 && //pour pas que tout les arbres pleuvent d'un coup
-						(alti[x][ombre_y]>=0 && alti[x][ombre_y]<=6) && // verifier que c pas dans l'eau / sur montagne
+						(alti[x][ombre_y]>=0 && alti[x][ombre_y]<=5) && // verifier que c pas dans l'eau / sur montagne
 						w.world[x][ombre_y]==0 && //verifie qu'il n'y a rien sur la case
 						pluie==false && //pour ne pas rerentrer dedans
 						foudre==false &&
 						heart==false &&
 						fin_vie==false &&
-						alti[x+1][ombre_y]==alti[x][ombre_y] && alti[x-1][ombre_y]==alti[x][ombre_y] && //pour ne pas afficher sur sur un relief
+						w.rebord(x, ombre_y)==0 && //pour ne pas afficher sur sur un relief
 								Math.random()<0.05)//prob qui pleut 
 				{
 					//System.out.println(cpt_pluie);
@@ -182,7 +185,6 @@ public class Cloud {
 					}
 				}
 				if(pluie==false && foudre==false && fin_vie==false && heart==false) {
-
 					if(	x+1>=w.getX()-1 || x-1<=1 ) {
 
 						this.changeDirection();
@@ -197,7 +199,7 @@ public class Cloud {
 						if( x!=-1 && ancien!=alti[x][ombre_y]) {
 							ancien=-10;
 						}
-						if( x!=-1 && alti[x][ombre_y]<alti[x+1][ombre_y] && ancien==-10) {
+						if( x!=-1 && alti[x][ombre_y]<alti[x+1][ombre_y] && ancien==-10 ) {
 							ancien=alti[x][ombre_y];
 							ombre_y=ombre_y-1;
 						}else if( x!=-1 && ((alti[x][ombre_y]!=-1 && alti[x+1][ombre_y]==-1) || alti[x][ombre_y]>alti[x+1][ombre_y] ) && ancien==-10){
@@ -240,7 +242,7 @@ public class Cloud {
 			for(int x_bis=x-1;x_bis<=x+1;x_bis++) {
 				int a=w.RechercheAnimal(x_bis, ombre_y);
 				if(a!=-1)
-					w.tab_Animal.remove(a);
+					w.tab_Animal.get(a).mort=true;;
 			}
 		}else if(vie<=0 && pluie==false && foudre ==false && heart==false) {
 			w.tab_Cloud.remove(this);
