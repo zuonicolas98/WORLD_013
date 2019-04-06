@@ -887,7 +887,10 @@ public class Panneau extends JPanel  implements KeyListener{
 					
 					
 				}else if(c.getMature()==false) {
-					IMG_NUAGE=IMG_NUAGE_NORMAL;
+					if(c.volcan)
+						IMG_NUAGE=IMG_NUAGE2;
+					else
+						IMG_NUAGE=IMG_NUAGE_NORMAL;
 					int taillex=(taille_x*3)/5;
 					int tailley=(taille_y*4)/5;
 					if(c.getAge()<2 ) {
@@ -903,7 +906,10 @@ public class Panneau extends JPanel  implements KeyListener{
 						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taillex*5,tailley*5,this);
 					}
 				}else if(c.getDirection()==1 ) {
-					IMG_NUAGE=IMG_NUAGE0;
+					if(c.volcan)
+						IMG_NUAGE=IMG_NUAGE2;
+					else
+						IMG_NUAGE=IMG_NUAGE0;
 					if(c.getCpt()<10 ) {
 						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
 						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
@@ -922,7 +928,10 @@ public class Panneau extends JPanel  implements KeyListener{
 						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x+decalage*4)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);
 					}
 				}else if(c.getDirection()==3) {
-					IMG_NUAGE=IMG_NUAGE0;
+					if(c.volcan)
+						IMG_NUAGE=IMG_NUAGE2;
+					else
+						IMG_NUAGE=IMG_NUAGE0;
 					if(c.getCpt()<10 ) {
 						g.drawImage(IMG_NUAGE,  (taille_x*j-taille_x)-(xtmp*(taille_x)),(taille_y*i-taille_y*3)-(ytmp*(taille_y)),taille_x*3,taille_y*4, this);
 						g.drawImage(IMG_OMBRE,  (taille_x*c.ombre_x-taille_x)-(xtmp*(taille_x)),(taille_y*c.ombre_y)-(ytmp*(taille_y)),taille_x*3,taille_y, this);

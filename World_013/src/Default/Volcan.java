@@ -2,6 +2,8 @@ package Default;
 
 import java.util.ArrayList;
 
+import Object.*;
+
 public class Volcan {
 	protected World w;
 	private int alti_max=-2;
@@ -14,6 +16,8 @@ public class Volcan {
 	private int montee;
 	private ArrayList<Coor> max_alt;
 	public ArrayList<Projectille> tab_P=new ArrayList<Projectille>();
+	private boolean explosive=false;
+	private int dir_cloud;
 	
 	public Volcan(World w){
 		max_alt=new ArrayList<Coor>();
@@ -26,6 +30,13 @@ public class Volcan {
 				liquide[x][y]=0;
 			}
 		}
+		if(Math.random()<0.3) {
+			explosive=true;
+		}
+		if(w.vent==0) {
+			dir_cloud=1;
+		}else
+			dir_cloud=3;
 	}
 	public Volcan(World w,String n){
 		this.w=w;
@@ -37,11 +48,24 @@ public class Volcan {
 				liquide[x][y]=0;
 			}
 		}
+		if(Math.random()<0.3) {
+			explosive=true;
+		}
+		if(w.vent==0) {
+			dir_cloud=1;
+		}else
+			dir_cloud=3;
 		
 	}
 
 	public void step() {
 		if(volcan) {
+			if(cpt%100==0 && zombie==false && mort==false) {
+				if(explosive)
+					w.tab_Cloud.add(new Cloud(x_max,y_max,"explosive",dir_cloud,w));
+				else
+					w.tab_Cloud.add(new Cloud(x_max,y_max,"non_explosive",dir_cloud,w));
+			}
 			if(zombie==false) {
 				init_erup();
 				change=0;
@@ -49,7 +73,7 @@ public class Volcan {
 			else {
 				if(cpt%100==0) {
 					if(change==0) {
-						if(Math.random()<0.3) {
+						if(explosive) {
 							for(int x=x_max-20;x<x_max+20;x++) {
 								for(int y=y_max-20; y < y_max+20; y++) {
 									int a=Math.abs(y-y_max);
@@ -82,7 +106,7 @@ public class Volcan {
 							}
 						}
 					}change++;
-					if(change==20) {
+					if(change>=20) {
 						mort=true;
 					}
 				}
@@ -209,7 +233,7 @@ public class Volcan {
 	public void RechercheAleatoireAlti() {
 		x_max=(int)(Math.random()*w.getX());
 		y_max=(int)(Math.random()*w.getY());
-		while(w.n.alti[x_max][y_max]>8) {
+		while(w.n.alti[x_max][y_max]>8 && y_max<w.getY()-15) {
 			x_max=(int)(Math.random()*w.getX());
 			y_max=(int)(Math.random()*w.getY());
 		}
@@ -251,7 +275,12 @@ public class Volcan {
 		}
 		System.out.println("-------------------------------------------");
 	}
-	
+	public void changeDir() {
+		if(dir_cloud==1) {
+			dir_cloud=3;
+		}else
+			dir_cloud=1;
+	}
 	public int getMontee() {return montee;}
 	public void setMontee(int m) {montee=m;}
 }

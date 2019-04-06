@@ -22,6 +22,7 @@ public class World {
 	public int nb_lapin=0,nb_cochon=0,nb_chevre=0;
 	public int tx,ty;
 	private int nb_max_volcan,cpt_volcan=0;
+	public int vent;
 	
 	public World(int x, int y,int nb_arbre,int nb_animal,int nb_max_volcan, int tx,int ty) {
 		if(x==0 || y==0) {
@@ -39,6 +40,7 @@ public class World {
 		Y=y;
 		fin=true;
 		delay = 51;
+		vent=(int)(Math.random()*2);
 		f= new Fenetre(this,tx,ty);
 		this.nb_arbre=nb_arbre;
 		this.nb_animal=nb_animal;
@@ -138,7 +140,6 @@ public class World {
 		//afficherLiquide()
 			
 	}
-	
 
 	public void displayWorld() {
 		for(int y2=0;y2<Y;y2++) {
@@ -235,8 +236,8 @@ public class World {
 					liquide[i][j]=0;
 			}
 		}
-
-		if(Math.random()<0.005 && tab_Volcan.size()<nb_max_volcan) {
+		System.out.println(tab_Volcan.size());
+		if(Math.random()<1.005 && tab_Volcan.size()<nb_max_volcan) {
 			tab_Volcan.add(new Volcan(this,"new_aleatoire"));
 			cpt_volcan++;
 		}
@@ -259,7 +260,7 @@ public class World {
 				}
 			}
 		}
-		
+		MajVent();
 		f.getPanneau().repaint();
 	
 
@@ -290,6 +291,22 @@ public class World {
 			}
 		}
 		//afficherLiquide();
+	}
+	
+	public void MajVent() {
+		if(Math.random()<0.0005) {
+			if(vent==0)
+				vent=1;
+			else 
+				vent=0;
+			for(int i=0;i<tab_Cloud.size();i++) {
+				if(tab_Cloud.get(i).volcan)
+					tab_Cloud.get(i).changeDirection();
+			}
+			for(int i=0;i<tab_Volcan.size();i++) {
+				tab_Volcan.get(i).changeDir();
+			}
+		}
 	}
 	
 	public int rebord(int x, int y) {
