@@ -328,26 +328,30 @@ public class Panneau extends JPanel  implements KeyListener{
 								g.drawImage(IMG_LAVE_HAUT0, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 							else if(w.tab_Volcan.get(i2).liquide[j][i]<7)
 								g.drawImage(IMG_LAVE_HAUT1, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-
+							g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i+1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+						
 						}if (j+1<w.getX() && w.tab_Volcan.get(i2).liquide[j+1][i]==0 && (j-1>=0 && w.tab_Volcan.get(i2).liquide[j-1][i]>=7)) { //droit
 							if(w.tab_Volcan.get(i2).liquide[j][i]<3)
 								g.drawImage(IMG_LAVE_DROITE0, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 							else if(w.tab_Volcan.get(i2).liquide[j][i]<7)
 								g.drawImage(IMG_LAVE_DROITE1, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						
+							g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*(j-1))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+
 						}if (i+1<w.getY() && w.tab_Volcan.get(i2).liquide[j][i+1]==0 && (i-1>=0 && w.tab_Volcan.get(i2).liquide[j][i-1]>=7)) { //bas
 							if(w.tab_Volcan.get(i2).liquide[j][i]<3)
 								g.drawImage(IMG_LAVE_BAS0, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 							else if(w.tab_Volcan.get(i2).liquide[j][i]<7)
 								g.drawImage(IMG_LAVE_BAS1, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-						
+							g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*(i-1))-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+
 						}if (j-1>=0 && w.tab_Volcan.get(i2).liquide[j-1][i]==0 && (j+1<w.getX() && w.tab_Volcan.get(i2).liquide[j+1][i]>=7)) { //gauche
 							if(w.tab_Volcan.get(i2).liquide[j][i]<3)
 								g.drawImage(IMG_LAVE_GAUCHE0, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 							else if(w.tab_Volcan.get(i2).liquide[j][i]<7)
 								g.drawImage(IMG_LAVE_GAUCHE1, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
-							
-						}if(w.tab_Volcan.get(i2).liquide[j][i]>=7) //si la quatité de lave est égale à 10 (max)
+							g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*(j+1))-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
+
+						}if(w.tab_Volcan.get(i2).liquide[j][i]>=7) 
 							g.drawImage(IMG_LAVE, ((f.getX()/(x2-x1))*j)-(xtmp*(f.getX()/(x2-x1))),(((f.getY()-40)/(y2-y1))*i)-(ytmp*(f.getY()/(y2-y1))) ,f.getX()/(x2-x1),f.getY()/(y2-y1), this);
 					}
 				}
