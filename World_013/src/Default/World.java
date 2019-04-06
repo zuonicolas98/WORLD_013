@@ -236,8 +236,8 @@ public class World {
 					liquide[i][j]=0;
 			}
 		}
-		System.out.println(tab_Volcan.size());
-		if(Math.random()<1.005 && tab_Volcan.size()<nb_max_volcan) {
+
+		if(Math.random()<0.005 && tab_Volcan.size()<nb_max_volcan) {
 			tab_Volcan.add(new Volcan(this,"new_aleatoire"));
 			cpt_volcan++;
 		}
