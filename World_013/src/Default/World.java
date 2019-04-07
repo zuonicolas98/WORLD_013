@@ -2,6 +2,8 @@ package Default;
 
 import Object.*;
 import Agents.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class World {
@@ -10,7 +12,6 @@ public class World {
 	public Volcan v;
 	private int X,Y,delay,cpt_lave;
 	public ArrayList<Cloud> tab_Cloud;
-	public ArrayList<Object> object;
 	public ArrayList<Arbre> tab_Arbre;
 	public ArrayList<Animal> tab_Animal;
 	public ArrayList<Volcan> tab_Volcan;
@@ -23,9 +24,11 @@ public class World {
 	public int tx,ty;
 	private int nb_max_volcan,cpt_volcan=0;
 	public int vent;
+	public boolean bang=false,apres_bang=false;
+	public int bang_cpt=0,apres_bang_cpt=0;;
 	
 	public World(int x, int y,int nb_arbre,int nb_animal,int nb_max_volcan, int tx,int ty) {
-		if(x==0 || y==0) {
+		if(x<50 || y<50) {
 			System.out.println("ERREUR DIMENSION DU TABLEAU !!!");
 			System.exit(0);
 		}
@@ -46,7 +49,6 @@ public class World {
 		this.nb_animal=nb_animal;
 		
 		//ArrayLists
-		object=new ArrayList<Object>();
 		tab_Arbre=new ArrayList<Arbre>();
 		tab_Animal= new ArrayList<Animal>();
 		tab_Cloud= new ArrayList<Cloud>();
@@ -194,73 +196,88 @@ public class World {
 		nb_chevre=0;
 		nb_cochon=0;
 		
-		//step() animaux
-		for(int i=0; i < tab_Animal.size(); i++) {
-			tab_Animal.get(i).step();
-		}
-		for(int i=0;i<tab_Animal.size();i++) {
-			if(tab_Animal.get(i).getClass()==Lapin.class) 
-				nb_lapin++;
-			else if(tab_Animal.get(i).getClass()==Chevre.class) 
-				nb_chevre++;
-			else if(tab_Animal.get(i).getClass()==Cochon.class) 
-				nb_cochon++;
-		}
-		//step() arbres
-		for(int i=0; i < tab_Arbre.size(); i++) {
-			tab_Arbre.get(i).step();
-		}
-		try {
-		for(int i=0; i < tab_Cloud.size(); i++) {
-			tab_Cloud.get(i).step();
-		}
-		}catch(Exception e) {}
-		
-		if(Math.random()<0.01 && tab_Cloud.size()<Y/5) {//proba apparition nuage 
-			int ___x=(int)(Math.random()*X);
-			int ___y=(int)(Math.random()*Y);
-			while((n.alti[___x][___y]<-1 || n.alti[___x][___y]>6 || ___y>=Y-15 || ___x<3 || ___x>X-3)) {
-				___x=(int)(Math.random()*X);
-				___y=(int)(Math.random()*Y);
+		BigBang();
+		if(bang==false) {
+				//step() animaux
+			for(int i=0; i < tab_Animal.size(); i++) {
+				tab_Animal.get(i).step();
 			}
-			tab_Cloud.add(new Cloud(___x,___y,0,this));
-		}
-		//step() light
-		l.setCpt();
-		
-		refreshground();
-		
-		//remise a 0
-		for(int i=0; i<X; i++) {
-			for(int j=0; j<Y; j++) {
-					liquide[i][j]=0;
+			for(int i=0;i<tab_Animal.size();i++) {
+				if(tab_Animal.get(i).getClass()==Lapin.class) 
+					nb_lapin++;
+				else if(tab_Animal.get(i).getClass()==Chevre.class) 
+					nb_chevre++;
+				else if(tab_Animal.get(i).getClass()==Cochon.class) 
+					nb_cochon++;
 			}
-		}
-
-		if(Math.random()<0.005 && tab_Volcan.size()<nb_max_volcan) {
-			tab_Volcan.add(new Volcan(this,"new_aleatoire"));
-			cpt_volcan++;
-		}
-		for(int i=0;i<tab_Volcan.size();i++) {
-			if(tab_Volcan.get(i).getMontee()==0) {
-				cpt_lave++;
+			//step() arbres
+			for(int i=0; i < tab_Arbre.size(); i++) {
+				tab_Arbre.get(i).step();
 			}
-			for(int i2=0;i2<tab_Volcan.get(i).tab_P.size();i2++) {
-					tab_Volcan.get(i).tab_P.get(i2).step();
-
-			}
-			tab_Volcan.get(i).step();
-		}
+			try {
+				for(int i=0; i < tab_Cloud.size(); i++) {
+					tab_Cloud.get(i).step();
+				}
+			}catch(Exception e) {}
 		
-		for(int x=0;x<X;x++) {
-			for(int y=0;y<Y;y++) {
-				for(int i=0;i<tab_Volcan.size();i++) {
-					if(tab_Volcan.get(i).liquide[x][y]>liquide[x][y]) 
-						liquide[x][y]=tab_Volcan.get(i).liquide[x][y];
+			if(Math.random()<0.01 && tab_Cloud.size()<Y/5) {//proba apparition nuage 
+				int ___x=(int)(Math.random()*X);
+				int ___y=(int)(Math.random()*Y);
+				while((n.alti[___x][___y]<-1 || n.alti[___x][___y]>6 || ___y>=Y-15 || ___x<3 || ___x>X-3)) {
+					___x=(int)(Math.random()*X);
+					___y=(int)(Math.random()*Y);
+				}
+				tab_Cloud.add(new Cloud(___x,___y,0,this));
+			}
+			//step() light
+			l.setCpt();
+		
+			refreshground();
+			
+			//remise a 0
+			for(int i=0; i<X; i++) {
+				for(int j=0; j<Y; j++) {
+						liquide[i][j]=0;
 				}
 			}
+			if(apres_bang) {
+				if(apres_bang_cpt>X/5) {
+					apres_bang=false;
+					apres_bang_cpt=0;
+				}else if(Math.random()<0.002){
+					tab_Volcan.add(new Volcan(this,"non_Explosive"));
+					apres_bang_cpt++;
+				}
+			}else if(Math.random()<0.0008 && tab_Volcan.size()<nb_max_volcan) {
+				tab_Volcan.add(new Volcan(this,"new_aleatoire"));
+				cpt_volcan++;
+			}
+			for(int i=0;i<tab_Volcan.size();i++) {
+				if(tab_Volcan.get(i).getMontee()==0) {
+					cpt_lave++;
+				}
+				for(int i2=0;i2<tab_Volcan.get(i).tab_P.size();i2++) {
+					tab_Volcan.get(i).tab_P.get(i2).step();
+
+				}
+				tab_Volcan.get(i).step();
+			}
+		
+			for(int x=0;x<X;x++) {
+				for(int y=0;y<Y;y++) {
+					for(int i=0;i<tab_Volcan.size();i++) {
+						if(tab_Volcan.get(i).liquide[x][y]>liquide[x][y]) 
+							liquide[x][y]=tab_Volcan.get(i).liquide[x][y];
+					}
+				}
+			}
+			MajVent();
+		}else {
+			bang_cpt++;
+			try {
+				l.setLight();
+			} catch (IOException e) {	}
 		}
-		MajVent();
 		f.getPanneau().repaint();
 	
 
@@ -285,7 +302,6 @@ public class World {
 					world[x][y]=0;
 				
 				if(liquide[x][y]>0 && RechercheArbres(x,y).getX()==-1 && world[x][y]!=1) {
-					//System.out.println(liquide[x][y]);
 					world[x][y]=-1;
 				}
 			}
@@ -309,6 +325,32 @@ public class World {
 		}
 	}
 	
+	public void BigBang() {
+		if(cpt_volcan>=X/5) {
+			bang=true;
+			for(int i=0;i<tab_Cloud.size();i++)
+				tab_Cloud.remove(i);
+			for(int i=0;i<tab_Volcan.size();i++)
+				tab_Volcan.remove(i);
+			for(int i=0;i<tab_Arbre.size();i++)
+				tab_Arbre.remove(i);
+			for(int i=0;i<tab_Animal.size();i++)
+				tab_Animal.remove(i);
+			if(bang_cpt>=500) {
+				for(int x_=0;x_<X;x_++) {
+					for(int y_=0;y_<Y;y_++) {
+						world[x_][y_]=0;
+						n.alti[x_][y_]=-1;
+						liquide[x_][y_]=0;
+					}
+				}
+				bang=false;
+				cpt_volcan=0;
+				bang_cpt=0;
+				apres_bang=true;
+			}
+		}	
+	}
 	public int rebord(int x, int y) {
 		if((y-1>=0 && n.alti[x][y]!=n.alti[x][y-1]) 
 		|| (x+1<X && n.alti[x][y]!=n.alti[x+1][y])

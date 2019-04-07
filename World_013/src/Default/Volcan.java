@@ -48,9 +48,13 @@ public class Volcan {
 				liquide[x][y]=0;
 			}
 		}
-		if(Math.random()<0.3) {
+		if(n.equals("Explosive")) {
 			explosive=true;
-		}
+		}else if(n.equals("non_Explosive")) {
+			explosive=false;
+		}else if(Math.random()<0.3) {
+				explosive=true;
+			}
 		if(w.vent==0) {
 			dir_cloud=1;
 		}else
@@ -60,7 +64,7 @@ public class Volcan {
 
 	public void step() {
 		if(volcan) {
-			if(cpt%100==0 && zombie==false && mort==false) {
+			if(cpt%50==0 && zombie==false && mort==false) {
 				if(explosive)
 					w.tab_Cloud.add(new Cloud(x_max,y_max,"explosive",dir_cloud,w));
 				else
@@ -120,7 +124,7 @@ public class Volcan {
 			}else {
 				if(cpt<=1500) {
 					//System.out.println("New P");
-					if(tab_P.size()<3 )
+					if(tab_P.size()<5 )
 						tab_P.add(new Projectille(x_max,y_max,w));
 				}
 			}

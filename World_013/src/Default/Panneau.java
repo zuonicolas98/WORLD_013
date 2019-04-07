@@ -837,6 +837,16 @@ public class Panneau extends JPanel  implements KeyListener{
 	public void afficherNuage(int i,int j,Graphics g) {
 		int taille_x=(f.getX()/(x2-x1));
 		int taille_y=(f.getY()-40)/(y2-y1);
+		
+		if(w.bang && Math.random()<0.001) {
+			int x1=(int)(Math.random()*(w.getX()));
+			int y1=(int)(Math.random()*(w.getY()));
+			g.drawImage(IMG_NUAGE2,  (taille_x*x1-taille_x*2*(w.getX()/50))-(xtmp*(taille_x)),(taille_y*y1-taille_y*12*(w.getY()/50))-(ytmp*(taille_y)),taille_x*9*(w.getX()/50),taille_y*6*(w.getY()/50), this);
+			g.drawImage(IMG_LIGHT,  (taille_x*x1-taille_x*(w.getX()/50))-(xtmp*(taille_x)),(taille_y*y1-taille_y*7*(w.getY()/50))-(ytmp*(taille_y)),taille_x*3*(w.getX()/50),taille_y*8*(w.getY()/50), this);
+			//try {
+				//w.l.setLight();
+			//} catch (IOException e) {}//sa bug trop meme si c'est beau avec
+		}
 		for(int var=0;var<w.tab_Cloud.size();var++) {
 			Cloud c=w.tab_Cloud.get(var);
 			if(c.getY()==i && c.getX()==j) {

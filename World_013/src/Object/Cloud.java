@@ -84,8 +84,9 @@ public class Cloud {
 		if(alti[x][y]==-1 || y+10<w.getY()) {
 			ombre_y=y+10;
 		}
-
+		try {
 		ombre_y=y+10-alti[x][ombre_y];
+		}catch(Exception e) {}
 
 		
 	}
@@ -110,6 +111,8 @@ public class Cloud {
 						w.tab_Cloud.remove(this);
 					}
 					cpt_volcan++;
+					y--;
+					ombre_y--;
 				}else {
 					if(w.tab_Arbre.size() < w.getX()*w.getY()/10 && // faire quand ils manquent d'arbres
 							//x!=-1 && x-1>=0 && //erreur sur les coté de la map
