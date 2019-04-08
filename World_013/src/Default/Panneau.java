@@ -1046,17 +1046,10 @@ public class Panneau extends JPanel  implements KeyListener{
 			f.dispose();
 			w.setFin();
 		
-		}/*else if(c == KeyEvent.VK_V) { //fin
-			for(int i=0;i<w.tab_Volcan.size();i++) {
-				if(w.tab_Volcan.get(i).getMontee()==0) {
-					w.tab_Volcan.get(i).setMontee(1);
-					w.setLave(0);
-				}
-				if(w.tab_Volcan.get(i).getMontee()==1) {
-					w.setEcoulement(true);		
-			}
-			}
-		}*/
+		}
+		else if(c == KeyEvent.VK_H) { //aides
+			f.setAide();
+		}
 		try {
 			if(c == KeyEvent.VK_L) { //foudre
 				//w.l.setLight();

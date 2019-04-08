@@ -12,8 +12,8 @@ public class Main {
 		//Lightning l=new Lightning();
 		//Noise n=new Noise(largeur,hauteur);
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		int height = (int)dimension.getHeight()+80;
-		int width  = (int)dimension.getWidth()+80;
+		int height = (int)dimension.getHeight()+160;
+		int width  = (int)dimension.getWidth()+160;
 		World w=new World(largeur,hauteur,0,0,3,width,height); // (largeur_monde, hauteur_monde, nb_arbre, nb_animal,nb_de_volcan_a_la_foix_max, largeur_fenetre,hauteur_fenetre)
 		// NOTE : Trop de volcan, cree trop de d'affichage de lave et qui peut cree des bug où la lave ne s'affiche pas 
 		/*System.out.println("---------MAP EN INT---------");
