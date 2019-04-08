@@ -25,3 +25,5 @@ Source des images :
 	Pluie : https://media1.giphy.com/media/26BRzrFXgu7c81Oak/giphy.gif
 	
 	Coeur : https://2.bp.blogspot.com/-WTodWh9m1ZU/WHeGgBK9TAI/AAAAAAAARCo/KG9ss6v2vokyZswrtL6D6gqbm9aYW6TigCLcB/s400/gif%2Bde%2Bcorazones%2B2.gif
+
+	Ghost : https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF9hMfoRBz-nnKQplbbkbcTCnRUPqRjvW-zzYenaPqiWQV58mYCA
