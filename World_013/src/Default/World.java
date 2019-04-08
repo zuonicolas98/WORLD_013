@@ -243,15 +243,18 @@ public class World {
 			if(apres_bang) {
 				if(apres_bang_cpt>X/5) {
 					apres_bang=false;
-					apres_bang_cpt=0;
-				}else if(Math.random()<0.002){
+				}else if(Math.random()<0.002 && tab_Volcan.size()<nb_max_volcan+2){
 					tab_Volcan.add(new Volcan(this,"non_Explosive"));
 					apres_bang_cpt++;
 				}
-			}else if(Math.random()<0.0008 && tab_Volcan.size()<nb_max_volcan) {
-				tab_Volcan.add(new Volcan(this,"new_aleatoire"));
-				cpt_volcan++;
+			}else if(Math.random()<0.001 && tab_Volcan.size()<nb_max_volcan) {
+				if(apres_bang_cpt>X/4) {
+					tab_Volcan.add(new Volcan(this,"new_aleatoire"));
+					cpt_volcan++;
+				}else
+					apres_bang_cpt++;
 			}
+			
 			for(int i=0;i<tab_Volcan.size();i++) {
 				if(tab_Volcan.get(i).getMontee()==0) {
 					cpt_lave++;
@@ -327,6 +330,7 @@ public class World {
 	
 	public void BigBang() {
 		if(cpt_volcan>=X/5) {
+			apres_bang_cpt=0;
 			bang=true;
 			for(int i=0;i<tab_Cloud.size();i++)
 				tab_Cloud.remove(i);
@@ -345,7 +349,7 @@ public class World {
 					}
 				}
 				bang=false;
-				cpt_volcan=0;
+				cpt_volcan=-X/5;
 				bang_cpt=0;
 				apres_bang=true;
 			}
