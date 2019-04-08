@@ -10,9 +10,13 @@ git clone https://github.com/zuonicolas98/WORLD_013
 
 -------- 3 ----------
 
-cd WORLD_013/World_013/bin
+cd WORLD_013/World_013/src
 
 -------- 4 ----------
+
+javac Default/Main.java
+
+-------- 5 ----------
 
 java Default/Main
 
