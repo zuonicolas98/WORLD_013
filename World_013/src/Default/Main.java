@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] agrs) throws IOException {
 		//hauteur et largeur mini 50 sinon risque de bug;
 		int hauteur;//=400 max
-		int largeur=hauteur=150;//640 max
+		int largeur=hauteur=50;//640 max
 		//Lightning l=new Lightning();
 		//Noise n=new Noise(largeur,hauteur);
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();

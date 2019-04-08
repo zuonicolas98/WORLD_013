@@ -37,6 +37,7 @@ public class Cloud {
 		this.x=x;
 		this.y=y;
 		this.age=age;
+		//init vie si map trop petite minimum 30 de vie
 		if(w.getX()*2<20)
 			vie=30;
 		else
@@ -51,6 +52,7 @@ public class Cloud {
 			System.out.println("Mauvaise initialisation des nuages");
 			System.exit(0);
 		}
+		//calcul du position de l'ombre
 		if(alti[x][y]==-1 || y+10<w.getY()) {
 			ombre_y=y+10;
 		}
@@ -92,7 +94,7 @@ public class Cloud {
 	}
 	
 	public void step() {
-		
+		//si pas encore mature bouge pas 
 		if(mature==false) {
 			if (cpt>=10) {
 				cpt=0;
@@ -103,10 +105,10 @@ public class Cloud {
 			else
 				cpt++;
 		}else {
-			if(cpt==50 ) {
+			if(cpt==50 ) {//toute les 50 iteration bouge ou change d'etat
 				//--------PLUIE
 				cpt=0;
-				if(volcan) {
+				if(volcan) {//si c'est cree a partir d'un volcan cree la fumee noir
 					if(cpt_volcan==vie_explo || x<=2 || x>=w.getX()-2) {
 						w.tab_Cloud.remove(this);
 					}
@@ -235,7 +237,7 @@ public class Cloud {
 					//if(Math.random()<0.05 && flag==true)
 						//this.changeDirection();
 				
-					if(direction==1) {
+					if(direction==1) {//si bouge a droite recalcul les positions des ombre
 						//System.out.println("x = "+x+" ombre_y = "+ombre_y);
 						if( x!=-1 && ancien!=alti[x][ombre_y]) {
 							ancien=-10;
@@ -250,7 +252,7 @@ public class Cloud {
 						ombre_x=ombre_x+1;
 						x=x+1;
 						
-					}else if(direction==3) {
+					}else if(direction==3) {//si bouge a gauche recalcul les positions des ombre
 						if(ancien!=alti[x][ombre_y]) {
 							ancien=-10;
 						}
@@ -273,7 +275,7 @@ public class Cloud {
 				cpt++;
 			}
 		}
-		if(vie>0 && vie<=5 && pluie==false && foudre ==false && heart==false) {
+		if(vie>0 && vie<=5 && pluie==false && foudre ==false && heart==false) {// si pas en etat particulier il rentre dans l'etat de la mort qui tue
 			
 			fin_vie=true;
 			if(alti[x][ombre_y]>=0)
@@ -285,7 +287,7 @@ public class Cloud {
 				if(a!=-1)
 					w.tab_Animal.get(a).mort=true;;
 			}
-		}else if(vie<=0 && pluie==false && foudre ==false && heart==false) {
+		}else if(vie<=0 && pluie==false && foudre ==false && heart==false) {//fin de l'etat de la mort qui tue, il meurt
 			w.tab_Cloud.remove(this);
 		}
 

@@ -28,7 +28,7 @@ public class Projectille {
 		
 		if(y_a<0 ) {
 			sol=true;
-			if(direction==0 && x-x_a<w.getX() && y+1<w.getY()) {
+			if(direction==0 && x-x_a<w.getX() && y+1<w.getY()) {// si il y a un animal ou un arbre sur la case ou atteri le projectille il meurt
 				int id=w.RechercheAnimal(x-x_a, y+1);
 				if(w.RechercheArbres(x-x_a, y+1).getX()!=-1) {
 					w.RechercheArbres(x-x_a, y+1).setFeu(true);
@@ -46,11 +46,11 @@ public class Projectille {
 			}
 
 			
-			if(cpt==100) {
+			if(cpt==100) {// reste pendant 100 iteration sur la case puis disparait
 				mort=true;
 			}
 		}else {
-			if(cpt==5) {
+			if(cpt==5) {//calcul de la prochaine position avec une fonction x²-x+r
 				if(direction==0) {
 					x_a--;
 					y_a=-(x_a*x_a)-x2*x_a+reste;

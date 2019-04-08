@@ -21,7 +21,7 @@ public class Accueil extends JPanel implements KeyListener{
 	public void paintComponent(Graphics g) {
 		try {
 			IMG_FOND = ImageIO.read(new File("IMAGES/image_accueil.png"));
-			g.drawImage(IMG_FOND, fen.getX()/5,fen.getY()/10,1200,800, this);
+			g.drawImage(IMG_FOND, 0,0,1200,800, this);
 			
 		}catch(IOException e) {
 			e.printStackTrace();

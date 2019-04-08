@@ -20,8 +20,8 @@ public class Volcan {
 	private int dir_cloud;
 	
 	public Volcan(World w){
-		max_alt=new ArrayList<Coor>();
-		liquide=new int[w.getX()][w.getY()];
+		max_alt=new ArrayList<Coor>(); // enregistrement des coordonner
+		liquide=new int[w.getX()][w.getY()];// liquide pour chaque volcan pour ne pas s'entremeler entre toutes les volcans
 		this.w=w;
 		montee=1;
 		RecherchePlusHautAlti();
@@ -33,12 +33,12 @@ public class Volcan {
 		if(Math.random()<0.3) {
 			explosive=true;
 		}
-		if(w.vent==0) {
+		if(w.vent==0) {//direction des nuages
 			dir_cloud=1;
 		}else
 			dir_cloud=3;
 	}
-	public Volcan(World w,String n){
+	public Volcan(World w,String n){//pareil mais pour choisir quel type de volcan on veut explo ou non
 		this.w=w;
 		liquide=new int[w.getX()][w.getY()];
 		montee=1;
@@ -55,7 +55,7 @@ public class Volcan {
 		}else if(Math.random()<0.3) {
 				explosive=true;
 			}
-		if(w.vent==0) {
+		if(w.vent==0) {//direction des nuages 
 			dir_cloud=1;
 		}else
 			dir_cloud=3;
@@ -64,20 +64,20 @@ public class Volcan {
 
 	public void step() {
 		if(volcan) {
-			if(cpt%50==0 && zombie==false && mort==false) {
+			if(cpt%50==0 && zombie==false && mort==false) {//si en fase d'eruption cree des projectilles
 				if(explosive)
 					w.tab_Cloud.add(new Cloud(x_max,y_max,"explosive",dir_cloud,w));
 				else
 					w.tab_Cloud.add(new Cloud(x_max,y_max,"non_explosive",dir_cloud,w));
 			}
-			if(zombie==false) {
+			if(zombie==false) {//si pas fin d'eruption
 				init_erup();
 				change=0;
 			}
 			else {
 				if(cpt%100==0) {
 					if(change==0) {
-						if(explosive) {
+						if(explosive) {//si explosive cree un gros trou
 							for(int x=x_max-20;x<x_max+20;x++) {
 								for(int y=y_max-20; y < y_max+20; y++) {
 									int a=Math.abs(y-y_max);
@@ -89,7 +89,7 @@ public class Volcan {
 									}
 								}
 							}
-							change=20;
+							change=20;//pour finir directement
 						}
 						for(int x=0;x<w.getX();x++) {
 							for(int y=0; y < w.getY(); y++) {
@@ -103,7 +103,7 @@ public class Volcan {
 							}
 						}
 					}
-					for(int x=x_max-change ; x <= x_max+change ; x++) {
+					for(int x=x_max-change ; x <= x_max+change ; x++) {// pour retirer la lave lentement
 						for(int y=y_max-change ; y <= y_max+change ; y++) {
 							if(x>=0 && x<w.getX() && y>=0 && y<w.getY() ) {
 								liquide[x][y]=0;
@@ -116,7 +116,7 @@ public class Volcan {
 				}
 			}
 				
-			if(cpt>=1500 && tab_P.size()==0) {
+			if(cpt>=1500 && tab_P.size()==0) {//attend que toute les projectille et animation fini et se tue
 				zombie=true;
 				if(mort==true) {
 					w.tab_Volcan.remove(this);
@@ -124,11 +124,11 @@ public class Volcan {
 			}else {
 				if(cpt<=1500) {
 					//System.out.println("New P");
-					if(tab_P.size()<5 )
+					if(tab_P.size()<5 )// cree un projectille mais limiter a 5 en meme temps /volcan
 						tab_P.add(new Projectille(x_max,y_max,w));
 				}
 			}
-			if(zombie==false) {
+			if(zombie==false) {//fait ecouler la lave si pas mort
 				for(int i=0;i<tab_P.size();i++) {
 					if(tab_P.get(i).mort)
 						tab_P.remove(i);
@@ -142,12 +142,12 @@ public class Volcan {
 			if(cpt==200) {
 				if(alti_max<10) {
 					alti_max++;
-					for(int x=x_max-change ; x <= x_max+change ; x++) {
+					for(int x=x_max-change ; x <= x_max+change ; x++) {//parcour de la zone
 						for(int y=y_max-change ; y <= y_max+change ; y++) {
 							if(y>=0 && y<w.getY() && x>=0 && x<w.getX() ){
 								int a=Math.abs(y-y_max);
 								int b=Math.abs(x-x_max);
-								int h=(int)(Math.sqrt(a*a+b*b));
+								int h=(int)(Math.sqrt(a*a+b*b));//fait apparaitre le volcan de facon oval
 								if(w.n.alti[x][y]<9 && w.n.alti[x][y]<alti_max && h<10)
 								w.n.alti[x][y]++;
 								w.world[x][y]=0;
@@ -172,7 +172,7 @@ public class Volcan {
 		}
 		cpt++;
 	}
-	public void init_erup() {
+	public void init_erup() {// met a liquide du sommet du volcan a 10 qui est le maximun de liquide sur une case
 		change=5;
 		for(int x=x_max-change ; x <= x_max+change ; x++) {
 			for(int y=y_max-change ; y <= y_max+change ; y++) {
@@ -188,27 +188,27 @@ public class Volcan {
 		for(int x=0;x<w.getX();x++) {
 			for(int y=0;y<w.getY();y++) {
 
-				if(liquide[x][y]>=10) {
+				if(liquide[x][y]>=10) {//si la case a 10 de liquide sa s'expand 
 					if(liquide[x][y]>0) {
-						if(w.n.alti[x][y]==-1) {
+						if(w.n.alti[x][y]==-1) {// s'il a du liquide et c de l'eau alors il y a de la dry qui apparait
 							w.n.alti[x][y]=0;
 							w.world[x][y]=-1;
 							liquide[x][y]=0;
 						}
 					}
-					if( x+1<w.getX() && ((w.n.alti[x][y]>w.n.alti[x+1][y] ) || (Math.random()<0.1))) {
+					if( x+1<w.getX() && ((w.n.alti[x][y]>w.n.alti[x+1][y] ) || (Math.random()<0.1))) {//s'expant en priorité vers les altitude inferieur
 						liquide[x][y]--;
 						liquide[x+1][y]++;
-					}
+					}//s'expant en priorité vers les altitude inferieur
 					if(x-1>=0 && ((w.n.alti[x][y]>w.n.alti[x-1][y]) || (Math.random()<0.1))) {
 						liquide[x][y]--;
 						liquide[x-1][y]++;
 					}
-
+					//s'expant en priorité vers les altitude inferieur
 					if(y+1<w.getY() && ((w.n.alti[x][y]>w.n.alti[x][y+1] ) || (Math.random()<0.1))) {
 						liquide[x][y]--;
 						liquide[x][y+1]++;
-					}
+					}//s'expant en priorité vers les altitude inferieur
 					if(y-1>=0 && ((w.n.alti[x][y]>w.n.alti[x][y-1] ) || (Math.random()<0.1))) {
 						liquide[x][y]--;
 						liquide[x][y-1]++;
