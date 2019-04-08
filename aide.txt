@@ -14,20 +14,23 @@ cd WORLD_013/World_013/src
 
 -------- 4 ----------
 
-javac Default/Main.java
+javac Default/Main1java
 
 -------- 5 ----------
-//taille 50 
-java Default/Main
+//taille 100
+java Default/Main1
 
 -------- FIN ----------
-//taille 50 plus facile a voir les agents et vous pouvez ralentir le temps pour mieux voir les mouvements
-// vitesse rapide plus facile a voir les deplacements des nuages apparition des volcans et des arbres. 
+
+vitesse rapide plus facile a voir les deplacements des nuages apparition des volcans et des arbres. 
 Si vous souhaitez execute plusieur affichage de taille sans changé le code vous pouvez aussi faire
 
-//taille 100 beau a voir quand il y a des eruptions de volcan mais il peut y avoir des bugs d'affichage dû au nombre trop élevé de sprite a afficher
-javac Default/Main2.java
-javac Default/Main2
-//taill 200  beau a voir quand il y a des eruptions de volcan mais il peut y avoir des bugs d'affichage dû au nombre trop élevé de sprite a afficher
+taille 50 plus facile a voir les agents et vous pouvez ralentir le temps pour mieux voir les mouvements
+
+//taille 50
+javac Default/Main.java
+java Default/Main
+
+//taill 200 
 javac Default/Main3.java
-javac Default/Main3
+java Default/Main3
