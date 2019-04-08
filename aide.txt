@@ -14,7 +14,7 @@ cd WORLD_013/World_013/src
 
 -------- 4 ----------
 
-javac Default/Main1java
+javac Default/Main1.java
 
 -------- 5 ----------
 //taille 100
