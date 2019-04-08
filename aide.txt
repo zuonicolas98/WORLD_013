@@ -21,7 +21,7 @@ javac Default/Main1.java
 java Default/Main1
 
 -------- FIN ----------
-
+Execute plusieur fois pour voir different map possible
 vitesse rapide plus facile a voir les deplacements des nuages apparition des volcans et des arbres. 
 Si vous souhaitez execute plusieur affichage de taille sans changé le code vous pouvez aussi faire
 
