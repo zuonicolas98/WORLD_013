@@ -1,0 +1,19 @@
+Pour lancer le programme depuis Terminal LINUX :
+
+-------- 1 ----------
+
+cd
+
+-------- 2 ----------
+
+git clone https://github.com/zuonicolas98/WORLD_013
+
+-------- 3 ----------
+
+cd WORLD_013/World_013/bin
+
+-------- 4 ----------
+
+java Default/Main
+
+-------- FIN ----------
